@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum EvaValueType: String {
+public enum EvaValueType: String {
     case resettato
     case cumulato
     case info
 }
 
-enum EvaValues: Equatable {
+public enum EvaValues: Equatable {
     
     case ID1_01(String) //ID dispositivo
     case ID1_02(String) //modello dispositivo
@@ -232,7 +232,7 @@ enum EvaValues: Equatable {
     }
 }
 
-enum EvaValueIdentifier: String {
+public enum EvaValueIdentifier: String {
     
     case ID1_01 = "ID dispositivo"
     case ID1_02 = "modello dispositivo"
@@ -339,7 +339,7 @@ enum EvaValueIdentifier: String {
     case VA3_04 = "VA3_04 numero vendite libere resettato"
 }
 
-protocol ParsedValueType {
+public protocol ParsedValueType {
     static var invalidValue: Self { get }
     static var nullValue: Self { get }
     var isValid: Bool { get }
@@ -348,48 +348,48 @@ protocol ParsedValueType {
 }
 
 extension Double: ParsedValueType {
-    static var invalidValue: Double { -1.0 }
-    static var nullValue: Double { 0.0 }
-    var textDescription: String {
+    public static var invalidValue: Double { -1.0 }
+    public static var nullValue: Double { 0.0 }
+    public var textDescription: String {
         self.currencyFormatted()
     }
-    var fallBackValue: Double {
+    public var fallBackValue: Double {
         self == Double.invalidValue ? 0.0 : self
     }
-    var isValid: Bool { self != Self.invalidValue}
+    public var isValid: Bool { self != Self.invalidValue}
 }
 
 extension Int: ParsedValueType {
-    static var invalidValue: Int { -1 }
-    static var nullValue: Int { 0 }
-    var textDescription: String {
+    public static var invalidValue: Int { -1 }
+    public static var nullValue: Int { 0 }
+    public var textDescription: String {
         String(self)
     }
-    var fallBackValue: Int {
+    public var fallBackValue: Int {
         self == Int.invalidValue ? 0 : self
     }
-    var isValid: Bool { self != Self.invalidValue}
+    public var isValid: Bool { self != Self.invalidValue}
 }
 
 extension String: ParsedValueType {
-    static var invalidValue: String { "nd" }
-    static var nullValue: String { "" }
-    var textDescription: String { self }
-    var fallBackValue: String { "nd" }
-    var isValid: Bool { self != Self.invalidValue}
+    public static var invalidValue: String { "nd" }
+    public static var nullValue: String { "" }
+    public var textDescription: String { self }
+    public var fallBackValue: String { "nd" }
+    public var isValid: Bool { self != Self.invalidValue}
 }
 
 extension Date: ParsedValueType {
-    static var invalidValue: Date { .legalDistantPast }
-    static var nullValue: Date { .legalDistantPast }
-    var textDescription: String {
+    public static var invalidValue: Date { .legalDistantPast }
+    public static var nullValue: Date { .legalDistantPast }
+    public var textDescription: String {
         DateFormatter.localizedString(from: self, dateStyle: .short, timeStyle: .short)
     }
-    var fallBackValue: Date { .legalDistantPast }
-    var isValid: Bool { self != Self.invalidValue}
+    public var fallBackValue: Date { .legalDistantPast }
+    public var isValid: Bool { self != Self.invalidValue}
 }
 
-struct ParsedValue<T: ParsedValueType> {
+public struct ParsedValue<T: ParsedValueType> {
     var value: T
     var id: EvaValueIdentifier
     
@@ -399,7 +399,7 @@ struct ParsedValue<T: ParsedValueType> {
     }
 }
 
-struct EvaModelValues {
+public struct EvaModelValues {
     var deviceId: String
     var progressivoLettura: Int
     var dataLettura: Date
@@ -410,7 +410,7 @@ struct EvaModelValues {
     var venduto: Double
 }
 
-struct EvaResumeValues {
+public struct EvaResumeValues {
     var erogazioni: Int
     var venduto: Double
     var cashBox: Double
@@ -427,7 +427,7 @@ struct EvaResumeValues {
     var valoreVenditeLibere: Double
 }
 
-struct EvaAdeValues {
+public struct EvaAdeValues {
     var cashBox: Double
     var contato: Double = 0.0
     var differenza: Double

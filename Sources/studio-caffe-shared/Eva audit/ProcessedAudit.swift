@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProcessedReport: Equatable, Codable {
+struct ProcessedAudit: Equatable, Codable {
     let deviceID: String
     let progressivoLettura: Int
     let dataLettura: Date

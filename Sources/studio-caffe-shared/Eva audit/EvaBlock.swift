@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EvaBlock {
+public struct EvaBlock {
     var name: String
     var values: [String]
     
@@ -47,8 +47,8 @@ struct EvaBlock {
     }
 }
 
-struct Price: Identifiable, Hashable {
-    let id: UUID = UUID()
+public struct Price: Identifiable, Hashable {
+    public let id: UUID = UUID()
     var value: Double
     var vends: Int
     
@@ -57,7 +57,7 @@ struct Price: Identifiable, Hashable {
     }
 }
 
-struct Product: Equatable, Hashable {
+public struct Product: Equatable, Hashable {
     
     var code: String
     var prices: [Price]
@@ -74,7 +74,7 @@ struct Product: Equatable, Hashable {
         }
     }
     
-    static func == (lhs: Product, rhs: Product) -> Bool {
+    public static func == (lhs: Product, rhs: Product) -> Bool {
         lhs.code == rhs.code
     }
 }

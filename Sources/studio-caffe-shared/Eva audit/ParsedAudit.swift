@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ParsedReport: Identifiable, Hashable {
+public struct ParsedAudit: Identifiable, Hashable {
     
     enum PaymentSystemType: String {
         case unknown = "sconosciuto"
@@ -37,11 +37,11 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
-    var id: String
+    public var id: String
     
     var rawReport: String
     var parsedReport: String = ""
@@ -132,13 +132,13 @@ struct ParsedReport: Identifiable, Hashable {
         let expectedValue: String
     }
     
-    mutating private func validate_letturaID_EA3_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_letturaID_EA3_01(old: ParsedAudit, errors: inout [ImportError]) {
         if letturaID_EA3_01 != old.letturaID_EA3_01 + 1 {
             errors.append(ImportError(identifier: .EA3_01, actualValue: letturaID_EA3_01.textDescription, expectedValue: (old.letturaID_EA3_01 + 1).textDescription))
         }
     }
     
-    mutating private func validate_ldataLetturaPrecedente_EA3_05_06(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_ldataLetturaPrecedente_EA3_05_06(old: ParsedAudit, errors: inout [ImportError]) {
         if paymentSystem == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
             fixMissingPreviousDate(previousDate: old.dataLettura)
         }
@@ -147,7 +147,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_importoVendutoCash_CA2_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_importoVendutoCash_CA2_01(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.importoVendutoCash_CA2_01.isValid && importoVendutoCash_CA2_01.isValid && importoVendutoCash_CA2_03.isValid else { return }
         let importoVendutoCash = (importoVendutoCash_CA2_01 - old.importoVendutoCash_CA2_01).round(to: 2)
         if importoVendutoCash != importoVendutoCash_CA2_03.round(to: 2) {
@@ -155,7 +155,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_numeroVenditeCash_CA2_02(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_numeroVenditeCash_CA2_02(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_04.isValid else { return }
         let numeroVenditeCash = numeroVenditeCash_CA2_02 - old.numeroVenditeCash_CA2_02
         if numeroVenditeCash != numeroVenditeCash_CA2_04 {
@@ -163,7 +163,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_totaleCashInserito_CA3_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_totaleCashInserito_CA3_01(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.totaleCashInserito_CA3_05.isValid && totaleCashInserito_CA3_05.isValid && totaleCashInserito_CA3_01.isValid else { return }
         let totaleCashInserito = (totaleCashInserito_CA3_05 - old.totaleCashInserito_CA3_05).round(to: 2)
         if totaleCashInserito != totaleCashInserito_CA3_01.round(to: 2) {
@@ -171,7 +171,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_moneteInCassetta_CA3_02(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_moneteInCassetta_CA3_02(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.moneteInCassetta_CA3_06.isValid && moneteInCassetta_CA3_06.isValid && moneteInCassetta_CA3_02.isValid else { return }
         let moneteInCassetta = (moneteInCassetta_CA3_06 - old.moneteInCassetta_CA3_06).round(to: 2)
         if moneteInCassetta != moneteInCassetta_CA3_02.round(to: 2) {
@@ -179,7 +179,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_banconoteInCassetta(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_banconoteInCassetta(old: ParsedAudit, errors: inout [ImportError]) {
         let bic = banconoteInCassetta_CA3_04 >= 0 ? banconoteInCassetta_CA3_04 : banconoteInCassetta_CA3_09
         
         guard old.banconoteInCassetta_CA3_08.isValid && banconoteInCassetta_CA3_08.isValid && bic.isValid else { return }
@@ -189,7 +189,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_cashOverpay_CA8_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_cashOverpay_CA8_01(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.cashOverpay_CA8_02.isValid && cashOverpay_CA8_02.isValid && cashOverpay_CA8_01.isValid else { return }
         let cashOverpay = (cashOverpay_CA8_02 - old.cashOverpay_CA8_02).round(to: 2)
         if cashOverpay != cashOverpay_CA8_01.round(to: 2) {
@@ -197,7 +197,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_caricoManualeTubi_CA10_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_caricoManualeTubi_CA10_01(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.caricoManualeTubi_CA10_02.isValid && caricoManualeTubi_CA10_02.isValid && caricoManualeTubi_CA10_01.isValid else { return }
         let caricoManualeTubi = (caricoManualeTubi_CA10_02 - old.caricoManualeTubi_CA10_02).round(to: 2)
         if caricoManualeTubi != caricoManualeTubi_CA10_01.round(to: 2) {
@@ -205,7 +205,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_totaleScaricoTubi_CA4_01(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_totaleScaricoTubi_CA4_01(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.totaleScaricoTubi_CA4_03.isValid && totaleScaricoTubi_CA4_03.isValid && totaleScaricoTubi_CA4_01.isValid else { return }
         let totaleScaricoTubi = (totaleScaricoTubi_CA4_03 - old.totaleScaricoTubi_CA4_03).round(to: 2)
         if totaleScaricoTubi != totaleScaricoTubi_CA4_01.round(to: 2) {
@@ -213,7 +213,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_scaricoTubiSoloManuale_CA4_02(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_scaricoTubiSoloManuale_CA4_02(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.scaricoTubiSoloManuale_CA4_04.isValid && scaricoTubiSoloManuale_CA4_04.isValid && scaricoTubiSoloManuale_CA4_02.isValid else { return }
         let scaricoTubiManuale = (scaricoTubiSoloManuale_CA4_04 - old.scaricoTubiSoloManuale_CA4_04).round(to: 2)
         if scaricoTubiManuale != scaricoTubiSoloManuale_CA4_02.round(to: 2) {
@@ -221,7 +221,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_moneteVersoTubi_CA3_03(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_moneteVersoTubi_CA3_03(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.moneteVersoTubi_CA3_07.isValid && moneteVersoTubi_CA3_07.isValid && moneteVersoTubi_CA3_03.isValid else { return }
         let moneteVersoTubi = (moneteVersoTubi_CA3_07 - old.moneteVersoTubi_CA3_07).round(to: 2)
         if moneteVersoTubi != moneteVersoTubi_CA3_03.round(to: 2) {
@@ -229,7 +229,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_numeroVendite_LA1_04(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_numeroVendite_LA1_04(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.numeroVendite_LA1_05.isValid && numeroVendite_LA1_05.isValid && numeroVendite_LA1_04.isValid else { return }
         let diff = numeroVendite_LA1_05 - old.numeroVendite_LA1_05
         if diff != numeroVendite_LA1_04 {
@@ -237,7 +237,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_importoVendutoCashless1_DA2_03(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_importoVendutoCashless1_DA2_03(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_03.isValid else { return }
         let diff = (importoVendutoCashless1_DA2_01 - old.importoVendutoCashless1_DA2_01).round(to: 2)
         if diff != importoVendutoCashless1_DA2_03.round(to: 2) {
@@ -245,7 +245,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_erogazioniCashless1_DA2_04(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_erogazioniCashless1_DA2_04(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_04.isValid else { return }
         let diff = erogazioniCashless1_DA2_02 - old.erogazioniCashless1_DA2_02
         if diff != erogazioniCashless1_DA2_04 {
@@ -253,7 +253,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_importoPrelevatoDaCashless1_DA3_02(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_importoPrelevatoDaCashless1_DA3_02(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.importoPrelevatoDaCashless1_DA3_01.isValid && importoPrelevatoDaCashless1_DA3_01.isValid && importoPrelevatoDaCashless1_DA3_02.isValid else { return }
         let diff = (importoPrelevatoDaCashless1_DA3_01 - old.importoPrelevatoDaCashless1_DA3_01).round(to: 2)
         if diff != importoPrelevatoDaCashless1_DA3_02.round(to: 2) {
@@ -261,7 +261,7 @@ struct ParsedReport: Identifiable, Hashable {
         }
     }
     
-    mutating private func validate_importoAccreditatoSuCashless1_DA4_02(old: ParsedReport, errors: inout [ImportError]) {
+    mutating private func validate_importoAccreditatoSuCashless1_DA4_02(old: ParsedAudit, errors: inout [ImportError]) {
         guard old.importoAccreditatoSuCashless1_DA4_01.isValid && importoAccreditatoSuCashless1_DA4_01.isValid && importoAccreditatoSuCashless1_DA4_02.isValid else { return }
         let diff = (importoAccreditatoSuCashless1_DA4_01 - old.importoAccreditatoSuCashless1_DA4_01).round(to: 2)
         if diff != importoAccreditatoSuCashless1_DA4_02.round(to: 2) {
@@ -279,7 +279,7 @@ struct ParsedReport: Identifiable, Hashable {
         dataLetturaPrecedente_EA3_05_06 = previousDate
     }
     
-    mutating func validateImport(old: ParsedReport) -> [ImportError] {
+    mutating func validateImport(old: ParsedAudit) -> [ImportError] {
         var errors: [ImportError] = []
         
         if paymentSystem == .unknown {
@@ -444,8 +444,8 @@ struct ParsedReport: Identifiable, Hashable {
         self.rawReport = ""
     }
     
-    static var emptyReport: ParsedReport {
-        ParsedReport()
+    static var emptyReport: ParsedAudit {
+        ParsedAudit()
     }
     
     var importerLabel: String {
@@ -1410,22 +1410,20 @@ struct ParsedReport: Identifiable, Hashable {
     }
 }
 
-extension ParsedReport: Equatable {
-    static func == (lhs: ParsedReport, rhs: ParsedReport) -> Bool {
+extension ParsedAudit: Equatable {
+    public static func == (lhs: ParsedAudit, rhs: ParsedAudit) -> Bool {
         return lhs.dispositivoID_ID1_01 == rhs.dispositivoID_ID1_01 && lhs.letturaID_EA3_01 == rhs.letturaID_EA3_01
     }
 }
 
-#if os(macOS)
-extension ParsedReport {
-    func isEqual(to processed: ProcessedReport) -> Bool {
+extension ParsedAudit {
+    func isEqual(to processed: ProcessedAudit) -> Bool {
         processed.deviceID == dispositivoID_ID1_01 &&
             processed.progressivoLettura == letturaID_EA3_01 &&
             processed.dataLettura == dataLettura_EA3_02_03
     }
     
-    func processedEquivalent(in processed: [ProcessedReport]) -> ProcessedReport? {
+    func processedEquivalent(in processed: [ProcessedAudit]) -> ProcessedAudit? {
         processed.first(where: { self.isEqual(to: $0) })
     }
 }
-#endif
