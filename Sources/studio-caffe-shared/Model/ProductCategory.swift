@@ -1,15 +1,8 @@
-//
-//  File.swift
-//  
-//
-//  Created by Massimo Di Leonardo on 14/04/21.
-//
-
 import Foundation
 
-enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Identifiable {
+public enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Identifiable {
     
-    var id: String { rawValue }
+    public var id: String { rawValue }
     
     case prodotti
     case ricambi
@@ -21,7 +14,7 @@ enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Identifia
 }
 
 extension ProductCategory: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         rawValue
     }
 }

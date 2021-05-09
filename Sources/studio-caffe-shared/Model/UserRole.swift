@@ -1,20 +1,14 @@
-//
-//  UserRole.swift
-//  Studio Caffe App
-//
-//  Created by Massimo Di Leonardo on 14/08/20.
-//
-
 import Foundation
 
-enum UserRole: String, Codable, CaseIterable, RawRepresentable {
+public enum UserRole: String, Codable, CaseIterable, RawRepresentable, Identifiable {
+    public var id: String { rawValue }
     case amministratore
     case gestore
     case visitatore
 }
 
 extension UserRole: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         rawValue
     }
 }
