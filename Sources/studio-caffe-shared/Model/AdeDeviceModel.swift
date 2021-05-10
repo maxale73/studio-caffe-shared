@@ -17,6 +17,24 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable {
     case COINCO_GUARDIAN = "Coinco Guardian"
     case SCATTI = "Scatti"
     case none = "nessun modello"
+    
+    public static func type(from string: String) -> Self {
+        let reference = string.lowercased()
+        if reference.contains("ELK ATTO COIN".lowercased()) {
+            return .ELKEY_ATTO_COIN
+        } else if reference.contains("ELK Bubble".lowercased()) {
+            return .ELKEY_BUBBLE
+        } else if reference.contains("zip".lowercased()) {
+            return .NEWIS_ZIP
+        } else if reference.contains("platinum exe".lowercased()) {
+            return .NEWIS_HI
+        } else if reference.contains("CF7900".lowercased()) {
+            return .MEI7900
+        } else if reference.contains("NRI C2".lowercased()) {
+            return .NRI_CURRENZA_C2
+        }
+        return .none
+    }
 }
 
 extension AdeDeviceModel: CustomStringConvertible {

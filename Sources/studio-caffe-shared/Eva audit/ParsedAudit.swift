@@ -9,34 +9,6 @@ import Foundation
 
 public struct ParsedAudit: Identifiable, Hashable {
     
-    enum PaymentSystemType: String {
-        case unknown = "sconosciuto"
-        case NEWIS_ZIP = "Newis Zip"
-        case NEWIS_HI = "Newis Hi"
-        case MEI_CF7900 = "MEI CF7900"
-        case ELKEY_BUBBLE = "Elkey Bubble"
-        case ELKEY_ATTO_COIN = "Elkey Atto Coin"
-        case NRI_Currenza_C2 = "NRI Currenza C2"
-        
-        static func type(with string: String) -> Self {
-            let reference = string.lowercased()
-            if reference.contains("ELK ATTO COIN".lowercased()) {
-                return .ELKEY_ATTO_COIN
-            } else if reference.contains("ELK Bubble".lowercased()) {
-                return .ELKEY_BUBBLE
-            } else if reference.contains("zip".lowercased()) {
-                return .NEWIS_ZIP
-            } else if reference.contains("platinum exe".lowercased()) {
-                return .NEWIS_HI
-            } else if reference.contains("CF7900".lowercased()) {
-                return .MEI_CF7900
-            } else if reference.contains("NRI C2".lowercased()) {
-                return .NRI_Currenza_C2
-            }
-            return .unknown
-        }
-    }
-    
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -46,7 +18,7 @@ public struct ParsedAudit: Identifiable, Hashable {
     var rawReport: String
     var parsedReport: String = ""
     
-    var paymentSystem = PaymentSystemType.unknown
+    var paymentSystem = AdeDeviceModel.none
     var dispositivo: String {
         dispositivoID_ID1_01
     }
@@ -99,7 +71,7 @@ public struct ParsedAudit: Identifiable, Hashable {
             || totaleScaricoTubi_CA4_01 > 0.0
             || scaricoTubiSoloManuale_CA4_02 > 0
             || caricoManualeTubi_CA10_01 > 0
-            || paymentSystem == .MEI_CF7900
+            || paymentSystem == .MEI7900
     }
     
     let contato = 0.0
@@ -282,7 +254,7 @@ public struct ParsedAudit: Identifiable, Hashable {
     mutating func validateImport(old: ParsedAudit) -> [ImportError] {
         var errors: [ImportError] = []
         
-        if paymentSystem == .unknown {
+        if paymentSystem == .none {
             errors.append(ImportError(identifier: .ID1_02, actualValue: "sconosiuto", expectedValue: "___________"))
         }
         
@@ -764,8 +736,8 @@ public struct ParsedAudit: Identifiable, Hashable {
                      cashOverpay: cashOverpay_CA8_01.fallBackValue)
     }
     
-    mutating private func setPaymentSystem(ps: PaymentSystemType) {
-        if paymentSystem == .unknown {
+    mutating private func setPaymentSystem(ps: AdeDeviceModel) {
+        if paymentSystem == .none {
             paymentSystem = ps
         }
     }
@@ -821,7 +793,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         if let DXSBlock = blocks.first(where: { $0.name == "DXS" }) {
             if let value = DXSBlock.stringValue(for: 1) {
                 communicationID_DXS_01 = value
-                setPaymentSystem(ps: .type(with: value))
+                setPaymentSystem(ps: .type(from: value))
             }
         }
         
@@ -834,7 +806,7 @@ public struct ParsedAudit: Identifiable, Hashable {
             }
             if let value = ID1Block.stringValue(for: 2) {
                 dispositivoModello_ID1_02 = value
-                setPaymentSystem(ps: .type(with: value))
+                setPaymentSystem(ps: .type(from: value))
             } else {
                 missingValues.append(.ID1_02)
             }
@@ -843,7 +815,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         // ID7
         if let ID7Block = blocks.first(where: { $0.name == "ID7" }) {
             if let value = ID7Block.stringValue(for: 5) {
-                setPaymentSystem(ps: .type(with: value))
+                setPaymentSystem(ps: .type(from: value))
             }
         }
         
@@ -918,7 +890,7 @@ public struct ParsedAudit: Identifiable, Hashable {
             
             if let value = CA1Block.stringValue(for: 2) {
                 modelloValidatore_CA1_02 = value
-                setPaymentSystem(ps: .type(with: value))
+                setPaymentSystem(ps: .type(from: value))
             } else {
                 missingValues.append(.CA1_02)
             }
