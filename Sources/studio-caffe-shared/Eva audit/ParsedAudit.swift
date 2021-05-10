@@ -1,5 +1,5 @@
 //
-//  ParsedReport.swift
+//  ParsedAudit.swift
 //  Studio Caffe App
 //
 //  Created by Massimo Di Leonardo on 23/03/21.
@@ -15,23 +15,24 @@ public struct ParsedAudit: Identifiable, Hashable {
     
     public var id: String
     
-    var rawReport: String
+    public var rawReport: String
     var parsedReport: String = ""
     
-    var paymentSystem = AdeDeviceModel.none
-    var dispositivo: String {
+    public var paymentSystem = AdeDeviceModel.none
+    
+    public var dispositivo: String {
         dispositivoID_ID1_01
     }
     
-    var dataLettura: Date {
+    public var dataLettura: Date {
         dataLettura_EA3_02_03
     }
     
-    var erogazioni: Int {
+    public var erogazioni: Int {
         erogazioni_VA1_04 >= 0 ? erogazioni_VA1_04 : numeroVendite_LA1_04
     }
     
-    var venduto: Double {
+    public var venduto: Double {
         if venduto_VA1_03 > 0 {
             return venduto_VA1_03.round(to: 2)
         } else {
@@ -40,7 +41,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         }
     }
     
-    var cashBox: Double {
+    public var cashBox: Double {
         if banconoteInCassetta_CA3_09 > 0 {
             return moneteInCassetta_CA3_02 + banconoteInCassetta_CA3_09
         } else if banconoteInCassetta_CA3_04 > 0 {
@@ -50,23 +51,23 @@ public struct ParsedAudit: Identifiable, Hashable {
         }
     }
     
-    var cashOverpay: Double {
+    public var cashOverpay: Double {
         cashOverpay_CA8_01.fallBackValue
     }
     
-    var bilancioTubi: Double {
+    public var bilancioTubi: Double {
         moneteVersoTubi_CA3_03.fallBackValue - totaleScaricoTubi_CA4_01.fallBackValue
     }
     
-    var bilancioChiaviCashless1: Double {
+    public var bilancioChiaviCashless1: Double {
         importoAccreditatoSuCashless1_DA4_02.fallBackValue - importoPrelevatoDaCashless1_DA3_02.fallBackValue
     }
     
-    var totaleTubi: Double {
+    public var totaleTubi: Double {
         valoreTotaleTubi_CA15_01.fallBackValue
     }
     
-    func rilevataRendiresto() -> Bool {
+    public func rilevataRendiresto() -> Bool {
         moneteVersoTubi_CA3_03 > 0.0
             || totaleScaricoTubi_CA4_01 > 0.0
             || scaricoTubiSoloManuale_CA4_02 > 0
@@ -95,13 +96,13 @@ public struct ParsedAudit: Identifiable, Hashable {
         incassatoRicarica - vendutoNoContante
     }
     
-    var missingValues: [EvaValueIdentifier] = []
+    public var missingValues: [EvaValueIdentifier] = []
     
-    struct ImportError: Hashable, Identifiable {
-        var id: EvaValueIdentifier { identifier }
-        let identifier: EvaValueIdentifier
-        let actualValue: String
-        let expectedValue: String
+    public struct ImportError: Hashable, Identifiable {
+        public var id: EvaValueIdentifier { identifier }
+        public let identifier: EvaValueIdentifier
+        public let actualValue: String
+        public let expectedValue: String
     }
     
     mutating private func validate_letturaID_EA3_01(old: ParsedAudit, errors: inout [ImportError]) {
@@ -251,7 +252,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         dataLetturaPrecedente_EA3_05_06 = previousDate
     }
     
-    mutating func validateImport(old: ParsedAudit) -> [ImportError] {
+    public mutating func validateImport(old: ParsedAudit) -> [ImportError] {
         var errors: [ImportError] = []
         
         if paymentSystem == .none {
@@ -405,7 +406,7 @@ public struct ParsedAudit: Identifiable, Hashable {
     private var valoreErogazioniGratuite_VA3_01 = Double.invalidValue
     private var erogazioniGratuite_VA3_02 = Int.invalidValue
     
-    init?(rawReport: String) {
+    public init?(rawReport: String) {
         guard !rawReport.isEmpty else { return nil }
         self.id = UUID().uuidString
         self.rawReport = rawReport
@@ -416,15 +417,15 @@ public struct ParsedAudit: Identifiable, Hashable {
         self.rawReport = ""
     }
     
-    static var emptyReport: ParsedAudit {
+    public static var emptyReport: ParsedAudit {
         ParsedAudit()
     }
     
-    var importerLabel: String {
+    public var importerLabel: String {
         "\(dispositivoID_ID1_01)_\(letturaID_EA3_01)"
     }
     
-    func infoValues() -> [EvaValues] {
+    public func infoValues() -> [EvaValues] {
         var values: [EvaValues] = []
         if dispositivoID_ID1_01.isValid {
             values.append(.ID1_01(dispositivoID_ID1_01))
@@ -464,7 +465,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         return values
     }
     
-    func resettableValues() -> [EvaValues] {
+    public func resettableValues() -> [EvaValues] {
         var values: [EvaValues] = []
         if importoVendutoCash_CA2_03.isValid {
             values.append(.CA2_03(importoVendutoCash_CA2_03))
@@ -574,7 +575,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         return values
     }
     
-    func cumulatedValues() -> [EvaValues] {
+    public func cumulatedValues() -> [EvaValues] {
         var values: [EvaValues] = []
         if importoVendutoCash_CA2_01.isValid {
             values.append(.CA2_01(importoVendutoCash_CA2_01))
@@ -690,7 +691,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         return values
     }
     
-    func modelValues() -> EvaModelValues? {
+    public func modelValues() -> EvaModelValues? {
         guard dispositivoID_ID1_01.isValid, dataLettura_EA3_02_03 != .distantFuture, letturaID_EA3_01.isValid else {
             return nil
         }
@@ -703,7 +704,7 @@ public struct ParsedAudit: Identifiable, Hashable {
                        venduto: venduto)
     }
     
-    func resumeValues() -> EvaResumeValues {
+    public func resumeValues() -> EvaResumeValues {
         EvaResumeValues(erogazioni: erogazioni,
                         venduto: venduto,
                         cashBox: cashBox,
@@ -718,7 +719,7 @@ public struct ParsedAudit: Identifiable, Hashable {
                         valoreVenditeLibere: valoreErogazioniGratuite_VA3_03.fallBackValue)
     }
     
-    func adeValues() -> EvaAdeValues {
+    public func adeValues() -> EvaAdeValues {
         EvaAdeValues(cashBox: cashBox,
                      contato: contato,
                      differenza: contato - cashBox,
@@ -742,7 +743,7 @@ public struct ParsedAudit: Identifiable, Hashable {
         }
     }
     
-    func priceList() -> [Product] {
+    public func priceList() -> [AuditProduct] {
         var blocks: [EvaBlock] = []
         
         let rawBlocks = rawReport.components(separatedBy: "\n")
@@ -756,7 +757,7 @@ public struct ParsedAudit: Identifiable, Hashable {
             }
         }
         let LA1Blocks = blocks.filter({ $0.name == "LA1" })
-        return LA1Blocks.reduce([Product]()) { (_products, block) -> [Product] in
+        return LA1Blocks.reduce([AuditProduct]()) { (_products, block) -> [AuditProduct] in
             guard let vends = block.intValue(for: 4), let price = block.doubleValue(for: 3) else { return _products }
             let code = block.values[1]
             if var prod = _products.first(where: { $0.code == code }) {
@@ -766,7 +767,7 @@ public struct ParsedAudit: Identifiable, Hashable {
                 newProducts.append(prod)
                 return newProducts
             } else {
-                let newProd = Product(code: code, prices: [Price(value: price, vends: vends)])
+                let newProd = AuditProduct(code: code, prices: [AuditPrice(value: price, vends: vends)])
                 var newProducts = _products
                 newProducts.append(newProd)
                 return newProducts
@@ -775,7 +776,7 @@ public struct ParsedAudit: Identifiable, Hashable {
     }
     
     
-    mutating func parseReport() {
+    public mutating func parseReport() {
         guard !parsed else { return }
         var blocks: [EvaBlock] = []
         let rawBlocks = rawReport.components(separatedBy: "\n")
@@ -1389,13 +1390,13 @@ extension ParsedAudit: Equatable {
 }
 
 extension ParsedAudit {
-    func isEqual(to processed: ProcessedAudit) -> Bool {
+    public func isEqual(to processed: ProcessedAudit) -> Bool {
         processed.deviceID == dispositivoID_ID1_01 &&
             processed.progressivoLettura == letturaID_EA3_01 &&
             processed.dataLettura == dataLettura_EA3_02_03
     }
     
-    func processedEquivalent(in processed: [ProcessedAudit]) -> ProcessedAudit? {
+    public func processedEquivalent(in processed: [ProcessedAudit]) -> ProcessedAudit? {
         processed.first(where: { self.isEqual(to: $0) })
     }
 }

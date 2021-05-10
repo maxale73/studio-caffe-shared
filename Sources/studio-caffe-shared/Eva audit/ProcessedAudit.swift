@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct ProcessedAudit: Equatable, Codable {
-    let deviceID: String
-    let progressivoLettura: Int
-    let dataLettura: Date
-    let success: Bool
-    let message: String
+public struct ProcessedAudit: Equatable, Codable {
+    public let deviceID: String
+    public let progressivoLettura: Int
+    public let dataLettura: Date
+    public let success: Bool
+    public let message: String
 }

@@ -119,7 +119,7 @@ public enum EvaValues: Equatable {
     case VA3_03(Double) //valore vendite libere resettato
     case VA3_04 (Int) //numero vendite libere resettato
     
-    func valueDescription() -> (label: String, description: String, valueRepresentation: String, type: EvaValueType) {
+    public func valueDescription() -> (label: String, description: String, valueRepresentation: String, type: EvaValueType) {
         switch self {
             case .ID1_01(let value): return ("ID1_01", "ID dispositivo", value, .info)
             case .ID1_02(let value): return ("ID1_02", "modello dispositivo", value, .info)
@@ -390,61 +390,94 @@ extension Date: ParsedValueType {
 }
 
 public struct ParsedValue<T: ParsedValueType> {
-    var value: T
-    var id: EvaValueIdentifier
+    public var value: T
+    public var id: EvaValueIdentifier
     
-    static var defaultValue: T { T.invalidValue }
-    static func defaultParsedValue(with id: EvaValueIdentifier) -> ParsedValue<T> {
+    public static var defaultValue: T { T.invalidValue }
+    public static func defaultParsedValue(with id: EvaValueIdentifier) -> ParsedValue<T> {
         ParsedValue<T>(value: defaultValue, id: id)
     }
 }
 
 public struct EvaModelValues {
-    var deviceId: String
-    var progressivoLettura: Int
-    var dataLettura: Date
-    var dataLetturaPrecedente: Date
-    var rawReport: String
+    public var deviceId: String
+    public var progressivoLettura: Int
+    public var dataLettura: Date
+    public var dataLetturaPrecedente: Date
+    public var rawReport: String
     
-    var erogazioni: Int
-    var venduto: Double
+    public var erogazioni: Int
+    public var venduto: Double
 }
 
 public struct EvaResumeValues {
-    var erogazioni: Int
-    var venduto: Double
-    var cashBox: Double
+    public init(erogazioni: Int, venduto: Double, cashBox: Double, bilancioTubi: Double, bilancioChiavi: Double, scaricoManualeTubi: Double, caricoManualeTubi: Double, cashOverpay: Double, numeroProve: Int, valoreProve: Double, numeroVenditeLibere: Int, valoreVenditeLibere: Double) {
+        self.erogazioni = erogazioni
+        self.venduto = venduto
+        self.cashBox = cashBox
+        self.bilancioTubi = bilancioTubi
+        self.bilancioChiavi = bilancioChiavi
+        self.scaricoManualeTubi = scaricoManualeTubi
+        self.caricoManualeTubi = caricoManualeTubi
+        self.cashOverpay = cashOverpay
+        self.numeroProve = numeroProve
+        self.valoreProve = valoreProve
+        self.numeroVenditeLibere = numeroVenditeLibere
+        self.valoreVenditeLibere = valoreVenditeLibere
+    }
     
-    var bilancioTubi: Double
-    var bilancioChiavi: Double
-    var scaricoManualeTubi: Double
-    var caricoManualeTubi: Double
+    public var erogazioni: Int
+    public var venduto: Double
+    public var cashBox: Double
     
-    var cashOverpay: Double
-    var numeroProve: Int
-    var valoreProve: Double
-    var numeroVenditeLibere: Int
-    var valoreVenditeLibere: Double
+    public var bilancioTubi: Double
+    public var bilancioChiavi: Double
+    public var scaricoManualeTubi: Double
+    public var caricoManualeTubi: Double
+    
+    public var cashOverpay: Double
+    public var numeroProve: Int
+    public var valoreProve: Double
+    public var numeroVenditeLibere: Int
+    public var valoreVenditeLibere: Double
 }
 
 public struct EvaAdeValues {
-    var cashBox: Double
-    var contato: Double = 0.0
-    var differenza: Double
+    public init(cashBox: Double, contato: Double = 0.0, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
+        self.cashBox = cashBox
+        self.contato = contato
+        self.differenza = differenza
+        self.incassato = incassato
+        self.incassatoVendita = incassatoVendita
+        self.incassatoRicarica = incassatoRicarica
+        self.venduto = venduto
+        self.vendutoContante = vendutoContante
+        self.vendutoNoContante = vendutoNoContante
+        self.caricatoTubiResto = caricatoTubiResto
+        self.resoTubiResto = resoTubiResto
+        self.caricatoManualeTubiResto = caricatoManualeTubiResto
+        self.resoManualeTubiResto = resoManualeTubiResto
+        self.residuoChiavi = residuoChiavi
+        self.cashOverpay = cashOverpay
+    }
     
-    var incassato: Double
-    var incassatoVendita: Double
-    var incassatoRicarica: Double
+    public var cashBox: Double
+    public var contato: Double = 0.0
+    public var differenza: Double
     
-    var venduto: Double
-    var vendutoContante: Double
-    var vendutoNoContante: Double
+    public var incassato: Double
+    public var incassatoVendita: Double
+    public var incassatoRicarica: Double
     
-    var caricatoTubiResto: Double
-    var resoTubiResto: Double
-    var caricatoManualeTubiResto: Double
-    var resoManualeTubiResto: Double
+    public var venduto: Double
+    public var vendutoContante: Double
+    public var vendutoNoContante: Double
     
-    var residuoChiavi: Double
-    var cashOverpay: Double
+    public var caricatoTubiResto: Double
+    public var resoTubiResto: Double
+    public var caricatoManualeTubiResto: Double
+    public var resoManualeTubiResto: Double
+    
+    public var residuoChiavi: Double
+    public var cashOverpay: Double
 }

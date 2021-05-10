@@ -47,20 +47,20 @@ public struct EvaBlock {
     }
 }
 
-public struct Price: Identifiable, Hashable {
+public struct AuditPrice: Identifiable, Hashable {
     public let id: UUID = UUID()
-    var value: Double
-    var vends: Int
+    public var value: Double
+    public var vends: Int
     
     mutating func increaseVends(v: Int) {
         vends += v
     }
 }
 
-public struct Product: Equatable, Hashable {
+public struct AuditProduct: Equatable, Hashable {
     
-    var code: String
-    var prices: [Price]
+    public var code: String
+    public var prices: [AuditPrice]
     
     mutating func increaseVends(v: Int, for price: Double) {
         if var _price = prices.first(where: { $0.value == price }) {
@@ -70,11 +70,11 @@ public struct Product: Equatable, Hashable {
             newPrices.append(_price)
             prices = newPrices
         } else {
-            prices.append(Price(value: price, vends: v))
+            prices.append(AuditPrice(value: price, vends: v))
         }
     }
     
-    public static func == (lhs: Product, rhs: Product) -> Bool {
+    public static func == (lhs: AuditProduct, rhs: AuditProduct) -> Bool {
         lhs.code == rhs.code
     }
 }
