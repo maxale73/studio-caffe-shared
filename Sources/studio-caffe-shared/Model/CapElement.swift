@@ -9,6 +9,14 @@ public struct CapElement: Codable, Identifiable, Hashable {
     public let cap: String?
     public let children: [CapElement]?
     public let parentName: String?
+    
+    public init(parentName: String?, name: String, cap: String?, children: [CapElement]?) {
+        self.id = UUID()
+        self.parentName = parentName
+        self.name = name
+        self.cap = cap
+        self.children = children
+    }
 }
 
 public struct City: Codable {
