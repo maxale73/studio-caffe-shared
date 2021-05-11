@@ -1,6 +1,19 @@
 import Foundation
 
 public struct CustomerDTO: Codable, Identifiable, Hashable {
+    
+    public init(id: UUID, businessName: String, alias: String, partitaIva: String, codiceFiscale: String, cuFatturazione: String, iban: String, referencePerson: String, notes: [String]? = nil) {
+        self.id = id
+        self.businessName = businessName
+        self.alias = alias
+        self.partitaIva = partitaIva
+        self.codiceFiscale = codiceFiscale
+        self.cuFatturazione = cuFatturazione
+        self.iban = iban
+        self.referencePerson = referencePerson
+        self.notes = notes
+    }
+    
     public var id: UUID
     
     public var businessName: String
