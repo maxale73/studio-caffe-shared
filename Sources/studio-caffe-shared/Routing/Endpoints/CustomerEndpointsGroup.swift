@@ -26,7 +26,7 @@ public struct CustomerEndpointsGroup {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
-    public static func save(customer: Body) -> EndpointConfiguration {
+    public static func save(customer: Body? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
         ]
