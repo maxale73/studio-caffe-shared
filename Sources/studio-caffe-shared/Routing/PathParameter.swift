@@ -54,14 +54,12 @@ public struct PathConstructor {
     }
     
     public var serverSidePath: [String] {
-        let arr = [group]
-        let el = elements.map { _el -> String in
+        elements.map { _el -> String in
             if let _ = _el.value {
-                return ":\(_el.name)/"
+                return ":\(_el.name)"
             } else {
-                return "\(_el.name)/"
+                return "\(_el.name)"
             }
         }
-        return arr + el
     }
 }
