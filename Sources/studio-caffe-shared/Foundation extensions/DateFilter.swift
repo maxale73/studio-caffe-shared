@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum DateFilter: String, CaseIterable, Identifiable {
-    var id: String {
+public enum DateFilter: String, CaseIterable, Identifiable {
+    public var id: String {
         rawValue
     }
     
@@ -28,7 +28,7 @@ enum DateFilter: String, CaseIterable, Identifiable {
     case imposta = "imposta"
     case giorno = "giorno"
     
-    var extretemes: (from: Date, to: Date) {
+    public var extretemes: (from: Date, to: Date) {
         var calendar = Calendar(identifier: .gregorian)
         calendar.firstWeekday = 2
         calendar.timeZone = .autoupdatingCurrent

@@ -7,9 +7,9 @@
 
 import Foundation
 
-let IVA: Double = 22.0
+public let IVA: Double = 22.0
 
-extension Double {
+public extension Double {
     func round(to places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
@@ -36,7 +36,7 @@ extension Double {
     }
 }
 
-extension NumberFormatter {
+public extension NumberFormatter {
     
     static func decimalFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()

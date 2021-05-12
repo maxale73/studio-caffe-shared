@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
     static func nowComponents(calendar: Calendar) -> DateComponents {
         calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
     }
@@ -113,7 +113,7 @@ extension Date {
     }
 }
 
-extension Date {
+public extension Date {
     static var defaultStartDate: Date {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .autoupdatingCurrent
