@@ -7,14 +7,14 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
     func commaSeparated() -> [String] {
         self.split(separator: ";").map{String($0)}
     }
 }
 
-extension Array where Element: StringProtocol {
+public extension Array where Element: StringProtocol {
     func toCommaSeparated() -> String {
         if self.isEmpty { return "" }
         var retString = ""
@@ -27,3 +27,5 @@ extension Array where Element: StringProtocol {
         return !retString.isEmpty ? String(retString.dropLast()) : ""
     }
 }
+
+extension String: Body {}
