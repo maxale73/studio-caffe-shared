@@ -29,9 +29,9 @@ public struct CustomerDTO: Codable, Identifiable, Hashable {
 
 public struct CustomerEndpointsGroup {
     
-    private static let group = "customer"
+    public static let group = "customer"
     
-    public static func indexWithFilter(filter: CustomersFilter) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
         ]

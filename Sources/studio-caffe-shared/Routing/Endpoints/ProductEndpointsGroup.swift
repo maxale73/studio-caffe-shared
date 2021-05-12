@@ -31,3 +31,36 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     }
 }
 
+extension ProductDTO: Body {}
+extension ProductsFilter: Body {}
+
+public struct ProductEndpointsGroup {
+    
+    public static let group = "product"
+    
+    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_with_filter", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func save(product: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: product)
+    }
+    
+    public static func fetchPurchases(id: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_purchases", value: nil),
+            PathParameter(name: "id", value: .uuid(id))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: product)
+    }
+}
+

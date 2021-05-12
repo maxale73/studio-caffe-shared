@@ -18,7 +18,7 @@ public struct TagDTO: Codable, Identifiable, Hashable, Equatable {
 
 public struct TagEndpointsGroup {
     
-    private static let group = "tag"
+    public static let group = "tag"
     
     public static func create(tag: String? = nil) -> EndpointConfiguration {
         let parameters = [
