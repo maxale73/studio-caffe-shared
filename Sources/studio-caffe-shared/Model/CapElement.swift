@@ -1,8 +1,5 @@
 import Foundation
 
-import Foundation
-import Combine
-
 public struct CapElement: Codable, Identifiable, Hashable {
     public var id: UUID
     public let name: String
