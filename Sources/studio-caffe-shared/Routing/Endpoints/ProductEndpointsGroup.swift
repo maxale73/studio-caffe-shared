@@ -60,7 +60,7 @@ public struct ProductEndpointsGroup {
             PathParameter(name: "id", value: .uuid(id))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: product)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
 }
 
