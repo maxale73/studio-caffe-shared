@@ -90,7 +90,8 @@ public struct MachineEndpointsGroup {
     
     public static func finfComplete(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "find_complete", value: .uuid(id))
+            PathParameter(name: "find_complete", value: nil),
+            PathParameter(name: "id", value: .uuid(id))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
