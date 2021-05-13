@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Massimo Di Leonardo on 20/06/2020.
-//
-
 import Foundation
 
 public enum InstallationType: String, Codable, Identifiable, CaseIterable, RawRepresentable {
