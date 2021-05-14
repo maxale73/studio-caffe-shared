@@ -103,7 +103,7 @@ public struct MachineEndpointsGroup {
             PathParameter(name: "update_history", value: .bool(updateHistory))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: machineBySP)
     }
     
     public static func finfComplete(id: UUID? = nil) -> EndpointConfiguration {
