@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType {
+public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Body {
 
     public var id: UUID
     public var adeID: String
@@ -39,5 +39,57 @@ public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType {
                                                         coinnAcceptor: .none,
                                                         billAcceptor: .none,
                                                         appEnabled: false))
+    }
+}
+
+public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
+    public init(id: UUID, adeID: String, model: AdeDeviceModel) {
+        self.id = id
+        self.adeID = adeID
+        self.model = model
+    }
+    
+    public let id: UUID
+    public let adeID: String
+    public let model: AdeDeviceModel
+}
+
+public struct AdeDeviceEndpointsGroup {
+    
+    public static let group = "adeDevice"
+    
+    public static func uninstalled() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "uninstalled", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func mastersByAddress(addressID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "masters_by_address", value: nil),
+            PathParameter(name: "address_id", value: .uuid(addressID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func save(adeDevice: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: adeDevice)
+    }
+    
+    public static func uninstall(deviceID: UUID? = nil, machineID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "uninstall", value: nil),
+            PathParameter(name: "device_id", value: .uuid(deviceID)),
+            PathParameter(name: "machine_id", value: .uuid(machineID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
 }
