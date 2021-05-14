@@ -68,6 +68,38 @@ public struct FilteredMachineDTO: Equatable, Identifiable, Hashable, Codable {
     }
 }
 
+public struct MachineBySP: Codable, Hashable, Identifiable {
+    public init(id: UUID, internalID: Int, factoryID: String, notes: [String]? = nil, installation: InstallationType, model: MachineModelDTO, adeDevice: AdeDeviceDTO? = nil) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.notes = notes
+        self.installation = installation
+        self.model = model
+        self.adeDevice = adeDevice
+    }
+    
+    
+    public var id: UUID
+    public var internalID: Int
+    public var factoryID: String
+    public var notes: [String]?
+    public var installation: InstallationType
+    
+    public var model: MachineModelDTO
+    public var adeDevice: AdeDeviceDTO?
+    
+    public static func == (lhs: MachineBySP, rhs: MachineBySP) -> Bool {
+        lhs.id == rhs.id
+            && lhs.internalID == rhs.internalID
+            && lhs.factoryID == rhs.factoryID
+            && lhs.notes == rhs.notes
+            && lhs.installation == rhs.installation
+            && lhs.model == rhs.model
+            && lhs.adeDevice == rhs.adeDevice
+    }
+}
+
 public struct MachineEndpointsGroup {
     
     public static let group = "machine"
