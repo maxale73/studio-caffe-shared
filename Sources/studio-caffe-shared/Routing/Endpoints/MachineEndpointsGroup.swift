@@ -88,6 +88,24 @@ public struct MachineEndpointsGroup {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func indexUninstalled() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_uninstalled", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func saveBySP(machineBySP: Body? = nil, sellingPointID: UUID? = nil, updateHistory: Bool? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save_by_sp", value: nil),
+            PathParameter(name: "selling_point_id", value: .uuid(sellingPointID)),
+            PathParameter(name: "update_history", value: .bool(updateHistory))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post)
+    }
+    
     public static func finfComplete(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "find_complete", value: nil),
@@ -95,6 +113,14 @@ public struct MachineEndpointsGroup {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func findIn(ids: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "find_in", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: ids)
     }
     
     public static func uninstall(id: UUID? = nil) -> EndpointConfiguration {
