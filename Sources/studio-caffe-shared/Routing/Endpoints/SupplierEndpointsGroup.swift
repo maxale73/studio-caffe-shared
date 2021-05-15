@@ -13,9 +13,9 @@ public struct SupplierName: Codable, Identifiable, Equatable, Hashable {
 
 extension SuppliersFilter: Body {}
 
-public struct SupplierEndpointsGroup {
+public struct SupplierEndpointsGroup: EndpointGroupType {
     
-    public static let group = "supplier"
+    public static var group = "supplier"
     
     public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
         let parameters = [

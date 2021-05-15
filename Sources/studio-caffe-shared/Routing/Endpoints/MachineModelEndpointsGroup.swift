@@ -35,9 +35,9 @@ public extension MachineModelDTO {
     static let emptyModel: MachineModelDTO = MachineModelDTO(id: UUID(), maker: "", model: "", type: .caldo)
 }
 
-public struct MachineModelEndpointsGroup {
+public struct MachineModelEndpointsGroup: EndpointGroupType {
     
-    public static let group = "machineModel"
+    public static var group = "machineModel"
     
     public static func save(machineModel: Body? = nil) -> EndpointConfiguration {
         let parameters = [

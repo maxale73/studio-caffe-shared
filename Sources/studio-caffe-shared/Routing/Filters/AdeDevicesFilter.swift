@@ -23,4 +23,8 @@ public struct AdeDeviceFilters: Equatable, Codable, Identifiable,Body {
     public static var emptyFilter: AdeDeviceFilters {
         AdeDeviceFilters(id: defaultFilterID, installationStateFilters: [], modelFilters: [], qrCodeFilter: "", textFilter: "")
     }
+    
+    public static func qrCodeFilter(qrCode: String) -> AdeDeviceFilters {
+        AdeDeviceFilters(id: defaultFilterID, installationStateFilters: [], modelFilters: [], qrCodeFilter: qrCode, textFilter: "")
+    }
 }

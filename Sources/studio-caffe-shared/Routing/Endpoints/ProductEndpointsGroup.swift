@@ -54,9 +54,9 @@ extension ProductDTO: Body {}
 extension ProductsFilter: Body {}
 extension ProductPurchase: Body {}
 
-public struct ProductEndpointsGroup {
+public struct ProductEndpointsGroup: : EndpointGroupType {
     
-    public static let group = "product"
+    public static var group = "product"
     
     public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
         let parameters = [

@@ -54,9 +54,9 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
     public let model: AdeDeviceModel
 }
 
-public struct AdeDeviceEndpointsGroup {
+public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
-    public static let group = "adeDevice"
+    public static var group = "adeDevice"
     
     public static func uninstalled() -> EndpointConfiguration {
         let parameters = [

@@ -83,9 +83,9 @@ public extension AdeDeviceConfigurationDTO {
     }
 }
 
-public struct AdeDeviceConfigurationEndpointsGroup {
+public struct AdeDeviceConfigurationEndpointsGroup: EndpointGroupType {
     
-    public static let group = "adeDeviceConfiguration"
+    public static var group = "adeDeviceConfiguration"
     
     public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
         let parameters = [

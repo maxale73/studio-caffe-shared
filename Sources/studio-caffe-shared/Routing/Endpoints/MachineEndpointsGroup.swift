@@ -100,9 +100,9 @@ public struct MachineBySP: Codable, Hashable, Identifiable {
     }
 }
 
-public struct MachineEndpointsGroup {
+public struct MachineEndpointsGroup: EndpointGroupType {
     
-    public static let group = "machine"
+    public static let var = "machine"
     
     public static func save(machine: Body? = nil) -> EndpointConfiguration {
         let parameters = [
@@ -162,14 +162,5 @@ public struct MachineEndpointsGroup {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post)
-    }
-    
-    public static func indexByCustomer(customerID: UUID? = nil) -> EndpointConfiguration {
-        let parameters = [
-            PathParameter(name: "index_by_customer", value: nil),
-            PathParameter(name: "customer_id", value: .uuid(customerID))
-        ]
-        let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
 }
