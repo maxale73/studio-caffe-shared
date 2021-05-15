@@ -2,7 +2,7 @@ import Foundation
 
 public struct AuditEndpointsGroup: EndpointGroupType {
     
-    private static var group = "evaReport"
+    public static var group = "evaReport"
     
     public static func reports_reportsByMachine(machineID: Int? = nil, from: Date? = nil, to: Date? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "reports_by_machine", value: nil),

@@ -102,7 +102,7 @@ public struct MachineBySP: Codable, Hashable, Identifiable {
 
 public struct MachineEndpointsGroup: EndpointGroupType {
     
-    public static let var = "machine"
+    public static var group = "machine"
     
     public static func save(machine: Body? = nil) -> EndpointConfiguration {
         let parameters = [

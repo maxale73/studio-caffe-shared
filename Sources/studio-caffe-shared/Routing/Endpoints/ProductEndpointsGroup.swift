@@ -54,7 +54,7 @@ extension ProductDTO: Body {}
 extension ProductsFilter: Body {}
 extension ProductPurchase: Body {}
 
-public struct ProductEndpointsGroup: : EndpointGroupType {
+public struct ProductEndpointsGroup: EndpointGroupType {
     
     public static var group = "product"
     
