@@ -92,4 +92,12 @@ public struct AdeDeviceEndpointsGroup {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
+    
+    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_with_filter", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
 }
