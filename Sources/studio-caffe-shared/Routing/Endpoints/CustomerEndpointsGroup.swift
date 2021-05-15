@@ -46,4 +46,22 @@ public struct CustomerEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: customer)
     }
+    
+    public static func findBySP(customerID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "find_by_sp", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func findBySPWithSellingPoint(sellingPointID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "find_by_sp_with_sp", value: nil),
+            PathParameter(name: "selling_point_id", value: .uuid(sellingPointID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
