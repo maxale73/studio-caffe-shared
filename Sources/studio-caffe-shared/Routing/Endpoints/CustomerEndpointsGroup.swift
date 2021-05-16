@@ -28,6 +28,13 @@ public struct CustomerDTO: Codable, Identifiable, Hashable {
 }
 
 public struct CustomerName: Codable, Identifiable, Equatable, Hashable {
+    
+    public init(id: UUID, businessName: String, alias: String? = nil) {
+        self.id = id
+        self.businessName = businessName
+        self.alias = alias
+    }
+    
     public var id: UUID
     public var businessName: String
     public var alias: String?
