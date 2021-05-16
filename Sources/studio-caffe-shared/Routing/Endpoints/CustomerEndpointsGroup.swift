@@ -27,6 +27,12 @@ public struct CustomerDTO: Codable, Identifiable, Hashable {
     
 }
 
+public struct CustomerName: Codable, Identifiable, Equatable, Hashable {
+    public var id: UUID
+    public var businessName: String
+    public var alias: String?
+}
+
 public struct CustomerEndpointsGroup: EndpointGroupType {
     
     public static var group = "customer"
@@ -60,6 +66,14 @@ public struct CustomerEndpointsGroup: EndpointGroupType {
         let parameters = [
             PathParameter(name: "find_by_sp_with_sp", value: nil),
             PathParameter(name: "selling_point_id", value: .uuid(sellingPointID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func installedMachines() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "installed_machines", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
