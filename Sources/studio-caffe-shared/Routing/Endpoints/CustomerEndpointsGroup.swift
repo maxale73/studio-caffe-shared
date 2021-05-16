@@ -85,4 +85,13 @@ public struct CustomerEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func findComplete(customerID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "find_complete", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
