@@ -100,4 +100,23 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
+    
+    public static func findComplete(deviceID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "find_complete", value: nil),
+            PathParameter(name: "address_id", value: .uuid(deviceID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func tubesStatistics(fromDate: Date? = nil, toDate: Date? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "tubes_statistics_by_device", value: nil),
+            PathParameter(name: "from_date", value: .date(fromDate)),
+            PathParameter(name: "to_date", value: .date(toDate))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
