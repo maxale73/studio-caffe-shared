@@ -104,7 +104,7 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     public static func findComplete(deviceID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "find_complete", value: nil),
-            PathParameter(name: "address_id", value: .uuid(deviceID))
+            PathParameter(name: "device_id", value: .uuid(deviceID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
