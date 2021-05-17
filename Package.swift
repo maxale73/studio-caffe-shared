@@ -7,7 +7,7 @@ let package = Package(
     name: "studio-caffe-shared",
     platforms: [
        .macOS(.v10_15),
-        .iOS(.v14)
+        .iOS(SupportedPlatform.IOSVersion.v14)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
