@@ -54,6 +54,31 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
     public let model: AdeDeviceModel
 }
 
+public struct FetchedDevice: Content {
+    
+    public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfiguration, machineModel: MachineModel? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil) {
+        self.id = id
+        self.adeID = adeID
+        self.qrCode = qrCode
+        self.model = model
+        self.configuration = configuration
+        self.machineModel = machineModel
+        self.machineID = machineID
+        self.customer = customer
+        self.site = site
+    }
+    
+    public var id: UUID
+    public var adeID: String
+    public var qrCode: String
+    public var model: AdeDeviceModel
+    public var configuration: AdeDeviceConfiguration
+    public var machineModel: MachineModel?
+    public var machineID: Int?
+    public var customer: String?
+    public var site: String?
+}
+
 public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
     public static var group = "adeDevice"
@@ -118,5 +143,13 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func fetch(filter: Body? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
 }
