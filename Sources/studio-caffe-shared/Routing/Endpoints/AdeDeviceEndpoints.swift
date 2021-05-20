@@ -54,7 +54,7 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
     public let model: AdeDeviceModel
 }
 
-public struct FetchedDevice: Codable {
+public struct FetchedDevice: Codable, Equatable {
     
     public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfigurationDTO, machineModel: MachineModelDTO? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil) {
         self.id = id
@@ -77,6 +77,10 @@ public struct FetchedDevice: Codable {
     public var machineID: Int?
     public var customer: String?
     public var site: String?
+    
+    public static func == (lhs: FetchedDevice, rhs: FetchedDevice) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 public struct AdeDeviceEndpointsGroup: EndpointGroupType {
