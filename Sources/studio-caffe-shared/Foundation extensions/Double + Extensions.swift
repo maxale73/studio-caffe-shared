@@ -19,8 +19,16 @@ public extension Double {
         NumberFormatter.localizedString(from: NSNumber(value: self), number: .currencyAccounting)
     }
     
+    func fourDigitsCurrencyFormatted() -> String {
+        NumberFormatter.fourDigitsCurrencyFormatter().string(from: NSNumber(value: self))!
+    }
+    
     func decimalFormatted() -> String {
         NumberFormatter.localizedString(from: NSNumber(value: self), number: .decimal)
+    }
+    
+    func percentFormatted() -> String {
+        NumberFormatter.localizedString(from: NSNumber(value: self), number: .percent)
     }
     
     func iva() -> Double {
@@ -47,6 +55,13 @@ public extension NumberFormatter {
     static func integerFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
+        return formatter
+    }
+    
+    static func fourDigitsCurrencyFormatter() -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currencyAccounting
+        formatter.minimumFractionDigits = 4
         return formatter
     }
 }
