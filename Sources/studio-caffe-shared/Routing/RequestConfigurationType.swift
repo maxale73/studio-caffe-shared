@@ -17,7 +17,7 @@ public protocol RequestConfigurationType {
     var clientRoute: String { get }
     var allowsCaching: Bool { get }
     var httpMethod: HTTPMethod { get set }
-    var body: Body? { get set }
+    var body: RequestBody? { get set }
 }
 
 public extension RequestConfigurationType {

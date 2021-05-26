@@ -50,15 +50,15 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
     public var supplierName: String
 }
 
-extension ProductDTO: Body {}
-extension ProductsFilter: Body {}
-extension ProductPurchase: Body {}
+extension ProductDTO: RequestBody {}
+extension ProductsFilter: RequestBody {}
+extension ProductPurchase: RequestBody {}
 
 public struct ProductEndpointsGroup: EndpointGroupType {
     
     public static var group = "product"
     
-    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
         ]
@@ -66,7 +66,7 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
-    public static func save(product: Body? = nil) -> EndpointConfiguration {
+    public static func save(product: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
         ]

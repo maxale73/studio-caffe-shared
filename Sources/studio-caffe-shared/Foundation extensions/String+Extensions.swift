@@ -28,4 +28,4 @@ public extension Array where Element: StringProtocol {
     }
 }
 
-extension String: Body {}
+extension String: RequestBody {}

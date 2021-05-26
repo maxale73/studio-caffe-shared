@@ -2,7 +2,7 @@ import Foundation
 
 public let defaultFilterID: UUID = UUID()
 
-public struct AdeDeviceFilters: Equatable, Codable, Identifiable,Body {
+public struct AdeDeviceFilters: Equatable, Codable, Identifiable,RequestBody {
     public var id: UUID
     public var installationStateFilters: [DeviceInstallationState]
     public var modelFilters: [AdeDeviceModel]

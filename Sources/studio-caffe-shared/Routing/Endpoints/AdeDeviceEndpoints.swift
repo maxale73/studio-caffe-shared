@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Body {
+public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, RequestBody {
 
     public var id: UUID
     public var adeID: String
@@ -104,7 +104,7 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func save(adeDevice: Body? = nil) -> EndpointConfiguration {
+    public static func save(adeDevice: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
         ]
@@ -122,7 +122,7 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
     
-    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
         ]
@@ -149,7 +149,7 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func fetch(filter: Body? = nil) -> EndpointConfiguration {
+    public static func fetch(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "fetch", value: nil),
         ]

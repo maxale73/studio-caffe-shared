@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, Body {
+public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBody {
     
     public var id: UUID
     public var internalID: Int = 1001
@@ -104,7 +104,7 @@ public struct MachineEndpointsGroup: EndpointGroupType {
     
     public static var group = "machine"
     
-    public static func save(machine: Body? = nil) -> EndpointConfiguration {
+    public static func save(machine: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil)
         ]
@@ -112,7 +112,7 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: machine)
     }
     
-    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil)
         ]
@@ -128,7 +128,7 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func saveBySP(machineBySP: Body? = nil, sellingPointID: UUID? = nil, updateHistory: Bool? = nil) -> EndpointConfiguration {
+    public static func saveBySP(machineBySP: RequestBody? = nil, sellingPointID: UUID? = nil, updateHistory: Bool? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save_by_sp", value: nil),
             PathParameter(name: "selling_point_id", value: .uuid(sellingPointID)),
@@ -147,7 +147,7 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func findIn(ids: Body? = nil) -> EndpointConfiguration {
+    public static func findIn(ids: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "find_in", value: nil)
         ]

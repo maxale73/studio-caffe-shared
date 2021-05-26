@@ -39,7 +39,7 @@ public struct MachineModelEndpointsGroup: EndpointGroupType {
     
     public static var group = "machineModel"
     
-    public static func save(machineModel: Body? = nil) -> EndpointConfiguration {
+    public static func save(machineModel: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil)
         ]

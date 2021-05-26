@@ -7,9 +7,9 @@ public struct EndpointConfiguration: RequestConfigurationType {
     public var serverRoute: [String]
     public var allowsCaching: Bool
     public var httpMethod: HTTPMethod
-    public var body: Body?
+    public var body: RequestBody?
     
-    init(pathConstructor: PathConstructor, method: HTTPMethod, requiresToken: Bool = true, allowsCaching: Bool = false, body: Body? = nil) {
+    init(pathConstructor: PathConstructor, method: HTTPMethod, requiresToken: Bool = true, allowsCaching: Bool = false, body: RequestBody? = nil) {
         self.group = pathConstructor.group
         self.clientRoute = pathConstructor.clientSidePath
         self.serverRoute = pathConstructor.serverSidePath

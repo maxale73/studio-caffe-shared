@@ -4,7 +4,7 @@ public struct PhoneNumberEndpointsGroup: EndpointGroupType {
     
     public static var group = "phoneNumber"
     
-    public static func save(phoneNumber: Body? = nil) -> EndpointConfiguration {
+    public static func save(phoneNumber: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil)
         ]

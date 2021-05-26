@@ -11,13 +11,13 @@ public struct SupplierName: Codable, Identifiable, Equatable, Hashable {
     public var businessName: String
 }
 
-extension SuppliersFilter: Body {}
+extension SuppliersFilter: RequestBody {}
 
 public struct SupplierEndpointsGroup: EndpointGroupType {
     
     public static var group = "supplier"
     
-    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
         ]
@@ -25,7 +25,7 @@ public struct SupplierEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
-    public static func save(supplier: Body? = nil) -> EndpointConfiguration {
+    public static func save(supplier: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
         ]

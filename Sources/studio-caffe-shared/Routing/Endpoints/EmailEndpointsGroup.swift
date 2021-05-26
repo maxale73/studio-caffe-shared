@@ -4,7 +4,7 @@ public struct EmailEndpointsGroup: EndpointGroupType {
     
     public static var group = "email"
     
-    public static func save(email: Body? = nil) -> EndpointConfiguration {
+    public static func save(email: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil)
         ]

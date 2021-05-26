@@ -4,7 +4,7 @@ public struct AddressEndpointsGroup: EndpointGroupType {
     
     public static var group = "address"
     
-    public static func save(address: Body? = nil) -> EndpointConfiguration {
+    public static func save(address: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil)
         ]

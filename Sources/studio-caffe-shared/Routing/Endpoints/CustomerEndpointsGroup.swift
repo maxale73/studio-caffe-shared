@@ -44,7 +44,7 @@ public struct CustomerEndpointsGroup: EndpointGroupType {
     
     public static var group = "customer"
     
-    public static func indexWithFilter(filter: Body? = nil) -> EndpointConfiguration {
+    public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
         ]
@@ -52,7 +52,7 @@ public struct CustomerEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
-    public static func save(customer: Body? = nil) -> EndpointConfiguration {
+    public static func save(customer: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
         ]
