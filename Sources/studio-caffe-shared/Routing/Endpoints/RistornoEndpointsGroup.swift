@@ -1,12 +1,28 @@
 import Foundation
 
 public struct AuditConsumption: Codable, Identifiable, Equatable {
+    public init(id: UUID, dataRilevazione: Date, erogazioni: Int) {
+        self.id = id
+        self.dataRilevazione = dataRilevazione
+        self.erogazioni = erogazioni
+    }
+    
     public var id: UUID
     public var dataRilevazione: Date
     public var erogazioni: Int
 }
 
 public struct AuditsRistorno: Codable, Identifiable, Equatable {
+    public init(id: UUID, cliente: String, importoUnitario: Double, frequenza: FrequenzaRistorno, dataUltimoPagamento: Date, dataProssimoPagamento: Date, evaReports: [AuditConsumption]) {
+        self.id = id
+        self.cliente = cliente
+        self.importoUnitario = importoUnitario
+        self.frequenza = frequenza
+        self.dataUltimoPagamento = dataUltimoPagamento
+        self.dataProssimoPagamento = dataProssimoPagamento
+        self.evaReports = evaReports
+    }
+    
     public var id: UUID
     public var cliente: String
     public var importoUnitario: Double
