@@ -18,6 +18,7 @@ public protocol RequestConfigurationType {
     var allowsCaching: Bool { get }
     var httpMethod: HTTPMethod { get set }
     var body: RequestBody? { get set }
+    var loginString: String? { get set }
 }
 
 public extension RequestConfigurationType {

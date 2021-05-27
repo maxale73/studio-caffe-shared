@@ -50,7 +50,11 @@ public struct PathConstructor {
                 return "\(partial)\(element.name)/"
             }
         }
-        return "\(group)/\(final)"
+        if group.isEmpty {
+            return final
+        } else {
+            return "\(group)/\(final)"
+        }
     }
     
     public var serverSidePath: [String] {
