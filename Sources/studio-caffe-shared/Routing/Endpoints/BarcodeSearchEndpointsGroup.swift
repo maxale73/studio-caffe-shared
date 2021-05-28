@@ -9,6 +9,6 @@ public struct BarcodeEndpointsGroup: EndpointGroupType {
             PathParameter(name: "search", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: searchTerm)
     }
 }
