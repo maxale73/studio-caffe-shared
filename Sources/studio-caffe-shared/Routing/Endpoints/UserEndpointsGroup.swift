@@ -32,6 +32,14 @@ public struct UserEndpointsGroup: EndpointGroupType {
     
     public static var group = "user"
     
+    public static func me() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "me", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
     public static func index() -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index", value: nil)
