@@ -18,9 +18,12 @@ public struct UserTokenEndpointsGroup: EndpointGroupType {
     
     public static var group = ""
     
-    public static func login(email: String, password: String) -> EndpointConfiguration {
-        let loginData = ("\(email):\(password)").data(using: .utf8)!
-        let base64LoginString = loginData.base64EncodedString(options: .lineLength64Characters)
+    public static func login(email: String? = nil, password: String? = nil) -> EndpointConfiguration {
+        var base64LoginString: String? = nil
+        if let _email = email, let _password = password {
+            let loginData = ("\(_email):\(_password)").data(using: .utf8)!
+            base64LoginString = loginData.base64EncodedString(options: .lineLength64Characters)
+        }
         let parameters = [
             PathParameter(name: "st_login", value: nil)
         ]
