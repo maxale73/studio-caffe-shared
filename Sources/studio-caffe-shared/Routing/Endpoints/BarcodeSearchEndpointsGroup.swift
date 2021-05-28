@@ -4,12 +4,11 @@ public struct BarcodeEndpointsGroup: EndpointGroupType {
     
     public static var group = "barcode"
     
-    public static func search(searchTerm: String? = nil) -> EndpointConfiguration {
+    public static func search(searchTerm: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "search", value: nil),
-            PathParameter(name: "search_term", value: .string(searchTerm))
+            PathParameter(name: "search", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
 }
