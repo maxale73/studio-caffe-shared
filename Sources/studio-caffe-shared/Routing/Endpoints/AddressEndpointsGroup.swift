@@ -1,5 +1,42 @@
 import Foundation
 
+public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBody {
+    public var id: UUID
+    
+    public var latitude: Double?
+    public var longitude: Double?
+    public var address1: String
+    public var address2: String?
+    public var city: String
+    public var province: String
+    public var postalCode: String
+    public var isLegalAddress: Bool
+    public var sellingPoints: [SellingPointBySP]
+    
+    public init(id: UUID, latitude: Double? = nil, longitude: Double? = nil, address1: String, address2: String? = nil, city: String, province: String, postalCode: String, isLegalAddress: Bool, sellingPoints: [SellingPointBySP]) {
+        self.id = id
+        self.address1 = address1
+        self.address2 = address2
+        self.city = city
+        self.province = province
+        self.postalCode = postalCode
+        self.isLegalAddress = isLegalAddress
+        self.sellingPoints = sellingPoints
+    }
+    
+    public static func == (lhs: AddressBySP, rhs: AddressBySP) -> Bool {
+        return
+            lhs.id == rhs.id
+            && lhs.address1 == rhs.address1
+            && lhs.address2 == rhs.address2
+            && lhs.city == rhs.city
+            && lhs.province == rhs.province
+            && lhs.postalCode == rhs.postalCode
+            && lhs.isLegalAddress == rhs.isLegalAddress
+            && lhs.sellingPoints == rhs.sellingPoints
+    }
+}
+
 public struct AddressEndpointsGroup: EndpointGroupType {
     
     public static var group = "address"

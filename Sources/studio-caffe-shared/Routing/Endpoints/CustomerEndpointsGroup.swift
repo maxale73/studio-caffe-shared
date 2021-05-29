@@ -1,5 +1,34 @@
 import Foundation
 
+public struct CustomerBySP: Codable, Identifiable, Hashable, Equatable, RequestBody {
+    public var id: UUID
+    
+    public var businessName: String
+    public var alias: String?
+    
+    public var addresses: [AddressBySP]
+    
+    public init(id: UUID,
+         businessName: String,
+         alias: String?,
+         addresses: [AddressBySP] = []) {
+        
+        self.id = id
+        self.businessName = businessName
+        self.alias = alias
+        
+        self.addresses = addresses
+    }
+    
+    public static func == (lhs: CustomerBySP, rhs: CustomerBySP) -> Bool {
+        return
+            lhs.id == rhs.id
+            && lhs.businessName == rhs.businessName
+            && lhs.alias == rhs.alias
+            && lhs.addresses == rhs.addresses
+    }
+}
+
 public struct CustomerDTO: Codable, Identifiable, Hashable {
     
     public init(id: UUID, businessName: String, alias: String, partitaIva: String, codiceFiscale: String, cuFatturazione: String, iban: String, referencePerson: String, notes: [String]? = nil) {
