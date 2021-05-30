@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EvaAuditDTO: Identifiable, Hashable, Codable {
+public struct EvaReportDTO: Identifiable, Hashable, Codable {
     public init(id: UUID, deviceId: String, machineId: Int, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date, rawReport: String, erogazioni: Int, venduto: Double, sellingPoint: IDType) {
         self.id = id
         self.deviceId = deviceId

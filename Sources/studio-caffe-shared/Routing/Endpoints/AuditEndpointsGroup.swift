@@ -26,7 +26,7 @@ public struct ReportAroundDate:Codable, Equatable, Identifiable {
 }
 
 public struct ReportsBySellingPoint: Identifiable, Equatable, Codable {
-    public init(customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, reports: [EvaAuditDTO]) {
+    public init(customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, reports: [EvaReportDTO]) {
         self.customer = customer
         self.sellingPoint = sellingPoint
         self.site = site
@@ -45,12 +45,12 @@ public struct ReportsBySellingPoint: Identifiable, Equatable, Codable {
     public var machineID: Int
     public var machineModel: String
     public var machineType: String
-    public var reports: [EvaAuditDTO]
+    public var reports: [EvaReportDTO]
 }
 
 public struct ReportsByCustomer: Codable, Identifiable, Equatable {
     
-    public init(id: UUID, customerName: String, reports: [EvaAuditDTO]) {
+    public init(id: UUID, customerName: String, reports: [EvaReportDTO]) {
         self.id = id
         self.customerName = customerName
         self.reports = reports
@@ -58,7 +58,7 @@ public struct ReportsByCustomer: Codable, Identifiable, Equatable {
     
     public var id: UUID
     public var customerName: String
-    public var reports: [EvaAuditDTO]
+    public var reports: [EvaReportDTO]
 }
 
 public struct ReportByRistorno: Codable, Identifiable, Equatable {
