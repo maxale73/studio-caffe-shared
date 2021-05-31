@@ -1,7 +1,8 @@
 import Foundation
 
-public struct AuditValuesDTO: ResettedAuditValuesType {
+public struct AuditValuesDTO: ResettedAuditValuesType, Identifiable {
     
+    public var id: UUID
     public var importoVendutoCash_CA2_03: Double?
     public var numeroVenditeCash_CA2_04: Int?
 

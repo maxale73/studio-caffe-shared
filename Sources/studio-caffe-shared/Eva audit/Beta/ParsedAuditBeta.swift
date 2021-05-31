@@ -1067,6 +1067,64 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
         
         ""
     }
+    
+    public func auditValues() -> AuditValuesDTO {
+        
+        AuditValuesDTO(
+            
+            id: UUID(),
+            importoVendutoCash_CA2_03: importoVendutoCash_CA2_03,
+            numeroVenditeCash_CA2_04: numeroVenditeCash_CA2_04,
+
+            totaleCashInserito_CA3_01: totaleCashInserito_CA3_01,
+            moneteInCassetta_CA3_02: moneteInCassetta_CA3_02,
+            moneteVersoTubi_CA3_03: moneteVersoTubi_CA3_03,
+            banconoteInCassetta_CA3_04: banconoteInCassetta_CA3_04,
+            banconoteInCassetta_CA3_09: banconoteInCassetta_CA3_09,
+
+            totaleScaricoTubi_CA4_01: totaleScaricoTubi_CA4_01,
+            scaricoTubiSoloManuale_CA4_02: scaricoTubiSoloManuale_CA4_02,
+            cashOverpay_CA8_01: cashOverpay_CA8_01,
+            caricoManualeTubi_CA10_01: caricoManualeTubi_CA10_01,
+
+            valoreTotaleTubi_CA15_01: valoreTotaleTubi_CA15_01,
+
+            numeroVendite_LA1_04: numeroVendite_LA1_04,
+
+            importoVendutoCashless1_DA2_03: importoVendutoCashless1_DA2_03,
+            erogazioniCashless1_DA2_04: erogazioniCashless1_DA2_04,
+
+            importoPrelevatoDaCashless1_DA3_02: importoPrelevatoDaCashless1_DA3_02,
+            importoAccreditatoSuCashless1_DA4_02: importoAccreditatoSuCashless1_DA4_02,
+
+            importoScontiCashless1_DA5_01: importoScontiCashless1_DA5_01,
+            erogazioniScontateCashless1_DA5_02: erogazioniScontateCashless1_DA5_02,
+
+            bonusAccreditatoSuCashless1_DA6_02: bonusAccreditatoSuCashless1_DA6_02,
+
+            importoVendutoCashless2_DB2_03: importoVendutoCashless2_DB2_03,
+            erogazioniCashless2_DB2_04: erogazioniCashless2_DB2_04,
+
+            importoPrelevatoDaCashless2_DB3_02: importoPrelevatoDaCashless2_DB3_02,
+            importoAccreditatoSuCashless2_DB4_02: importoAccreditatoSuCashless2_DB4_02,
+
+            importoScontiCashless2_DB5_01: importoScontiCashless2_DB5_01,
+            erogazioniScontateCashless2_DB5_02: erogazioniScontateCashless2_DB5_02,
+
+            bonusAccreditatoSuCashless2_DB6_02: bonusAccreditatoSuCashless2_DB6_02,
+
+            venduto_VA1_03: venduto_VA1_03,
+            erogazioni_VA1_04: erogazioni_VA1_04,
+
+            valoreScontato_VA1_07: valoreScontato_VA1_07,
+            erogazioniScontate_VA1_08: erogazioniScontate_VA1_08,
+
+            valoreProve_VA2_03: valoreProve_VA2_03,
+            erogazioniProva_VA2_04: erogazioniProva_VA2_04,
+
+            valoreErogazioniGratuite_VA3_03: valoreErogazioniGratuite_VA3_03,
+            erogazioniGratuite_VA3_04: erogazioniGratuite_VA3_04)
+    }
 }
 
 extension ParsedAuditBeta: Equatable {
