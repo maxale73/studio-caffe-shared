@@ -64,6 +64,7 @@ public protocol ResettedAuditValuesType {
     var residuoChiavi: Double { get }
     
     func rilevataRendiresto() -> Bool
+    func adeValues() -> EvaAdeValues
 }
 
 public extension ResettedAuditValuesType {
@@ -133,5 +134,9 @@ public extension ResettedAuditValuesType {
             || totaleScaricoTubi_CA4_01.fbValue > 0.0
             || scaricoTubiSoloManuale_CA4_02.fbValue > 0
             || caricoManualeTubi_CA10_01.fbValue > 0
+    }
+    
+    func adeValues() -> EvaAdeValues {
+        EvaAdeValues(cashBox: cashBox, differenza: 0.0, incassato: totaleCashInserito_CA3_01.fbValue, incassatoVendita: incassatoVendita, incassatoRicarica: incassatoRicarica, venduto: venduto, vendutoContante: importoVendutoCash_CA2_03.fbValue, vendutoNoContante: vendutoNoContante, caricatoTubiResto: moneteVersoTubi_CA3_03.fbValue, resoTubiResto: totaleScaricoTubi_CA4_01.fbValue, caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fbValue, resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fbValue, residuoChiavi: residuoChiavi, cashOverpay: cashOverpay_CA8_01.fbValue)
     }
 }
