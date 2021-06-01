@@ -158,6 +158,11 @@ public struct ParsedAuditToSave: Codable, RequestBody {
 }
 
 public struct CorrispettiviPerData: Codable {
+    public init(date: Date, values: EvaAdeValues) {
+        self.date = date
+        self.values = values
+    }
+    
     var date: Date
     var values: EvaAdeValues
 }
