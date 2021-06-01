@@ -157,14 +157,19 @@ public struct ParsedAuditToSave: Codable, RequestBody {
     }
 }
 
-public struct CorrispettiviPerData: Codable {
+public struct CorrispettiviPerData: Codable, Equatable {
     public init(date: Date, values: EvaAdeValues) {
         self.date = date
         self.values = values
     }
     
-    var date: Date
-    var values: EvaAdeValues
+    public var date: Date
+    public var values: EvaAdeValues
+    
+    public static func == (lhs: CorrispettiviPerData, rhs: CorrispettiviPerData) -> Bool {
+        return lhs.date == rhs.date &&
+            lhs.values == rhs.values
+    }
 }
 
 
@@ -241,7 +246,7 @@ public struct AuditEndpointsGroup: EndpointGroupType {
     }
     
     public static func corrispettivi(filter: RequestBody? = nil) -> EndpointConfiguration {
-        let parameters = [ PathParameter(name: "index", value: nil) ]
+        let parameters = [ PathParameter(name: "corrispettivi", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }

@@ -442,7 +442,7 @@ public struct EvaResumeValues {
     public var valoreVenditeLibere: Double
 }
 
-public struct EvaAdeValues: Codable {
+public struct EvaAdeValues: Codable, Equatable {
     public init(cashBox: Double, contato: Double = 0.0, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
         self.cashBox = cashBox
         self.contato = contato
@@ -484,5 +484,23 @@ public struct EvaAdeValues: Codable {
     public mutating func updateTally(tally: Double) {
         self.contato = tally
         self.differenza = tally - cashBox
+    }
+    
+    public static func == (lhs: EvaAdeValues, rhs: EvaAdeValues) -> Bool {
+        return lhs.cashBox == rhs.cashBox &&
+            lhs.contato == rhs.contato &&
+            lhs.differenza == rhs.differenza &&
+            lhs.incassato == rhs.incassato &&
+            lhs.incassatoVendita == rhs.incassatoVendita &&
+            lhs.incassatoRicarica == rhs.incassatoRicarica &&
+            lhs.venduto == rhs.venduto &&
+            lhs.vendutoContante == rhs.vendutoContante &&
+            lhs.vendutoNoContante == rhs.vendutoNoContante &&
+            lhs.caricatoTubiResto == rhs.caricatoTubiResto &&
+            lhs.resoTubiResto == rhs.resoTubiResto &&
+            lhs.caricatoManualeTubiResto == rhs.caricatoManualeTubiResto &&
+            lhs.resoManualeTubiResto == rhs.resoManualeTubiResto &&
+            lhs.residuoChiavi == rhs.residuoChiavi &&
+            lhs.cashOverpay == rhs.cashOverpay
     }
 }
