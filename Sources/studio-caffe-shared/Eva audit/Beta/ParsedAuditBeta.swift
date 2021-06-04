@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ParsedAuditBeta: Identifiable, Hashable {
+public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
@@ -18,7 +18,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     public var rawReport: String
     var parsedReport: String = ""
     
-    public var paymentSystem = AdeDeviceModel.none
+    public var detectedDeviceModel = AdeDeviceModel.none
     
     public var dispositivo: String {
         dispositivoID_ID1_01
@@ -34,14 +34,6 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     
     public var totaleTubi: Double {
         valoreTotaleTubi_CA15_01.fbValue
-    }
-    
-    public func rilevataRendiresto() -> Bool {
-        moneteVersoTubi_CA3_03.fbValue > 0.0
-            || totaleScaricoTubi_CA4_01.fbValue > 0.0
-            || scaricoTubiSoloManuale_CA4_02.fbValue > 0
-            || caricoManualeTubi_CA10_01.fbValue > 0
-            || paymentSystem == .MEI7900
     }
     
     let contato = 0.0
@@ -62,7 +54,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     }
     
     mutating private func validate_ldataLetturaPrecedente_EA3_05_06(old: ParsedAuditBeta, errors: inout [ImportError]) {
-        if paymentSystem == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
+        if detectedDeviceModel == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
             fixMissingPreviousDate(previousDate: old.dataLettura)
         }
         if dataLetturaPrecedente_EA3_05_06 != old.dataLettura_EA3_02_03 {
@@ -205,7 +197,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     public mutating func validateImport(old: ParsedAuditBeta) -> [ImportError] {
         var errors: [ImportError] = []
         
-        if paymentSystem == .none {
+        if detectedDeviceModel == .none {
             errors.append(ImportError(identifier: .ID1_02, actualValue: "sconosiuto", expectedValue: "___________"))
         }
         
@@ -253,57 +245,57 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     private var versioneSoftwareValidatore_CA1_03: Int?
     
     // *********** RESETTATI ****************
-    private var importoVendutoCash_CA2_03: Double?
-    private var numeroVenditeCash_CA2_04: Int?
+    public var importoVendutoCash_CA2_03: Double?
+    public var numeroVenditeCash_CA2_04: Int?
     
-    private var totaleCashInserito_CA3_01: Double?
-    private var moneteInCassetta_CA3_02: Double?
-    private var moneteVersoTubi_CA3_03: Double?
-    private var banconoteInCassetta_CA3_04: Double?
-    private var banconoteInCassetta_CA3_09: Double?
+    public var totaleCashInserito_CA3_01: Double?
+    public var moneteInCassetta_CA3_02: Double?
+    public var moneteVersoTubi_CA3_03: Double?
+    public var banconoteInCassetta_CA3_04: Double?
+    public var banconoteInCassetta_CA3_09: Double?
     
-    private var totaleScaricoTubi_CA4_01: Double?
-    private var scaricoTubiSoloManuale_CA4_02: Double?
-    private var cashOverpay_CA8_01: Double?
-    private var caricoManualeTubi_CA10_01: Double?
+    public var totaleScaricoTubi_CA4_01: Double?
+    public var scaricoTubiSoloManuale_CA4_02: Double?
+    public var cashOverpay_CA8_01: Double?
+    public var caricoManualeTubi_CA10_01: Double?
     
-    private var valoreTotaleTubi_CA15_01: Double?
+    public var valoreTotaleTubi_CA15_01: Double?
     
-    private var numeroVendite_LA1_04: Int?
+    public var numeroVendite_LA1_04: Int?
     
-    private var importoVendutoCashless1_DA2_03: Double?
-    private var erogazioniCashless1_DA2_04: Int?
+    public var importoVendutoCashless1_DA2_03: Double?
+    public var erogazioniCashless1_DA2_04: Int?
     
-    private var importoPrelevatoDaCashless1_DA3_02: Double?
-    private var importoAccreditatoSuCashless1_DA4_02: Double?
+    public var importoPrelevatoDaCashless1_DA3_02: Double?
+    public var importoAccreditatoSuCashless1_DA4_02: Double?
     
-    private var importoScontiCashless1_DA5_01: Double?
-    private var erogazioniScontateCashless1_DA5_02: Int?
+    public var importoScontiCashless1_DA5_01: Double?
+    public var erogazioniScontateCashless1_DA5_02: Int?
     
-    private var bonusAccreditatoSuCashless1_DA6_02: Double?
+    public var bonusAccreditatoSuCashless1_DA6_02: Double?
     
-    private var importoVendutoCashless2_DB2_03: Double?
-    private var erogazioniCashless2_DB2_04: Int?
+    public var importoVendutoCashless2_DB2_03: Double?
+    public var erogazioniCashless2_DB2_04: Int?
     
-    private var importoPrelevatoDaCashless2_DB3_02: Double?
-    private var importoAccreditatoSuCashless2_DB4_02: Double?
+    public var importoPrelevatoDaCashless2_DB3_02: Double?
+    public var importoAccreditatoSuCashless2_DB4_02: Double?
     
-    private var importoScontiCashless2_DB5_01: Double?
-    private var erogazioniScontateCashless2_DB5_02: Int?
+    public var importoScontiCashless2_DB5_01: Double?
+    public var erogazioniScontateCashless2_DB5_02: Int?
     
-    private var bonusAccreditatoSuCashless2_DB6_02: Double?
+    public var bonusAccreditatoSuCashless2_DB6_02: Double?
     
-    private var venduto_VA1_03: Double?
-    private var erogazioni_VA1_04: Int?
+    public var venduto_VA1_03: Double?
+    public var erogazioni_VA1_04: Int?
     
-    private var valoreScontato_VA1_07: Double?
-    private var erogazioniScontate_VA1_08: Int?
+    public var valoreScontato_VA1_07: Double?
+    public var erogazioniScontate_VA1_08: Int?
     
-    private var valoreProve_VA2_03: Double?
-    private var erogazioniProva_VA2_04: Int?
+    public var valoreProve_VA2_03: Double?
+    public var erogazioniProva_VA2_04: Int?
     
-    private var valoreErogazioniGratuite_VA3_03: Double?
-    private var erogazioniGratuite_VA3_04: Int?
+    public var valoreErogazioniGratuite_VA3_03: Double?
+    public var erogazioniGratuite_VA3_04: Int?
     
     
     // ************ CUMULATI *******************
@@ -424,8 +416,8 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
 //    }
     
     mutating private func setPaymentSystem(ps: AdeDeviceModel) {
-        if paymentSystem == .none {
-            paymentSystem = ps
+        if detectedDeviceModel == .none {
+            detectedDeviceModel = ps
         }
     }
     
@@ -1063,16 +1055,64 @@ public struct ParsedAuditBeta: Identifiable, Hashable {
     
     private var parsed: Bool = false
     
-    func readableReport() -> String {
-        
-        ""
+    public var erogazioni: Int {
+        get {
+            erogazioni_VA1_04.fbValue >= 0 ? erogazioni_VA1_04.fbValue : numeroVendite_LA1_04.fbValue
+        }
     }
     
-    public func auditValues() -> AuditValuesDTO {
+    public var venduto: Double {
+        get {
+            let _venduto = venduto_VA1_03.fbValue!
+            let _ivCash = importoVendutoCash_CA2_03.fbValue!
+            let _ivCashless1 = importoVendutoCashless1_DA2_03.fbValue!
+            let _ivCashless2 = importoVendutoCashless2_DB2_03.fbValue!
+            
+            if _venduto > 0 {
+                return _venduto.round(to: 2)
+            } else {
+                let vt = _ivCash + _ivCashless1 + _ivCashless2
+                return vt.round(to: 2)
+            }
+        }
+    }
+    
+    public var cashBox: Double {
+        get {
+            let banconote9 = banconoteInCassetta_CA3_09.fbValue!
+            let banconote4 = banconoteInCassetta_CA3_04.fbValue!
+            let monete = moneteInCassetta_CA3_02.fbValue!
+            
+            if banconote9 > 0 {
+                return monete + banconote9
+            } else if banconote4 > 0 {
+                return monete + banconote4
+            } else {
+                return monete
+            }
+        }
+    }
+    
+    public func audit(machineID: Int, sellingPointID: IDType) -> AuditDTO {
         
-        AuditValuesDTO(
+        AuditDTO(
             
             id: UUID(),
+            
+            deviceId: dispositivoID_ID1_01,
+            detectedDeviceModel: detectedDeviceModel,
+            machineId: machineID,
+            progressivoLettura: letturaID_EA3_01,
+            dataLettura: dataLettura_EA3_02_03,
+            dataLetturaPrecedente: dataLetturaPrecedente_EA3_05_06,
+            
+            sellingPoint: sellingPointID,
+            
+            erogazioni: erogazioni,
+            venduto: venduto,
+            cashBox: cashBox,
+            tally: nil,
+            
             importoVendutoCash_CA2_03: importoVendutoCash_CA2_03,
             numeroVenditeCash_CA2_04: numeroVenditeCash_CA2_04,
 

@@ -1,8 +1,23 @@
 import Foundation
 
-public struct AuditValuesDTO: ResettedAuditValuesType, Identifiable {
+public struct AuditDTO: ResettedAuditValuesType, Identifiable {
     
     public var id: UUID
+    
+    public var deviceId: String
+    public var detectedDeviceModel: AdeDeviceModel
+    public var machineId: Int
+    public var progressivoLettura: Int
+    public var dataLettura: Date
+    public var dataLetturaPrecedente: Date
+    
+    public var sellingPoint: IDType
+    
+    public var erogazioni: Int
+    public var venduto: Double
+    public var cashBox: Double
+    public var tally: Double?
+    
     public var importoVendutoCash_CA2_03: Double?
     public var numeroVenditeCash_CA2_04: Int?
 
