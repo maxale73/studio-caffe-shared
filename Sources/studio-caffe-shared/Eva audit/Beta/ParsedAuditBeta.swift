@@ -28,6 +28,14 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         dataLettura_EA3_02_03
     }
     
+    public var dataLetturaPrecedente: Date {
+        dataLetturaPrecedente_EA3_05_06
+    }
+    
+    public var progressivoLettura: Int {
+        letturaID_EA3_01
+    }
+    
     public var cashOverpay: Double {
         cashOverpay_CA8_01.fbValue
     }
@@ -1093,11 +1101,11 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
-    public func audit(machineID: Int, sellingPointID: IDType) -> AuditDTO {
+    public func audit(id: UUID? = nil, machineID: Int, sellingPointID: IDType) -> AuditDTO {
         
         AuditDTO(
             
-            id: UUID(),
+            id: id ?? UUID(),
             
             deviceId: dispositivoID_ID1_01,
             detectedDeviceModel: detectedDeviceModel,
