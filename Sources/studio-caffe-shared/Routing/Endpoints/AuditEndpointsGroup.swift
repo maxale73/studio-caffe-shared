@@ -139,21 +139,26 @@ public struct AuditCheckResult: Codable, Identifiable, Equatable, Hashable {
 
 public struct ParsedAuditToSave: Codable, RequestBody {
     public var id: UUID
-    public var deviceId: String
-    public var progressivoLettura: Int
-    public var dataLettura: Date
-    public var dataLetturaPrecedente: Date
+//    public var deviceId: String
+//    public var progressivoLettura: Int
+//    public var dataLettura: Date
+//    public var dataLetturaPrecedente: Date
     public var rawReport: String
     
-    public var erogazioni: Int
-    public var venduto: Double
+//    public var erogazioni: Int
+//    public var venduto: Double
     
-    public static func createFrom(report: ParsedAudit, id: UUID) -> ParsedAuditToSave? {
-        guard let values = report.modelValues() else {
-            return nil
-        }
-        
-        return ParsedAuditToSave(id: id,deviceId: values.deviceId, progressivoLettura: values.progressivoLettura, dataLettura: values.dataLettura, dataLetturaPrecedente: values.dataLetturaPrecedente, rawReport: values.rawReport, erogazioni: values.erogazioni, venduto: values.venduto)
+//    public static func createFrom(report: ParsedAuditBeta, id: UUID) -> ParsedAuditToSave? {
+//        guard let values = report.modelValues() else {
+//            return nil
+//        }
+//
+//        return ParsedAuditToSave(id: id,deviceId: values.deviceId, progressivoLettura: values.progressivoLettura, dataLettura: values.dataLettura, dataLetturaPrecedente: values.dataLetturaPrecedente, rawReport: values.rawReport, erogazioni: values.erogazioni, venduto: values.venduto)
+//    }
+    
+    public init(id: UUID, rawAudit: String) {
+        self.id = id
+        self.rawReport = rawAudit
     }
 }
 
