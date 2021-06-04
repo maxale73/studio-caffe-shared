@@ -50,7 +50,7 @@ public struct ReportsBySellingPoint: Identifiable, Equatable, Codable {
 
 public struct ReportsByCustomer: Codable, Identifiable, Equatable {
     
-    public init(id: UUID, customerName: String, reports: [EvaReportDTO]) {
+    public init(id: UUID, customerName: String, reports: [AuditDTO]) {
         self.id = id
         self.customerName = customerName
         self.reports = reports
@@ -58,7 +58,7 @@ public struct ReportsByCustomer: Codable, Identifiable, Equatable {
     
     public var id: UUID
     public var customerName: String
-    public var reports: [EvaReportDTO]
+    public var reports: [AuditDTO]
 }
 
 public struct ReportByRistorno: Codable, Identifiable, Equatable {

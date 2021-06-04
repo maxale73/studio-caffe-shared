@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AuditDTO: ResettedAuditValuesType, Identifiable {
+public struct AuditDTO: ResettedAuditValuesType, Identifiable, Codable, Equatable {
     public init(id: UUID,
                 
                 deviceId: String,
@@ -174,4 +174,54 @@ public struct AuditDTO: ResettedAuditValuesType, Identifiable {
 
     public var valoreErogazioniGratuite_VA3_03: Double?
     public var erogazioniGratuite_VA3_04: Int?
+    
+    public static func == (lhs: AuditDTO, rhs: AuditDTO) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.deviceId == rhs.deviceId &&
+            lhs.detectedDeviceModel == rhs.detectedDeviceModel &&
+            lhs.machineId == rhs.machineId &&
+            lhs.progressivoLettura == rhs.progressivoLettura &&
+            lhs.dataLettura == rhs.dataLettura &&
+            lhs.dataLetturaPrecedente == rhs.dataLetturaPrecedente &&
+            lhs.sellingPoint == rhs.sellingPoint &&
+            lhs.erogazioni == rhs.erogazioni &&
+            lhs.venduto == rhs.venduto &&
+            lhs.cashBox == rhs.cashBox &&
+            lhs.tally == rhs.tally &&
+            lhs.importoVendutoCash_CA2_03 == rhs.importoVendutoCash_CA2_03 &&
+            lhs.numeroVenditeCash_CA2_04 == rhs.numeroVenditeCash_CA2_04 &&
+            lhs.totaleCashInserito_CA3_01 == rhs.totaleCashInserito_CA3_01 &&
+            lhs.moneteInCassetta_CA3_02 == rhs.moneteInCassetta_CA3_02 &&
+            lhs.moneteVersoTubi_CA3_03 == rhs.moneteVersoTubi_CA3_03 &&
+            lhs.banconoteInCassetta_CA3_04 == rhs.banconoteInCassetta_CA3_04 &&
+            lhs.banconoteInCassetta_CA3_09 == rhs.banconoteInCassetta_CA3_09 &&
+            lhs.totaleScaricoTubi_CA4_01 == rhs.totaleScaricoTubi_CA4_01 &&
+            lhs.scaricoTubiSoloManuale_CA4_02 == rhs.scaricoTubiSoloManuale_CA4_02 &&
+            lhs.cashOverpay_CA8_01 == rhs.cashOverpay_CA8_01 &&
+            lhs.caricoManualeTubi_CA10_01 == rhs.caricoManualeTubi_CA10_01 &&
+            lhs.valoreTotaleTubi_CA15_01 == rhs.valoreTotaleTubi_CA15_01 &&
+            lhs.numeroVendite_LA1_04 == rhs.numeroVendite_LA1_04 &&
+            lhs.importoVendutoCashless1_DA2_03 == rhs.importoVendutoCashless1_DA2_03 &&
+            lhs.erogazioniCashless1_DA2_04 == rhs.erogazioniCashless1_DA2_04 &&
+            lhs.importoPrelevatoDaCashless1_DA3_02 == rhs.importoPrelevatoDaCashless1_DA3_02 &&
+            lhs.importoAccreditatoSuCashless1_DA4_02 == rhs.importoAccreditatoSuCashless1_DA4_02 &&
+            lhs.importoScontiCashless1_DA5_01 == rhs.importoScontiCashless1_DA5_01 &&
+            lhs.erogazioniScontateCashless1_DA5_02 == rhs.erogazioniScontateCashless1_DA5_02 &&
+            lhs.bonusAccreditatoSuCashless1_DA6_02 == rhs.bonusAccreditatoSuCashless1_DA6_02 &&
+            lhs.importoVendutoCashless2_DB2_03 == rhs.importoVendutoCashless2_DB2_03 &&
+            lhs.erogazioniCashless2_DB2_04 == rhs.erogazioniCashless2_DB2_04 &&
+            lhs.importoPrelevatoDaCashless2_DB3_02 == rhs.importoPrelevatoDaCashless2_DB3_02 &&
+            lhs.importoAccreditatoSuCashless2_DB4_02 == rhs.importoAccreditatoSuCashless2_DB4_02 &&
+            lhs.importoScontiCashless2_DB5_01 == rhs.importoScontiCashless2_DB5_01 &&
+            lhs.erogazioniScontateCashless2_DB5_02 == rhs.erogazioniScontateCashless2_DB5_02 &&
+            lhs.bonusAccreditatoSuCashless2_DB6_02 == rhs.bonusAccreditatoSuCashless2_DB6_02 &&
+            lhs.venduto_VA1_03 == rhs.venduto_VA1_03 &&
+            lhs.erogazioni_VA1_04 == rhs.erogazioni_VA1_04 &&
+            lhs.valoreScontato_VA1_07 == rhs.valoreScontato_VA1_07 &&
+            lhs.erogazioniScontate_VA1_08 == rhs.erogazioniScontate_VA1_08 &&
+            lhs.valoreProve_VA2_03 == rhs.valoreProve_VA2_03 &&
+            lhs.erogazioniProva_VA2_04 == rhs.erogazioniProva_VA2_04 &&
+            lhs.valoreErogazioniGratuite_VA3_03 == rhs.valoreErogazioniGratuite_VA3_03 &&
+            lhs.erogazioniGratuite_VA3_04 == rhs.erogazioniGratuite_VA3_04
+    }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable {
+public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatable {
     public var id: String {
         rawValue
     }
