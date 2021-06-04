@@ -1065,7 +1065,12 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     
     public var erogazioni: Int {
         get {
-            erogazioni_VA1_04.fbValue >= 0 ? erogazioni_VA1_04.fbValue : numeroVendite_LA1_04.fbValue
+            if let VA104 = erogazioni_VA1_04 {
+                return VA104
+            } else {
+                return numeroVendite_LA1_04 ?? 0
+            }
+//            erogazioni_VA1_04.fbValue >= 0 ? erogazioni_VA1_04.fbValue : numeroVendite_LA1_04.fbValue
         }
     }
     
