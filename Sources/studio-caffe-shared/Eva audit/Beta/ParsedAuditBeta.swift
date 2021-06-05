@@ -375,54 +375,6 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         "\(dispositivoID_ID1_01)_\(letturaID_EA3_01)"
     }
     
-    
-    
-//    public func modelValues() -> EvaModelValues? {
-//        guard dispositivoID_ID1_01.isValid, dataLettura_EA3_02_03 != .distantFuture, letturaID_EA3_01.isValid else {
-//            return nil
-//        }
-//        return EvaModelValues(deviceId: dispositivoID_ID1_01,
-//                       progressivoLettura: letturaID_EA3_01,
-//                       dataLettura: dataLettura_EA3_02_03,
-//                       dataLetturaPrecedente: dataLetturaPrecedente_EA3_05_06,
-//                       rawReport: rawReport,
-//                       erogazioni: erogazioni,
-//                       venduto: venduto)
-//    }
-//
-//    public func resumeValues() -> EvaResumeValues {
-//        EvaResumeValues(erogazioni: erogazioni,
-//                        venduto: venduto,
-//                        cashBox: cashBox,
-//                        bilancioTubi: moneteVersoTubi_CA3_03.fallBackValue - totaleScaricoTubi_CA4_01.fallBackValue,
-//                        bilancioChiavi: importoAccreditatoSuCashless1_DA4_02.fallBackValue - importoPrelevatoDaCashless1_DA3_02.fallBackValue,
-//                        scaricoManualeTubi: scaricoTubiSoloManuale_CA4_02.fallBackValue,
-//                        caricoManualeTubi: caricoManualeTubi_CA10_01.fallBackValue,
-//                        cashOverpay: cashOverpay_CA8_01.fallBackValue,
-//                        numeroProve: erogazioniProva_VA2_04.fallBackValue,
-//                        valoreProve: valoreProve_VA2_03.fallBackValue,
-//                        numeroVenditeLibere: erogazioniGratuite_VA3_04.fallBackValue,
-//                        valoreVenditeLibere: valoreErogazioniGratuite_VA3_03.fallBackValue)
-//    }
-//
-//    public func adeValues() -> EvaAdeValues {
-//        EvaAdeValues(cashBox: cashBox,
-//                     contato: contato,
-//                     differenza: contato - cashBox,
-//                     incassato: totaleCashInserito_CA3_01,
-//                     incassatoVendita: incassatoVendita,
-//                     incassatoRicarica: incassatoRicarica,
-//                     venduto: venduto,
-//                     vendutoContante: importoVendutoCash_CA2_03.fallBackValue,
-//                     vendutoNoContante: vendutoNoContante,
-//                     caricatoTubiResto: moneteVersoTubi_CA3_03.fallBackValue,
-//                     resoTubiResto: totaleScaricoTubi_CA4_01.fallBackValue,
-//                     caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fallBackValue,
-//                     resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fallBackValue,
-//                     residuoChiavi: residuoChiavi,
-//                     cashOverpay: cashOverpay_CA8_01.fallBackValue)
-//    }
-    
     mutating private func setPaymentSystem(ps: AdeDeviceModel) {
         if detectedDeviceModel == .none {
             detectedDeviceModel = ps
@@ -1185,3 +1137,303 @@ extension ParsedAuditBeta: Equatable {
         return lhs.dispositivoID_ID1_01 == rhs.dispositivoID_ID1_01 && lhs.letturaID_EA3_01 == rhs.letturaID_EA3_01
     }
 }
+
+extension ParsedAuditBeta {
+    public func infoValues() -> [EvaValues] {
+        var values: [EvaValues] = []
+        if dispositivoID_ID1_01.isValid {
+            values.append(.ID1_01(dispositivoID_ID1_01))
+        }
+        if dispositivoModello_ID1_02.isValid {
+            values.append(.ID1_02(dispositivoModello_ID1_02))
+        }
+        if letturaID_EA3_01.isValid {
+            values.append(.EA3_01(letturaID_EA3_01))
+        }
+        if dataLettura_EA3_02_03.isValid {
+            values.append(.EA3_02_03(dataLettura_EA3_02_03))
+        }
+        if dataLetturaPrecedente_EA3_05_06.isValid {
+            values.append(.EA3_05_06(dataLetturaPrecedente_EA3_05_06))
+        }
+        
+        if numeroSerialeLettoreBanconote_BA1_01.isValid {
+            values.append(.BA1_01(numeroSerialeLettoreBanconote_BA1_01!))
+        }
+        if modelloLettoreBanconote_BA1_02.isValid {
+            values.append(.BA1_02(modelloLettoreBanconote_BA1_02!))
+        }
+        if versioneSoftwareLettoreBanconote_BA1_03.isValid {
+            values.append(.BA1_03(versioneSoftwareLettoreBanconote_BA1_03!))
+        }
+        
+        if numeroSerialeValidatore_CA1_01.isValid {
+            values.append(.CA1_01(numeroSerialeValidatore_CA1_01!))
+        }
+        if modelloValidatore_CA1_02.isValid {
+            values.append(.CA1_02(modelloValidatore_CA1_02!))
+        }
+        if versioneSoftwareValidatore_CA1_03.isValid {
+            values.append(.CA1_03(versioneSoftwareValidatore_CA1_03.fbValue))
+        }
+        return values
+    }
+    
+    public func resettableValues() -> [EvaValues] {
+        var values: [EvaValues] = []
+        if importoVendutoCash_CA2_03.isValid {
+            values.append(.CA2_03(importoVendutoCash_CA2_03.fbValue))
+        }
+        if numeroVenditeCash_CA2_04.isValid {
+            values.append(.CA2_04(numeroVenditeCash_CA2_04.fbValue))
+        }
+        if totaleCashInserito_CA3_01.isValid {
+            values.append(.CA3_01(totaleCashInserito_CA3_01.fbValue))
+        }
+        if moneteInCassetta_CA3_02.isValid {
+            values.append(.CA3_02(moneteInCassetta_CA3_02.fbValue))
+        }
+        if moneteVersoTubi_CA3_03.isValid {
+            values.append(.CA3_03(moneteVersoTubi_CA3_03.fbValue))
+        }
+        if banconoteInCassetta_CA3_04.isValid {
+            values.append(.CA3_04(banconoteInCassetta_CA3_04.fbValue))
+        }
+        if banconoteInCassetta_CA3_09.isValid {
+            values.append(.CA3_09(banconoteInCassetta_CA3_09.fbValue))
+        }
+        if totaleScaricoTubi_CA4_01.isValid {
+            values.append(.CA4_01(totaleScaricoTubi_CA4_01.fbValue))
+        }
+        if scaricoTubiSoloManuale_CA4_02.isValid {
+            values.append(.CA4_02(scaricoTubiSoloManuale_CA4_02.fbValue))
+        }
+        if cashOverpay_CA8_01.isValid {
+            values.append(.CA8_01(cashOverpay_CA8_01.fbValue))
+        }
+        if caricoManualeTubi_CA10_01.isValid {
+            values.append(.CA10_01(caricoManualeTubi_CA10_01.fbValue))
+        }
+        if valoreTotaleTubi_CA15_01.isValid {
+            values.append(.CA15_01(valoreTotaleTubi_CA15_01.fbValue))
+        }
+        if numeroVendite_LA1_04.isValid {
+            values.append(.LA1_04(numeroVendite_LA1_04.fbValue))
+        }
+        if importoVendutoCashless1_DA2_03.isValid {
+            values.append(.DA2_03(importoVendutoCashless1_DA2_03.fbValue))
+        }
+        if erogazioniCashless1_DA2_04.isValid {
+            values.append(.DA2_04(erogazioniCashless1_DA2_04.fbValue))
+        }
+        if importoPrelevatoDaCashless1_DA3_02.isValid {
+            values.append(.DA3_02(importoPrelevatoDaCashless1_DA3_02.fbValue))
+        }
+        if importoAccreditatoSuCashless1_DA4_02.isValid {
+            values.append(.DA4_02(importoAccreditatoSuCashless1_DA4_02.fbValue))
+        }
+        if importoScontiCashless1_DA5_01.isValid {
+            values.append(.DA5_01(importoScontiCashless1_DA5_01.fbValue))
+        }
+        if erogazioniScontateCashless1_DA5_02.isValid {
+            values.append(.DA5_02(erogazioniScontateCashless1_DA5_02.fbValue))
+        }
+        if bonusAccreditatoSuCashless1_DA6_02.isValid {
+            values.append(.DA6_02(bonusAccreditatoSuCashless1_DA6_02.fbValue))
+        }
+        if importoVendutoCashless2_DB2_03.isValid {
+            values.append(.DB2_03(importoVendutoCashless2_DB2_03.fbValue))
+        }
+        if erogazioniCashless2_DB2_04.isValid {
+            values.append(.DB2_04(erogazioniCashless2_DB2_04.fbValue))
+        }
+        if importoPrelevatoDaCashless2_DB3_02.isValid {
+            values.append(.DB3_02(importoPrelevatoDaCashless2_DB3_02.fbValue))
+        }
+        if importoAccreditatoSuCashless2_DB4_02.isValid {
+            values.append(.DB4_02(importoAccreditatoSuCashless2_DB4_02.fbValue))
+        }
+        if importoScontiCashless2_DB5_01.isValid {
+            values.append(.DB5_01(importoScontiCashless2_DB5_01.fbValue))
+        }
+        if erogazioniScontateCashless2_DB5_02.isValid {
+            values.append(.DB5_02(erogazioniScontateCashless2_DB5_02.fbValue))
+        }
+        if bonusAccreditatoSuCashless2_DB6_02.isValid {
+            values.append(.DB6_02(bonusAccreditatoSuCashless2_DB6_02.fbValue))
+        }
+        if venduto_VA1_03.isValid {
+            values.append(.VA1_03(venduto_VA1_03.fbValue))
+        }
+        if erogazioni_VA1_04.isValid {
+            values.append(.VA1_04(erogazioni_VA1_04.fbValue))
+        }
+        if valoreScontato_VA1_07.isValid {
+            values.append(.VA1_07(valoreScontato_VA1_07.fbValue))
+        }
+        if erogazioniScontate_VA1_08.isValid {
+            values.append(.VA1_08(erogazioniScontate_VA1_08.fbValue))
+        }
+        if valoreProve_VA2_03.isValid {
+            values.append(.VA2_03(valoreProve_VA2_03.fbValue))
+        }
+        if erogazioniProva_VA2_04.isValid {
+            values.append(.VA2_04(erogazioniProva_VA2_04.fbValue))
+        }
+        if valoreErogazioniGratuite_VA3_03.isValid {
+            values.append(.VA3_03(valoreErogazioniGratuite_VA3_03.fbValue))
+        }
+        if erogazioniGratuite_VA3_04.isValid {
+            values.append(.VA3_04(erogazioniGratuite_VA3_04.fbValue))
+        }
+        return values
+    }
+    
+    public func cumulatedValues() -> [EvaValues] {
+        var values: [EvaValues] = []
+        if importoVendutoCash_CA2_01.isValid {
+            values.append(.CA2_01(importoVendutoCash_CA2_01))
+        }
+        if numeroVenditeCash_CA2_02.isValid {
+            values.append(.CA2_02(numeroVenditeCash_CA2_02))
+        }
+        if totaleCashInserito_CA3_05.isValid {
+            values.append(.CA3_05(totaleCashInserito_CA3_05))
+        }
+        if moneteInCassetta_CA3_06.isValid {
+            values.append(.CA3_06(moneteInCassetta_CA3_06))
+        }
+        if moneteVersoTubi_CA3_07.isValid {
+            values.append(.CA3_07(moneteVersoTubi_CA3_07))
+        }
+        if banconoteInCassetta_CA3_08.isValid {
+            values.append(.CA3_08(banconoteInCassetta_CA3_08))
+        }
+        
+        if totaleScaricoTubi_CA4_03.isValid {
+            values.append(.CA4_03(totaleScaricoTubi_CA4_03))
+        }
+        if scaricoTubiSoloManuale_CA4_04.isValid {
+            values.append(.CA4_04(scaricoTubiSoloManuale_CA4_04))
+        }
+        if cashOverpay_CA8_02.isValid {
+            values.append(.CA8_02(cashOverpay_CA8_02))
+        }
+        if caricoManualeTubi_CA10_02.isValid {
+            values.append(.CA10_02(caricoManualeTubi_CA10_02))
+        }
+        
+        if numeroVendite_LA1_05.isValid {
+            values.append(.LA1_05(numeroVendite_LA1_05))
+        }
+        
+        if importoVendutoCashless1_DA2_01.isValid {
+            values.append(.DA2_01(importoVendutoCashless1_DA2_01))
+        }
+        if erogazioniCashless1_DA2_02.isValid {
+            values.append(.DA2_02(erogazioniCashless1_DA2_02))
+        }
+        
+        if importoPrelevatoDaCashless1_DA3_01.isValid {
+            values.append(.DA3_01(importoPrelevatoDaCashless1_DA3_01))
+        }
+        if importoAccreditatoSuCashless1_DA4_01.isValid {
+            values.append(.DA4_01(importoAccreditatoSuCashless1_DA4_01))
+        }
+        
+        if importoScontiCashless1_DA5_03.isValid {
+            values.append(.DA5_03(importoScontiCashless1_DA5_03))
+        }
+        if erogazioniScontateCashless1_DA5_04.isValid {
+            values.append(.DA5_04(erogazioniScontateCashless1_DA5_04))
+        }
+        
+        if bonusAccreditatoSuCashless1_DA6_01.isValid {
+            values.append(.DA6_01(bonusAccreditatoSuCashless1_DA6_01))
+        }
+        
+        if importoVendutoCashless2_DB2_01.isValid {
+            values.append(.DB2_01(importoVendutoCashless2_DB2_01))
+        }
+        if erogazioniCashless2_DB2_02.isValid {
+            values.append(.DB2_02(erogazioniCashless2_DB2_02))
+        }
+        
+        if importoPrelevatoDaCashless2_DB3_01.isValid {
+            values.append(.DB3_01(importoPrelevatoDaCashless2_DB3_01))
+        }
+        if importoAccreditatoSuCashless2_DB4_01.isValid {
+            values.append(.DB4_01(importoAccreditatoSuCashless2_DB4_01))
+        }
+        
+        if importoScontiCashless2_DB5_03.isValid {
+            values.append(.DB5_03(importoScontiCashless2_DB5_03))
+        }
+        if erogazioniScontateCashless2_DB5_04.isValid {
+            values.append(.DB5_04(erogazioniScontateCashless2_DB5_04))
+        }
+        
+        if bonusAccreditatoSuCashless2_DB6_01.isValid {
+            values.append(.DB6_01(bonusAccreditatoSuCashless2_DB6_01))
+        }
+        if venduto_VA1_01.isValid {
+            values.append(.VA1_01(venduto_VA1_01))
+        }
+        if erogazioni_VA1_02.isValid {
+            values.append(.VA1_02(erogazioni_VA1_02))
+        }
+        
+        if valoreScontato_VA1_05.isValid {
+            values.append(.VA1_05(valoreScontato_VA1_05))
+        }
+        if erogazioniScontate_VA1_06.isValid {
+            values.append(.VA1_06(erogazioniScontate_VA1_06))
+        }
+        
+        if valoreProve_VA2_01.isValid {
+            values.append(.VA2_01(valoreProve_VA2_01))
+        }
+        if erogazioniProva_VA2_02.isValid {
+            values.append(.VA2_02(erogazioniProva_VA2_02))
+        }
+        if valoreErogazioniGratuite_VA3_01.isValid {
+            values.append(.VA3_01(valoreErogazioniGratuite_VA3_01))
+        }
+        if erogazioniGratuite_VA3_02.isValid {
+            values.append(.VA3_02(erogazioniGratuite_VA3_02))
+        }
+        return values
+    }
+}
+
+//public struct RepresentableParsedValue: Identifiable {
+//    public let id: String { code }
+//    public let code: String
+//    public let description: String
+//    public let value: String
+//
+//    public init(code: String, description: String, value: String) {
+//        self.code = code
+//        self.description = description
+//        self.value = value
+//    }
+//}
+//
+//extension ParsedAuditBeta {
+//    func infoValues() -> [RepresentableParsedValue] {
+//        [
+//            RepresentableParsedValue(code: "DXS_01", description: "communicationID", value: communicationID_DXS_01 ),
+//            RepresentableParsedValue(code: "ID1_01", description: "dispositivoID", value: dispositivoID_ID1_01 ),
+//            RepresentableParsedValue(code: "ID1_02", description: "dispositivoModello", value: dispositivoModello_ID1_02 ),
+//            RepresentableParsedValue(code: "EA3_01", description: "letturaID", value: letturaID_EA3_01.textDescription ),
+//            RepresentableParsedValue(code: "EA3_02_03", description: "dataLettura", value: DateFormatter.localizedString(from: dataLettura_EA3_02_03, dateStyle: .short, timeStyle: .none) ),
+//            RepresentableParsedValue(code: "EA3_05_06", description: "dataLetturaPrecedente", value: DateFormatter.localizedString(from: dataLetturaPrecedente_EA3_05_06, dateStyle: .short, timeStyle: .none) ),
+//            RepresentableParsedValue(code: "BA1_01", description: "numeroSerialeLettoreBanconote", value: numeroSerialeLettoreBanconote_BA1_01 ?? "-" ),
+//            RepresentableParsedValue(code: "BA1_02", description: "modelloLettoreBanconote", value: modelloLettoreBanconote_BA1_02 ?? "-" ),
+//            RepresentableParsedValue(code: "BA1_03", description: "versioneSoftwareLettoreBanconote", value: versioneSoftwareLettoreBanconote_BA1_03 ?? "" ),
+//            RepresentableParsedValue(code: "CA1_01", description: "numeroSerialeValidatore", value: numeroSerialeValidatore_CA1_01?.textDescription ),
+//            RepresentableParsedValue(code: "CA1_02", description: "modelloValidatore", value: modelloValidatore_CA1_02?.textDescription ),
+//            RepresentableParsedValue(code: "CA1_03", description: "versioneSoftwareValidatore", value: versioneSoftwareValidatore_CA1_03?.textDescription )
+//        ]
+//    }
+//}
