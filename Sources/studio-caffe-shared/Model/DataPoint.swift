@@ -69,9 +69,9 @@ public extension Array where Element == DataPoint {
         guard count > 1 else {
             return []
         }
-        let sorted = sorted(by: { $0.date <= $1.date })
-        let firstDate = sorted.first!.date
-        let points = sorted.reduce([]) { (partialPoints, report) -> [AveragePoint] in
+        let _sorted = sorted(by: { $0.date <= $1.date })
+        let firstDate = _sorted.first!.date
+        let points = _sorted.reduce([]) { (partialPoints, report) -> [AveragePoint] in
 
             guard report.amount > 0 else { return partialPoints }
             let reportsToCalculate = filter({ $0.date <= report.date })
