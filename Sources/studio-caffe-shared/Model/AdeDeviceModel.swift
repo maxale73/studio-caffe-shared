@@ -15,6 +15,7 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
     case MEI690 = "MEI 690"
     case NRI_CURRENZA_C2 = "NRI Currenza C2"
     case COINCO_GUARDIAN = "Coinco Guardian"
+    case ICT_CC6100 = "ICT CC6100"
     case SCATTI = "Scatti"
     case none = "nessun modello"
     
