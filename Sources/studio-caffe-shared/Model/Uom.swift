@@ -3,9 +3,22 @@ import Foundation
 public enum Uom: String, Codable, CaseIterable, Identifiable {
     public var id: String { rawValue }
     case kg
-    case pezzo = "pz"
-    case litri = "lt"
-    case giorni = "gg"
+    case pz = "pz"
+    case lt = "lt"
+    case gg = "gg"
+    
+    case pezzi
+    case litri
+    case giorni
+    case confezioni
+    case faldoni
+    case cartoni
+    case bancali
+    case bottiglie
+    case lattine
+    case metri
+    case scatole
+    case buste
 }
 
 extension Uom: CustomStringConvertible {
