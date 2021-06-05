@@ -76,7 +76,8 @@ public extension Array where Element == DataPoint {
             guard report.amount > 0 else { return partialPoints }
             let reportsToCalculate = filter({ $0.date <= report.date })
             guard let average = reportsToCalculate.calculateAverage(months: months) else { return partialPoints }
-            let rpit = firstDate.distance(to: report.date)
+            //let rpit = firstDate.distance(to: report.date)
+            let rpit = report.date.timeIntervalSince(firstDate)
             //let avg = averages.0 > 0 ? averages.0 : averages.1
             return partialPoints + [AveragePoint(date: report.date, relativePointInTime: rpit, average: Int(average))]
             
