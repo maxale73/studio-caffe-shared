@@ -2,12 +2,12 @@ import Foundation
 
 public struct ReportAroundDate:Codable, Equatable, Identifiable {
     
-    public init(adeID: String, machineID: Int? = nil, previousDate: Date? = nil, nextDate: Date? = nil, rawReport: String? = nil, customer: String, site: String, note: String) {
+    public init(adeID: String, machineID: Int? = nil, previousDate: Date? = nil, nextDate: Date? = nil, venduto: Double? = nil, customer: String, site: String, note: String) {
         self.adeID = adeID
         self.machineID = machineID
         self.previousDate = previousDate
         self.nextDate = nextDate
-        self.rawReport = rawReport
+        self.venduto = venduto
         self.customer = customer
         self.site = site
         self.note = note
@@ -19,7 +19,7 @@ public struct ReportAroundDate:Codable, Equatable, Identifiable {
     public var machineID: Int?
     public var previousDate: Date?
     public var nextDate: Date?
-    public var rawReport: String?
+    public var venduto: Double?
     public var customer: String
     public var site: String
     public var note: String

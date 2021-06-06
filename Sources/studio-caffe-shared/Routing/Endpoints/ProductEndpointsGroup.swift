@@ -1,5 +1,22 @@
 import Foundation
 
+public struct PackageDTO: Identifiable, Codable, Equatable, Hashable {
+    public init(id: UUID, uom: Uom, barcode: String? = nil, quantity: Double, productID: IDType) {
+        self.id = id
+        self.uom = uom
+        self.barcode = barcode
+        self.quantity = quantity
+        self.productID = productID
+    }
+    
+    public var id: UUID
+    
+    public var uom: Uom
+    public var barcode: String?
+    public var quantity: Double
+    public var productID: IDType
+}
+
 public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     
     public var id: UUID
@@ -7,8 +24,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     public var productDescription: String
     public var productCodes: String
     public var productCategory: ProductCategory
-    public var uom: Uom
     public var iva: IvaType
+    public var packages: [PackageDTO]
     public var tags: [TagDTO]
 
     public init(id: UUID,
@@ -16,8 +33,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
          productDescription: String,
          productCodes: String,
          productCategory: ProductCategory,
-         uom: Uom,
          iva: IvaType,
+         packages: [PackageDTO],
          tags: [TagDTO]) {
         
         self.id = id
@@ -25,8 +42,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
         self.productDescription = productDescription
         self.productCodes = productCodes
         self.productCategory = productCategory
-        self.uom = uom
         self.iva = iva
+        self.packages = packages
         self.tags = tags
     }
 }
