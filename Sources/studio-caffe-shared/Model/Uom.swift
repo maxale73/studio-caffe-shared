@@ -2,6 +2,7 @@ import Foundation
 
 public enum Uom: String, Codable, CaseIterable, Identifiable {
     public var id: String { rawValue }
+    case kg
     case pezzi
     case litri
     case giorni
