@@ -1,12 +1,12 @@
 import Foundation
 
 public struct PackageDTO: Identifiable, Codable, Equatable, Hashable {
-    public init(id: UUID, uom: Uom, barcode: String? = nil, quantity: Double, productID: IDType) {
+    public init(id: UUID, uom: Uom, barcode: String? = nil, quantity: Double, product: IDType) {
         self.id = id
         self.uom = uom
         self.barcode = barcode
         self.quantity = quantity
-        self.productID = productID
+        self.product = product
     }
     
     public var id: UUID
@@ -14,7 +14,7 @@ public struct PackageDTO: Identifiable, Codable, Equatable, Hashable {
     public var uom: Uom
     public var barcode: String?
     public var quantity: Double
-    public var productID: IDType
+    public var product: IDType
 }
 
 public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
