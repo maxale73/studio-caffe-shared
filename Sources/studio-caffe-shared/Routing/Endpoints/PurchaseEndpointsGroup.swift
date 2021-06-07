@@ -27,4 +27,14 @@ public struct PurchaseEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
+    
+    public static func lastPurchase(supplierID: UUID? = nil, productID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "last_purchase", value: nil),
+            PathParameter(name: "supplier_ID", value: .uuid(supplierID)),
+            PathParameter(name: "product_ID", value: .uuid(productID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
