@@ -594,11 +594,11 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 banconoteInCassetta_CA3_09 = value
             } else {
                 missingValues.append(.CA3_09)
-                if let value = CA3Block.doubleValue(for: 4) {
-                    banconoteInCassetta_CA3_04 = value
-                } else {
-                    missingValues.append(.CA3_04)
-                }
+            }
+            if let value = CA3Block.doubleValue(for: 4) {
+                banconoteInCassetta_CA3_04 = value
+            } else {
+                missingValues.append(.CA3_04)
             }
             
             if let value = CA3Block.doubleValue(for: 5) {
