@@ -162,6 +162,16 @@ public struct CorrispettiviPerData: Codable, Equatable {
     }
 }
 
+public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody {
+    
+    public var id: UUID
+    public var amount: Double
+    
+    public init(audit: AuditDTO, amount: Double) {
+        self.id = audit.id
+        self.amount = amount
+    }
+}
 
 public struct AuditEndpointsGroup: EndpointGroupType {
     
@@ -239,5 +249,11 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         let parameters = [ PathParameter(name: "corrispettivi", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func updateTallies(tallies: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "update_tallies", value: nil) ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: tallies)
     }
 }

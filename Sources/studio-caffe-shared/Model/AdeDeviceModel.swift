@@ -13,6 +13,8 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
     case MEI7000 = "MEI 7000"
     case MEI7900 = "MEI 7900"
     case MEI690 = "MEI 690"
+    case MEI_GRYPHON = "MEI Gryphon"
+    case COGES_PROFIT = "Coges Profit"
     case NRI_CURRENZA_C2 = "NRI Currenza C2"
     case COINCO_GUARDIAN = "Coinco Guardian"
     case ICT_CC6100 = "ICT CC6100"
@@ -55,6 +57,8 @@ extension AdeDeviceModel: CustomRawRepresentable {
             case .ELKEY_BUBBLE_S: return "Bubble S"
             case .ELKEY_BUBBLE_XL: return "Bubble XL"
             case .ELKEY_ATTO_COIN: return "Atto Coin"
+            case .MEI_GRYPHON: return "Gryphon"
+            case .COGES_PROFIT: return "Profit"
             case .NRI_CURRENZA_C2: return "Curr C2"
             default:
                 return rawValue
