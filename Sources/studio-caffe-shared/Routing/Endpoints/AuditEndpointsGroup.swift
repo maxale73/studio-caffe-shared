@@ -173,6 +173,34 @@ public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody {
     }
 }
 
+public struct LastReportByMachine: Identifiable, Codable, Equatable {
+    public init(id: UUID, customer: String, site: String, city: String, province: String, machineID: Int, machineModel: String, machineType: MachineModelType, deviceModel: AdeDeviceModel, deciceID: String, date: Date) {
+        self.id = id
+        self.customer = customer
+        self.site = site
+        self.city = city
+        self.province = province
+        self.machineID = machineID
+        self.machineModel = machineModel
+        self.machineType = machineType
+        self.deviceModel = deviceModel
+        self.deviceID = deciceID
+        self.date = date
+    }
+    
+    public var id: UUID
+    public var customer: String
+    public var site: String
+    public var city: String
+    public var province: String
+    public var machineID: Int
+    public var machineModel: String
+    public var machineType: MachineModelType
+    public var deviceModel: AdeDeviceModel
+    public var deviceID: String
+    public var date: Date
+}
+
 public struct AuditEndpointsGroup: EndpointGroupType {
     
     public static var group = "evaReport"
@@ -255,5 +283,11 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         let parameters = [ PathParameter(name: "update_tallies", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: tallies)
+    }
+    
+    public static func lastReportByMachine() -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "last_report_by_machine", value: nil)]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
 }
