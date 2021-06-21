@@ -140,10 +140,14 @@ public struct AuditCheckResult: Codable, Identifiable, Equatable, Hashable {
 public struct ParsedAuditToSave: Codable, RequestBody {
     public var id: UUID
     public var rawReport: String
+    public var dataLettura: Date
+    public var dataLetturaPrecedente: Date
     
-    public init(id: UUID, rawAudit: String) {
+    public init(id: UUID, rawAudit: String, dataLettura: Date, dataLetturaPrecedente: Date) {
         self.id = id
         self.rawReport = rawAudit
+        self.dataLettura = dataLettura
+        self.dataLetturaPrecedente = dataLetturaPrecedente
     }
 }
 
