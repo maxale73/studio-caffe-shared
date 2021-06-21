@@ -228,6 +228,6 @@ public struct AuditDTO: Identifiable, Codable, Equatable, Hashable {
 
 extension AuditDTO: ResettedAuditValuesType {
     public func adeValues() -> EvaAdeValues {
-        EvaAdeValues(cashBox: cashBox, differenza: (tally ?? 0) - cashBox, incassato: totaleCashInserito_CA3_01.fbValue, incassatoVendita: incassatoVendita, incassatoRicarica: incassatoRicarica, venduto: venduto, vendutoContante: importoVendutoCash_CA2_03.fbValue, vendutoNoContante: vendutoNoContante, caricatoTubiResto: moneteVersoTubi_CA3_03.fbValue, resoTubiResto: totaleScaricoTubi_CA4_01.fbValue, caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fbValue, resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fbValue, residuoChiavi: incassatoRicarica - vendutoNoContante, cashOverpay: cashOverpay_CA8_01.fbValue)
+        EvaAdeValues(cashBox: cashBox, contato: tally, differenza: (tally ?? 0) - cashBox, incassato: totaleCashInserito_CA3_01.fbValue, incassatoVendita: incassatoVendita, incassatoRicarica: incassatoRicarica, venduto: venduto, vendutoContante: importoVendutoCash_CA2_03.fbValue, vendutoNoContante: vendutoNoContante, caricatoTubiResto: moneteVersoTubi_CA3_03.fbValue, resoTubiResto: totaleScaricoTubi_CA4_01.fbValue, caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fbValue, resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fbValue, residuoChiavi: incassatoRicarica - vendutoNoContante, cashOverpay: cashOverpay_CA8_01.fbValue)
     }
 }

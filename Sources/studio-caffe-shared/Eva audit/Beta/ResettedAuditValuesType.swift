@@ -102,6 +102,6 @@ public extension ResettedAuditValuesType {
     }
     
     func adeValues() -> EvaAdeValues {
-        EvaAdeValues(cashBox: cashBox, differenza: 0.0, incassato: totaleCashInserito_CA3_01.fbValue, incassatoVendita: incassatoVendita, incassatoRicarica: incassatoRicarica, venduto: venduto, vendutoContante: importoVendutoCash_CA2_03.fbValue, vendutoNoContante: vendutoNoContante, caricatoTubiResto: moneteVersoTubi_CA3_03.fbValue, resoTubiResto: totaleScaricoTubi_CA4_01.fbValue, caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fbValue, resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fbValue, residuoChiavi: incassatoRicarica - vendutoNoContante, cashOverpay: cashOverpay_CA8_01.fbValue)
+        EvaAdeValues(cashBox: cashBox, contato: nil, differenza: 0.0, incassato: totaleCashInserito_CA3_01.fbValue, incassatoVendita: incassatoVendita, incassatoRicarica: incassatoRicarica, venduto: venduto, vendutoContante: importoVendutoCash_CA2_03.fbValue, vendutoNoContante: vendutoNoContante, caricatoTubiResto: moneteVersoTubi_CA3_03.fbValue, resoTubiResto: totaleScaricoTubi_CA4_01.fbValue, caricatoManualeTubiResto: caricoManualeTubi_CA10_01.fbValue, resoManualeTubiResto: scaricoTubiSoloManuale_CA4_02.fbValue, residuoChiavi: incassatoRicarica - vendutoNoContante, cashOverpay: cashOverpay_CA8_01.fbValue)
     }
 }
