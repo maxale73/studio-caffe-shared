@@ -438,7 +438,7 @@ public struct EvaResumeValues {
 }
 
 public struct EvaAdeValues: Codable, Equatable {
-    public init(cashBox: Double, contato: Double?, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
+    public init(cashBox: Double, contato: Double, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
         self.cashBox = cashBox
         self.contato = contato
         self.differenza = differenza
@@ -457,7 +457,7 @@ public struct EvaAdeValues: Codable, Equatable {
     }
     
     public var cashBox: Double
-    public var contato: Double?
+    public var contato: Double
     public var differenza: Double
     
     public var incassato: Double
