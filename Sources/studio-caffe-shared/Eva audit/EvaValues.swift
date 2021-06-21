@@ -411,31 +411,26 @@ public struct EvaModelValues {
 }
 
 public struct EvaResumeValues {
-    public init(erogazioni: Int, venduto: Double, cashBox: Double, bilancioTubi: Double, bilancioChiavi: Double, scaricoManualeTubi: Double, caricoManualeTubi: Double, cashOverpay: Double, numeroProve: Int, valoreProve: Double, numeroVenditeLibere: Int, valoreVenditeLibere: Double) {
-        self.erogazioni = erogazioni
-        self.venduto = venduto
-        self.cashBox = cashBox
+    public init(bilancioTubi: Double,
+                bilancioChiavi: Double,
+                
+                numeroProve: Int,
+                valoreProve: Double,
+                numeroVenditeLibere: Int,
+                valoreVenditeLibere: Double) {
+
         self.bilancioTubi = bilancioTubi
         self.bilancioChiavi = bilancioChiavi
-        self.scaricoManualeTubi = scaricoManualeTubi
-        self.caricoManualeTubi = caricoManualeTubi
-        self.cashOverpay = cashOverpay
+        
         self.numeroProve = numeroProve
         self.valoreProve = valoreProve
         self.numeroVenditeLibere = numeroVenditeLibere
         self.valoreVenditeLibere = valoreVenditeLibere
     }
     
-    public var erogazioni: Int
-    public var venduto: Double
-    public var cashBox: Double
-    
     public var bilancioTubi: Double
     public var bilancioChiavi: Double
-    public var scaricoManualeTubi: Double
-    public var caricoManualeTubi: Double
     
-    public var cashOverpay: Double
     public var numeroProve: Int
     public var valoreProve: Double
     public var numeroVenditeLibere: Int
@@ -443,7 +438,7 @@ public struct EvaResumeValues {
 }
 
 public struct EvaAdeValues: Codable, Equatable {
-    public init(cashBox: Double, contato: Double = 0.0, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
+    public init(cashBox: Double, contato: Double?, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
         self.cashBox = cashBox
         self.contato = contato
         self.differenza = differenza
@@ -462,7 +457,7 @@ public struct EvaAdeValues: Codable, Equatable {
     }
     
     public var cashBox: Double
-    public var contato: Double = 0.0
+    public var contato: Double?
     public var differenza: Double
     
     public var incassato: Double
