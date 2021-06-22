@@ -411,14 +411,16 @@ public struct EvaModelValues {
 }
 
 public struct EvaResumeValues {
-    public init(bilancioTubi: Double,
+    public init(erogazioni: Int,
+                bilancioTubi: Double,
                 bilancioChiavi: Double,
                 
                 numeroProve: Int,
                 valoreProve: Double,
                 numeroVenditeLibere: Int,
                 valoreVenditeLibere: Double) {
-
+        
+        self.erogazioni = erogazioni
         self.bilancioTubi = bilancioTubi
         self.bilancioChiavi = bilancioChiavi
         
@@ -428,6 +430,7 @@ public struct EvaResumeValues {
         self.valoreVenditeLibere = valoreVenditeLibere
     }
     
+    public var erogazioni: Int
     public var bilancioTubi: Double
     public var bilancioChiavi: Double
     
