@@ -99,6 +99,29 @@ public struct ReportByMachine: Identifiable, Equatable, Codable {
     public var date: Date
 }
 
+public struct ReportByDevice: Identifiable, Equatable, Codable {
+    public init(customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, date: Date) {
+        self.customer = customer
+        self.sellingPoint = sellingPoint
+        self.site = site
+        self.machineID = machineID
+        self.machineModel = machineModel
+        self.machineType = machineType
+        self.date = date
+    }
+    
+    public var id: UUID {
+        UUID()
+    }
+    public var customer: String
+    public var sellingPoint: Int
+    public var site: String
+    public var machineID: Int
+    public var machineModel: String
+    public var machineType: String
+    public var date: Date
+}
+
 public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody {
     public init(id: UUID, deviceId: String, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date) {
         self.id = id
@@ -242,9 +265,9 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func reportsByDevice(deviceID: String? = nil, from: Date? = nil, to: Date? = nil) -> EndpointConfiguration {
+    public static func reportsByDevice(deviceID: UUID? = nil, from: Date? = nil, to: Date? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "reports_by_device", value: nil),
-                           PathParameter(name: "device_id", value: .string(deviceID)),
+                           PathParameter(name: "device_id", value: .uuid(deviceID)),
                            PathParameter(name: "from", value: .date(from)),
                            PathParameter(name: "to", value: .date(to))]
         let constructor = PathConstructor(group: group, elements: parameters)
@@ -268,9 +291,9 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func reportsByMachine(machineID: Int? = nil, from: Date? = nil, to: Date? = nil) -> EndpointConfiguration {
+    public static func reportsByMachine(machineID: UUID? = nil, from: Date? = nil, to: Date? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "reports_by_machine", value: nil),
-                           PathParameter(name: "machine_id", value: .int(machineID)),
+                           PathParameter(name: "machine_id", value: .uuid(machineID)),
                            PathParameter(name: "from", value: .date(from)),
                            PathParameter(name: "to", value: .date(to))]
         let constructor = PathConstructor(group: group, elements: parameters)
