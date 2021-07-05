@@ -35,6 +35,21 @@ public extension MachineModelDTO {
     static let emptyModel: MachineModelDTO = MachineModelDTO(id: UUID(), maker: "", model: "", type: .caldo)
 }
 
+public struct MachineByModel: Codable, Hashable, Identifiable, Equatable {
+    
+    public init(id: UUID, internalID: Int, factoryID: String, installation: InstallationType) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.installation = installation
+    }
+    
+    public var id: UUID
+    public var internalID: Int
+    public var factoryID: String
+    public var installation: InstallationType
+}
+
 public struct MachineModelEndpointsGroup: EndpointGroupType {
     
     public static var group = "machineModel"
@@ -50,6 +65,14 @@ public struct MachineModelEndpointsGroup: EndpointGroupType {
     public static func index() -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func machinesByModel(modelID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "machines_by_model", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
