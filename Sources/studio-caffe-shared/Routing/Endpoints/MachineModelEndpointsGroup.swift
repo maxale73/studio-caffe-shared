@@ -72,7 +72,8 @@ public struct MachineModelEndpointsGroup: EndpointGroupType {
     
     public static func machinesByModel(modelID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "machines_by_model", value: nil)
+            PathParameter(name: "machines_by_model", value: nil),
+            PathParameter(name: "modelID", value: .uuid(modelID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
