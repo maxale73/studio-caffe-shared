@@ -35,7 +35,10 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
             return .MEI7900
         } else if reference.contains("NRI C2".lowercased()) {
             return .NRI_CURRENZA_C2
+        } else if reference.contains("PROFIT".lowercased()) {
+            return .COGES_PROFIT
         }
+        
         return .none
     }
 }
