@@ -67,6 +67,17 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
     public var supplierName: String
 }
 
+public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, RequestBody {
+    internal init(productDTO: ProductDTO, purchases: [ProductPurchase]) {
+        self.productDTO = productDTO
+        self.purchases = purchases
+    }
+    
+    public var id: UUID { productDTO.id }
+    public var productDTO: ProductDTO
+    public var purchases: [ProductPurchase]
+}
+
 extension ProductDTO: RequestBody {}
 extension ProductsFilter: RequestBody {}
 extension ProductPurchase: RequestBody {}
@@ -94,6 +105,15 @@ public struct ProductEndpointsGroup: EndpointGroupType {
     public static func fetchPurchases(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "fetch_purchases", value: nil),
+            PathParameter(name: "id", value: .uuid(id))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func fetchProductAndPurchases(id: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_product_and_purchases", value: nil),
             PathParameter(name: "id", value: .uuid(id))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
