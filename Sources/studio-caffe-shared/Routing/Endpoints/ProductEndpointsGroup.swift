@@ -68,7 +68,7 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
 }
 
 public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, RequestBody {
-    internal init(productDTO: ProductDTO, purchases: [ProductPurchase]) {
+    public init(productDTO: ProductDTO, purchases: [ProductPurchase]) {
         self.productDTO = productDTO
         self.purchases = purchases
     }
