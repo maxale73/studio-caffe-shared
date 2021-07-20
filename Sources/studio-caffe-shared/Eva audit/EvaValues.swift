@@ -13,6 +13,21 @@ public enum EvaValueType: String {
     case info
 }
 
+public struct EvaValueRepresentation: Identifiable {
+    
+    public init(id: String, description: String, value: String, type: EvaValueType) {
+        self.id = id
+        self.description = description
+        self.value = value
+        self.type = type
+    }
+    
+    public var id: String
+    public var description: String
+    public var value: String
+    public var type: EvaValueType
+}
+
 public enum EvaValues: Equatable {
     
     case ID1_01(String) //ID dispositivo
@@ -223,6 +238,113 @@ public enum EvaValues: Equatable {
             case .VA3_02(let value): return ("VA3_02", "numero vendite libere", String(value), .cumulato)
             case .VA3_03(let value): return ("VA3_03", "valore vendite libere", currencyFormattedValue(for: value), .resettato)
             case .VA3_04(let value): return ("VA3_04", "numero vendite libere", String(value), .resettato)
+        }
+    }
+    
+    public var representation: EvaValueRepresentation {
+        switch self {
+            case .ID1_01(let value): return EvaValueRepresentation(id: "ID1_01", description: "ID dispositivo", value: value, type: .info)
+            case .ID1_02(let value): return EvaValueRepresentation(id: "ID1_02", description: "modello dispositivo", value: value, type: .info)
+                    
+            case .EA3_01(let value): return EvaValueRepresentation(id: "EA3_01", description: "progressivo lettura", value: String(value), type: .info)
+            case .EA3_02_03(let value): return EvaValueRepresentation(id: "EA3_02_03", description: "data lettura attuale", value: DateFormatter.localizedString(from: value, dateStyle: .medium, timeStyle: .medium), type: .info)
+            case .EA3_05_06(let value): return EvaValueRepresentation(id: "EA3_05_06", description: "data lettura precedente", value: DateFormatter.localizedString(from: value, dateStyle: .medium, timeStyle: .medium), type: .info)
+                        
+            case .BA1_01(let value): return EvaValueRepresentation(id: "BA1_01", description: "numero seriale lettore banconote", value: value, type: .info)
+            case .BA1_02(let value): return EvaValueRepresentation(id: "BA1_02", description: "modello lettore banconote", value: value, type: .info)
+            case .BA1_03(let value): return EvaValueRepresentation(id: "BA1_03", description: "revisione software lettore banconote", value: value, type: .info)
+                    
+            case .CA1_01(let value): return EvaValueRepresentation(id: "CA1_01", description: "numero seriale validatore", value: value, type: .info)
+            case .CA1_02(let value): return EvaValueRepresentation(id: "CA1_02", description: "modello validatore", value: value, type: .info)
+            case .CA1_03(let value): return EvaValueRepresentation(id: "CA1_03", description: "revisione software validatore", value: String(value), type: .info)
+                    
+            case .CA2_01(let value): return EvaValueRepresentation(id: "CA2_01", description: "importo venduto cash", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA2_02(let value): return EvaValueRepresentation(id: "CA2_02", description: "numero vendite cash", value: String(value), type: .cumulato)
+            case .CA2_03(let value): return EvaValueRepresentation(id: "CA2_03", description: "importo venduto cash", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA2_04(let value): return EvaValueRepresentation(id: "CA2_04", description: "numero vendite cash", value: String(value), type: .resettato)
+                    
+            case .CA3_01(let value): return EvaValueRepresentation(id: "CA3_01", description: "totale cash inserito (monete + banconote)", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA3_02(let value): return EvaValueRepresentation(id: "CA3_02", description: "monete in cassetta", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA3_03(let value): return EvaValueRepresentation(id: "CA3_03", description: "monete verso i tubi", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA3_04(let value): return EvaValueRepresentation(id: "CA3_04", description: "banconote in cassetta", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA3_05(let value): return EvaValueRepresentation(id: "CA3_05", description: "totale cash inserito (monete + banconote)", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA3_06(let value): return EvaValueRepresentation(id: "CA3_06", description: "monete in cassetta", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA3_07(let value): return EvaValueRepresentation(id: "CA3_07", description: "monete verso i tubi", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA3_08(let value): return EvaValueRepresentation(id: "CA3_08", description: "banconote in cassetta", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA3_09(let value): return EvaValueRepresentation(id: "CA3_09", description: "banconote in cassetta", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .CA4_01(let value): return EvaValueRepresentation(id: "CA4_01", description: "totale scaricato dai tubi (resto + manuale)", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA4_02(let value): return EvaValueRepresentation(id: "CA4_02", description: "scarico manuale tubi", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA4_03(let value): return EvaValueRepresentation(id: "CA4_03", description: "totale scaricato dai tubi (resto + manuale)", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .CA4_04(let value): return EvaValueRepresentation(id: "CA4_04", description: "scarico manuale tubi", value: currencyFormattedValue(for: value), type: .cumulato)
+                    
+            case .CA8_01(let value): return EvaValueRepresentation(id: "CA8_01", description: "cash overpay", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA8_02(let value): return EvaValueRepresentation(id: "CA8_02", description: "cash overpay", value: currencyFormattedValue(for: value), type: .cumulato)
+                    
+            case .CA10_01(let value): return EvaValueRepresentation(id: "CA10_01", description: "riempimento manuale tubi", value: currencyFormattedValue(for: value), type: .resettato)
+            case .CA10_02(let value): return EvaValueRepresentation(id: "CA10_02", description: "riempimento manuale tubi", value: currencyFormattedValue(for: value), type: .cumulato)
+                    
+            case .CA15_01(let value): return EvaValueRepresentation(id: "CA15_01", description: "totale valore tubi", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .LA1_04(let value): return EvaValueRepresentation(id: "LA1_04", description: "numero totale vendite calcolato sulla somma dei blocchi LA1", value: String(value), type: .resettato)
+            case .LA1_05(let value): return EvaValueRepresentation(id: "LA1_05", description: "numero totale vendite calcolato sulla somma dei blocchi LA1", value: String(value), type: .cumulato)
+                    
+            case .DA2_01(let value): return EvaValueRepresentation(id: "DA2_01", description: "importo venduto cashless 1", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DA2_02(let value): return EvaValueRepresentation(id: "DA2_02", description: "numero vendite cashless 1", value: String(value), type: .cumulato)
+            case .DA2_03(let value): return EvaValueRepresentation(id: "DA2_03", description: "importo venduto cashless 1", value: currencyFormattedValue(for: value), type: .resettato)
+            case .DA2_04(let value): return EvaValueRepresentation(id: "DA2_04", description: "numero vendite cashless 1", value: String(value), type: .resettato)
+                    
+            case .DA3_01(let value): return EvaValueRepresentation(id: "DA3_01", description: "importo prelevato da cashless 1", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DA3_02(let value): return EvaValueRepresentation(id: "DA3_02", description: "importo prelevato da cashless 1", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .DA4_01(let value): return EvaValueRepresentation(id: "DA4_01", description: "importo accreditato su cashless 1", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DA4_02(let value): return EvaValueRepresentation(id: "DA4_02", description: "importo accreditato su cashless 1", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .DA5_01(let value): return EvaValueRepresentation(id: "DA5_01", description: "importo sconti cashless 1", value: currencyFormattedValue(for: value), type: .resettato)
+            case .DA5_02(let value): return EvaValueRepresentation(id: "DA5_02", description: "numero vendite scontate cashless 1", value: String(value), type: .resettato)
+            case .DA5_03(let value): return EvaValueRepresentation(id: "DA5_03", description: "importo sconti cashless 1", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DA5_04(let value): return EvaValueRepresentation(id: "DA5_04", description: "numero vendite scontate cashless 1", value: String(value), type: .cumulato)
+                    
+            case .DA6_01(let value): return EvaValueRepresentation(id: "DA6_01", description: "bonus accreditato su cashless 1", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DA6_02(let value): return EvaValueRepresentation(id: "DA6_02", description: "bonus accreditato su cashless 1", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .DB2_01(let value): return EvaValueRepresentation(id: "DB2_01", description: "importo venduto cashless 2", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DB2_02(let value): return EvaValueRepresentation(id: "DB2_02", description: "numero venditye cashless 2", value: String(value), type: .cumulato)
+            case .DB2_03(let value): return EvaValueRepresentation(id: "DB2_03", description: "importo venduto cashless 2", value: currencyFormattedValue(for: value), type: .resettato)
+            case .DB2_04(let value): return EvaValueRepresentation(id: "DB2_04", description: "numero venditye cashless 2", value: String(value), type: .resettato)
+                    
+            case .DB3_01(let value): return EvaValueRepresentation(id: "DB3_01", description: "importo prelevato da cashless 2", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DB3_02(let value): return EvaValueRepresentation(id: "DB3_02", description: "importo prelevato da cashless 2", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .DB4_01(let value): return EvaValueRepresentation(id: "DB4_01", description: "importo accreditato su cashless 2", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DB4_02(let value): return EvaValueRepresentation(id: "DB4_02", description: "importo accreditato su cashless 2", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .DB5_01(let value): return EvaValueRepresentation(id: "DB5_01", description: "importo sconti cashless 2", value: currencyFormattedValue(for: value), type: .resettato)
+            case .DB5_02(let value): return EvaValueRepresentation(id: "DB5_02", description: "numero vendite scontate cashless 2", value: String(value), type: .resettato)
+            case .DB5_03(let value): return EvaValueRepresentation(id: "DB5_03", description: "importo sconti cashless 2", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DB5_04(let value): return EvaValueRepresentation(id: "DB5_04", description: "numero vendite scontate cashless 2", value: String(value), type: .cumulato)
+                    
+            case .DB6_01(let value): return EvaValueRepresentation(id: "DB6_01", description: "bonus accreditato su cashless 2", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .DB6_02(let value): return EvaValueRepresentation(id: "DB6_02", description: "bonus accreditato su cashless 2", value: currencyFormattedValue(for: value), type: .resettato)
+                    
+            case .VA1_01(let value): return EvaValueRepresentation(id: "VA1_01", description: "totale venduto", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .VA1_02(let value): return EvaValueRepresentation(id: "VA1_02", description: "numero vendite", value: String(value), type: .cumulato)
+            case .VA1_03(let value): return EvaValueRepresentation(id: "VA1_03", description: "totale venduto", value: currencyFormattedValue(for: value), type: .resettato)
+            case .VA1_04(let value): return EvaValueRepresentation(id: "VA1_04", description: "numero vendite", value: String(value), type: .resettato)
+            case .VA1_05(let value): return EvaValueRepresentation(id: "VA1_05", description: "totale scontato", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .VA1_06(let value): return EvaValueRepresentation(id: "VA1_06", description: "numero vendite scontate", value: String(value), type: .cumulato)
+            case .VA1_07(let value): return EvaValueRepresentation(id: "VA1_07", description: "totale scontato", value: currencyFormattedValue(for: value), type: .resettato)
+            case .VA1_08(let value): return EvaValueRepresentation(id: "VA1_08", description: "numero vendite scontate", value: String(value), type: .resettato)
+                    
+            case .VA2_01(let value): return EvaValueRepresentation(id: "VA2_01", description: "valore prove", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .VA2_02(let value): return EvaValueRepresentation(id: "VA2_02", description: "numero prove", value: String(value), type: .cumulato)
+            case .VA2_03(let value): return EvaValueRepresentation(id: "VA2_03", description: "valore prove", value: currencyFormattedValue(for: value), type: .resettato)
+            case .VA2_04(let value): return EvaValueRepresentation(id: "VA2_04", description: "numero prove", value: String(value), type: .resettato)
+                    
+            case .VA3_01(let value): return EvaValueRepresentation(id: "VA3_01", description: "valore vendite libere", value: currencyFormattedValue(for: value), type: .cumulato)
+            case .VA3_02(let value): return EvaValueRepresentation(id: "VA3_02", description: "numero vendite libere", value: String(value), type: .cumulato)
+            case .VA3_03(let value): return EvaValueRepresentation(id: "VA3_03", description: "valore vendite libere", value: currencyFormattedValue(for: value), type: .resettato)
+            case .VA3_04(let value): return EvaValueRepresentation(id: "VA3_04", description: "numero vendite libere", value: String(value), type: .resettato)
         }
     }
     
