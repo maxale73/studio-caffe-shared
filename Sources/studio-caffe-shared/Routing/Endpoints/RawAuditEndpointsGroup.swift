@@ -1,6 +1,17 @@
 import Foundation
 
 public struct RawAuditInfo: Identifiable, Codable {
+    
+    public init(id: UUID, rawAudit: String, machineID: Int, machineModel: MachineModelDTO, deviceModel: AdeDeviceModel, sellingPointID: Int, customer: String) {
+        self.id = id
+        self.rawAudit = rawAudit
+        self.machineID = machineID
+        self.machineModel = machineModel
+        self.deviceModel = deviceModel
+        self.sellingPointID = sellingPointID
+        self.customer = customer
+    }
+    
     public var id: UUID
     public var rawAudit: String
     public var machineID: Int
