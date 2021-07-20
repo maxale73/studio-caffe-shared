@@ -28,7 +28,7 @@ public struct EvaValueRepresentation: Identifiable {
     public var type: EvaValueType
 }
 
-public enum EvaValues: Equatable {
+public enum EvaValues: Equatable, Identifiable {
     
     case ID1_01(String) //ID dispositivo
     case ID1_02(String) //modello dispositivo
