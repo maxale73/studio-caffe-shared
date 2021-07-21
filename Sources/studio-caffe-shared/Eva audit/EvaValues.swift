@@ -354,7 +354,9 @@ public enum EvaValues: Equatable {
     }
 }
 
-public enum EvaValueIdentifier: String {
+public enum EvaValueIdentifier: String, Identifiable, Equatable {
+    
+    public var id: String { rawValue }
     
     case ID1_01 = "ID dispositivo"
     case ID1_02 = "modello dispositivo"
