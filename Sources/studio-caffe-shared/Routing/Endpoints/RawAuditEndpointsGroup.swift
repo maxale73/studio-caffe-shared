@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RawAuditInfo: Identifiable, Codable {
+public struct RawAuditInfo: Identifiable, Codable, Equatable {
     
     public init(id: UUID, rawAudit: String, machineID: Int, machineModel: MachineModelDTO, deviceModel: AdeDeviceModel, sellingPointID: Int, customer: String) {
         self.id = id
