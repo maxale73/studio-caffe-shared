@@ -57,8 +57,9 @@ public struct AuditPrice: Identifiable, Hashable {
     }
 }
 
-public struct AuditProduct: Equatable, Hashable {
+public struct AuditProduct: Equatable, Hashable, Identifiable {
     
+    public let id: UUID = UUID()
     public var code: String
     public var prices: [AuditPrice]
     
