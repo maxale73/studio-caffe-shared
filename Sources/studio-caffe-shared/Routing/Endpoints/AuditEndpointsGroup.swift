@@ -174,17 +174,20 @@ public struct ParsedAuditToSave: Codable, RequestBody {
     }
 }
 
-public struct CorrispettiviPerData: Codable, Equatable {
+public struct CorrispettiviPerData: Codable, Equatable, Identifiable {
     public init(date: Date, values: EvaAdeValues) {
+        self.id = UUID()
         self.date = date
         self.values = values
     }
     
+    public let id: UUID
     public var date: Date
     public var values: EvaAdeValues
     
     public static func == (lhs: CorrispettiviPerData, rhs: CorrispettiviPerData) -> Bool {
         return lhs.date == rhs.date &&
+            lhs.id == rhs.id &&
             lhs.values == rhs.values
     }
 }
