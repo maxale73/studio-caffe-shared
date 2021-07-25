@@ -54,7 +54,7 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
     public let model: AdeDeviceModel
 }
 
-public struct FetchedDevice: Codable, Equatable {
+public struct FetchedDevice: Codable, Equatable, Identifiable {
     
     public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfigurationDTO, machineModel: MachineModelDTO? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil) {
         self.id = id
