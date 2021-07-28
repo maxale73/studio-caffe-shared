@@ -47,7 +47,8 @@ public struct EvaBlock {
     }
 }
 
-public struct AuditPrice: Identifiable, Hashable {
+public struct AuditPrice: Identifiable, Hashable, Equatable {
+    
     public let id: UUID = UUID()
     public var value: Double
     public var vends: Int
@@ -76,6 +77,8 @@ public struct AuditProduct: Equatable, Hashable, Identifiable {
     }
     
     public static func == (lhs: AuditProduct, rhs: AuditProduct) -> Bool {
-        lhs.code == rhs.code
+        lhs.id == rhs.id &&
+        lhs.code == rhs.code &&
+            lhs.prices == rhs.prices
     }
 }
