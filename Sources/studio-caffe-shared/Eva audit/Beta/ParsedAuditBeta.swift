@@ -1133,9 +1133,9 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
 }
 
 extension ParsedAuditBeta: Equatable {
-    public static func == (lhs: ParsedAuditBeta, rhs: ParsedAuditBeta) -> Bool {
-        return lhs.dispositivoID_ID1_01 == rhs.dispositivoID_ID1_01 && lhs.letturaID_EA3_01 == rhs.letturaID_EA3_01
-    }
+//    public static func == (lhs: ParsedAuditBeta, rhs: ParsedAuditBeta) -> Bool {
+//        return lhs.dispositivoID_ID1_01 == rhs.dispositivoID_ID1_01 && lhs.letturaID_EA3_01 == rhs.letturaID_EA3_01
+//    }
 }
 
 extension ParsedAuditBeta {
