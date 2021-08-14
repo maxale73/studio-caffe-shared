@@ -381,6 +381,28 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
+    mutating public func updateValue(id: String, newValue: String) {
+        let rawBlocks = rawReport.components(separatedBy: "\n")
+        let indexes = id.components(separatedBy: "_")
+        guard let blockName = indexes.first,
+                let indexString = indexes.last,
+                let index = Int(indexString),
+                let oldBlock = rawBlocks.first(where: { $0.hasPrefix(blockName) }) else { return }
+        var values = oldBlock.components(separatedBy: "*")
+        if index < values.count {
+            values.remove(at: index)
+            values.insert(newValue, at: index)
+            var newBlock = ""
+            for v in values {
+                newBlock.append(v + "*")
+            }
+            newBlock.removeLast()
+            rawReport = rawReport.replacingOccurrences(of: oldBlock, with: newBlock)
+            parsed = false
+            parseReport()
+        }
+    }
+    
     public func priceList() -> [AuditProduct] {
         var blocks: [EvaBlock] = []
         

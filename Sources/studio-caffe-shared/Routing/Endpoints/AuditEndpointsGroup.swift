@@ -190,6 +190,10 @@ public struct CorrispettiviPerData: Codable, Equatable, Identifiable {
             lhs.id == rhs.id &&
             lhs.values == rhs.values
     }
+    
+    public static var empty: CorrispettiviPerData {
+        CorrispettiviPerData(date: Date(), values: EvaAdeValues(cashBox: 0.0, contato: 0.0, differenza: 0.0, incassato: 0.0, incassatoVendita: 0.0, incassatoRicarica: 0.0, venduto: 0.0, vendutoContante: 0.0, vendutoNoContante: 0.0, caricatoTubiResto: 0.0, resoTubiResto: 0.0, caricatoManualeTubiResto: 0.0, resoManualeTubiResto: 0.0, residuoChiavi: 0.0, cashOverpay: 0.0))
+    }
 }
 
 public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody {

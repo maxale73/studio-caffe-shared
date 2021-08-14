@@ -626,3 +626,17 @@ public struct EvaAdeValues: Codable, Equatable {
             lhs.cashOverpay == rhs.cashOverpay
     }
 }
+
+extension EvaAdeValues {
+    public var controlloCassaContanti: Double {
+        incassato - caricatoTubiResto - cashBox
+    }
+    
+    public var controlloChiavi: Double {
+        incassatoRicarica - vendutoNoContante - residuoChiavi
+    }
+    
+    public var controlloCassaProv: Double {
+        (vendutoContante + incassatoRicarica + resoTubiResto + caricatoManualeTubiResto + cashOverpay) - (incassato + resoManualeTubiResto)
+    }
+}
