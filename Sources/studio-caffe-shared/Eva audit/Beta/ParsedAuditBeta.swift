@@ -403,6 +403,33 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
+    mutating public func updateDate(id: String, newValue: Date) {
+        let rawBlocks = rawReport.components(separatedBy: "\n")
+        guard id == "EA3_02_03" || id == "EA3_05_06" else { return }
+        guard let old = rawBlocks.first(where: { $0.hasPrefix("EA3") }) else { return }
+        var values = old.components(separatedBy: "*")
+        guard values.count > 6 else { return }
+        let customFormatter = DateFormatter()
+        customFormatter.dateFormat = "yyMMdd*HHmmss"
+        var new: String = ""
+        if id == "EA3_02_03" {
+            values.remove(at: 2)
+            values.remove(at: 3)
+            values.insert(customFormatter.string(from: newValue), at: 2)
+        } else if id == "EA3_05_06" {
+            values.remove(at: 5)
+            values.remove(at: 6)
+            values.insert(customFormatter.string(from: newValue), at: 5)
+        }
+        for v in values {
+            new.append(v + "*")
+        }
+        new.removeLast()
+        rawReport = rawReport.replacingOccurrences(of: old, with: new)
+        parsed = false
+        parseReport()
+    }
+    
     public func priceList() -> [AuditProduct] {
         var blocks: [EvaBlock] = []
         
