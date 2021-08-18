@@ -33,6 +33,6 @@ extension Date {
             case .annuale:
                 endDate = calendar.date(byAdding: .month, value: 12, to: oldEndDate)!
         }
-        return (startDate, endDate)
+        return (startDate, Date.endOfDay(from: endDate))
     }
 }
