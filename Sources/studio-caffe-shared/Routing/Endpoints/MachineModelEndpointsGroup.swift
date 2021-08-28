@@ -32,7 +32,9 @@ public extension MachineModelDTO {
         maker + " " + model
     }
     
-    static let emptyModel: MachineModelDTO = MachineModelDTO(id: UUID(), maker: "", model: "", type: .caldo)
+    static var emptyModel: MachineModelDTO {
+        MachineModelDTO(id: UUID(), maker: "", model: "", type: .caldo)
+    }
 }
 
 public struct MachineByModel: Codable, Hashable, Identifiable, Equatable {
