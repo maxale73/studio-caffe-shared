@@ -47,7 +47,7 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
         self.tags = tags
     }
     
-    static var empty: ProductDTO {
+    public static var empty: ProductDTO {
         ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .prodotti, iva: .ventidue, packages: [], tags: [])
     }
 }
@@ -83,7 +83,7 @@ public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, R
 }
 
 extension ProductAndPurchases {
-    static var empty: ProductAndPurchases {
+    public static var empty: ProductAndPurchases {
         ProductAndPurchases(productDTO: .empty, purchases: [])
     }
 }
