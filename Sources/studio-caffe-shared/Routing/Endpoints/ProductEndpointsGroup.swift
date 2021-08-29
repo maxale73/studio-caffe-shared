@@ -46,6 +46,10 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
         self.packages = packages
         self.tags = tags
     }
+    
+    static var empty: ProductDTO {
+        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .prodotti, iva: .ventidue, packages: [], tags: [])
+    }
 }
 
 public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
@@ -76,6 +80,12 @@ public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, R
     public var id: UUID { productDTO.id }
     public var productDTO: ProductDTO
     public var purchases: [ProductPurchase]
+}
+
+extension ProductAndPurchases {
+    static var empty: ProductAndPurchases {
+        ProductAndPurchases(productDTO: .empty, purchases: [])
+    }
 }
 
 extension ProductDTO: RequestBody {}
