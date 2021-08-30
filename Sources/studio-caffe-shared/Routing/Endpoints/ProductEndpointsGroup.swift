@@ -129,5 +129,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func searchByBarcode(barcode: String? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "search_by_barcode", value: nil),
+            PathParameter(name: "barcode", value: .string(barcode))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 
