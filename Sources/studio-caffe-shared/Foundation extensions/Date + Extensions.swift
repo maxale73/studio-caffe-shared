@@ -61,7 +61,7 @@ public extension Date {
         let beginOfMonth = calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: nowComponents.month, day: 1))!
         let endOfPreviousMonth = calendar.date(byAdding: .day, value: -1, to: beginOfMonth)!
         let beginOfPreviousMonth = calendar.date(byAdding: .month, value: -1, to: beginOfMonth)!
-        return (beginOfPreviousMonth, endOfPreviousMonth)
+        return (.beginOfDay(from: beginOfPreviousMonth), .endOfDay(from: endOfPreviousMonth))
     }
     
     static func settimanaCorrente(calendar: Calendar) -> (from: Date, to: Date) {
