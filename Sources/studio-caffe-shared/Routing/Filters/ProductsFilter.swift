@@ -9,10 +9,11 @@ import Foundation
 
 public struct ProductsFilter: Equatable, Codable, Identifiable {
     
-    public init(textFilter: String = "", supplierID: UUID? = nil, category: ProductCategory? = nil) {
+    public init(textFilter: String = "", supplierID: UUID? = nil, category: ProductCategory? = nil, barcode: String? = nil) {
         self.id = UUID()
         self.supplierID = supplierID
         self.category = category
+        self.barcode = barcode
         self.textFilter = textFilter
     }
     
@@ -20,6 +21,7 @@ public struct ProductsFilter: Equatable, Codable, Identifiable {
     public var id: UUID
     public var supplierID: UUID?
     public var category: ProductCategory?
+    public var barcode: String?
     public var textFilter: String
     
     public var empty: Bool {
