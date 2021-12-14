@@ -97,7 +97,7 @@ public extension Date {
             let lastWeekend = calendar.date(byAdding: .day, value: -7, to: to)!
             let lastWeekendInterval = calendar.nextWeekend(startingAfter: lastWeekend)!
             let toDate = lastWeekendInterval.end.addingTimeInterval(-1)
-            let fromDate = calendar.date(byAdding: .day, value: -6, to: toDate)!
+            let fromDate = calendar.date(byAdding: .day, value: -7, to: toDate)!
             return (fromDate, toDate)
         }
     }
