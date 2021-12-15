@@ -41,19 +41,19 @@ public extension Date {
     static func ultimoMese(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -1, to: to) ?? Date.defaultStartDate
-        return (from, to)
+        return (.beginOfDay(from: from), to)
     }
     
     static func ultimi3Mesi(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -3, to: to) ?? Date.defaultStartDate
-        return (from, to)
+        return (.beginOfDay(from: from), to)
     }
     
     static func ultimi6Mesi(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -6, to: to) ?? Date.defaultStartDate
-        return (from, to)
+        return (.beginOfDay(from: from), to)
     }
     
     static func mesePrecedente(calendar: Calendar) -> (from: Date, to: Date) {
@@ -82,7 +82,8 @@ public extension Date {
     
     static func ultimaSettimana(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
-        return (calendar.date(byAdding: .day, value: -6, to: to)!, to)
+        let from = calendar.date(byAdding: .day, value: -6, to: to)!
+        return (.beginOfDay(from: from), to)
     }
     
     static func settimanaPrecedente(calendar: Calendar) -> (from: Date, to: Date) {
@@ -118,7 +119,7 @@ public extension Date {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .autoupdatingCurrent
         let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
-        return calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: nowComponents.month, day: 1)) ?? Date.defaultStartDate
+        return calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: nowComponents.month, day: 1)) ?? .distantPast
     }
     
     static var beginOfYear: Date {
