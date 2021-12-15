@@ -100,7 +100,8 @@ public struct ReportByMachine: Identifiable, Equatable, Codable {
 }
 
 public struct ReportByDevice: Identifiable, Equatable, Codable {
-    public init(customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, date: Date) {
+    public init(auditID: UUID, customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, date: Date) {
+        self.id = auditID
         self.customer = customer
         self.sellingPoint = sellingPoint
         self.site = site
@@ -110,9 +111,7 @@ public struct ReportByDevice: Identifiable, Equatable, Codable {
         self.date = date
     }
     
-    public var id: UUID {
-        UUID()
-    }
+    public var id: UUID
     public var customer: String
     public var sellingPoint: Int
     public var site: String
