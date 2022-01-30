@@ -13,6 +13,7 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
     case MEI7000 = "MEI 7000"
     case MEI7900 = "MEI 7900"
     case MEI690 = "MEI 690"
+    case MEI8000 = "MEI 8000"
     case MEI_GRYPHON = "MEI Gryphon"
     case COGES_PROFIT = "Coges Profit"
     case NRI_CURRENZA_C2 = "NRI Currenza C2"
@@ -33,6 +34,8 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
             return .NEWIS_HI
         } else if reference.contains("CF7900".lowercased()) {
             return .MEI7900
+        } else if reference.contains("CF8000".lowercased()) {
+            return .MEI8000
         } else if reference.contains("NRI C2".lowercased()) {
             return .NRI_CURRENZA_C2
         } else if reference.contains("PROFIT".lowercased()) {
