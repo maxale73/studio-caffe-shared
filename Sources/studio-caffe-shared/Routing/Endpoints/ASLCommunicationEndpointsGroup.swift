@@ -34,6 +34,14 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     }
 }
 
+public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
+    public var id: UUID
+    public var communications: [ASLCommunicationDTO]
+    public var customer: String
+    public var sellingPoint: String
+    public var ubicazione: String
+}
+
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
     public static var group = "asl_communication"
     
@@ -43,5 +51,14 @@ public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: communication)
+    }
+    
+    public static func indexBySellingPoint(sellingPointID: UUID) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_by_selling_point", value: nil),
+            PathParameter(name: "selling_point_id", value: .uuid(sellingPointID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
     }
 }
