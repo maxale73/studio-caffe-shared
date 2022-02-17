@@ -14,7 +14,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
         self.referencePeriod = referencePeriod
         self.controlledTemperature = controlledTemperature
         self.date = date
-        self.sellingPointID = sellingPointID
+        self.sellingPoint = sellingPointID
     }
     
     public var id: UUID
@@ -22,7 +22,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     public var referencePeriod: String
     public var date: Date
     public var controlledTemperature: Bool
-    public var sellingPointID: IDType
+    public var sellingPoint: IDType
     
     public static func == (lhs: ASLCommunicationDTO, rhs: ASLCommunicationDTO) -> Bool {
         return lhs.id == rhs.id &&
@@ -30,7 +30,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
             lhs.referencePeriod == rhs.referencePeriod &&
             lhs.controlledTemperature == rhs.controlledTemperature &&
             lhs.date == rhs.date &&
-            lhs.sellingPointID == rhs.sellingPointID
+            lhs.sellingPoint == rhs.sellingPoint
     }
 }
 
