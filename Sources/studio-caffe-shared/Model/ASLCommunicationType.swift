@@ -6,7 +6,7 @@ public enum ASLCommunicationType: String, Codable, Identifiable, CaseIterable, R
         rawValue
     }
     case installazione
-    case disintallazione
+    case disinstallazione
 }
 
 extension ASLCommunicationType: CustomStringConvertible {
