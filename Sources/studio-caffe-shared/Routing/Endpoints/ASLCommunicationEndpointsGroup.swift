@@ -69,4 +69,13 @@ public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
     }
+    
+    public static func delete(communicationID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "delete", value: nil),
+            PathParameter(name: "communication_ID", value: .uuid(communicationID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: nil)
+    }
 }
