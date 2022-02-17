@@ -7,7 +7,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
                 referencePeriod: String,
                 date: Date,
                 controlledTemperature: Bool,
-                sellingPointID: UUID) {
+                sellingPointID: IDType) {
         
         self.id = id
         self.type = type
@@ -22,7 +22,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     public var referencePeriod: String
     public var date: Date
     public var controlledTemperature: Bool
-    public var sellingPointID: UUID
+    public var sellingPointID: IDType
     
     public static func == (lhs: ASLCommunicationDTO, rhs: ASLCommunicationDTO) -> Bool {
         return lhs.id == rhs.id &&
