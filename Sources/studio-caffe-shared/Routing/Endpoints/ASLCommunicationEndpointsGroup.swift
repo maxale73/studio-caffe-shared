@@ -7,12 +7,14 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
                 referencePeriod: String,
                 date: Date,
                 controlledTemperature: Bool,
+                note: String,
                 sellingPointID: IDType) {
         
         self.id = id
         self.type = type
         self.referencePeriod = referencePeriod
         self.controlledTemperature = controlledTemperature
+        self.note = note
         self.date = date
         self.sellingPoint = sellingPointID
     }
@@ -22,6 +24,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     public var referencePeriod: String
     public var date: Date
     public var controlledTemperature: Bool
+    public var note: String
     public var sellingPoint: IDType
     
     public static func == (lhs: ASLCommunicationDTO, rhs: ASLCommunicationDTO) -> Bool {
@@ -30,6 +33,7 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
             lhs.referencePeriod == rhs.referencePeriod &&
             lhs.controlledTemperature == rhs.controlledTemperature &&
             lhs.date == rhs.date &&
+            lhs.note == rhs.note &&
             lhs.sellingPoint == rhs.sellingPoint
     }
 }
