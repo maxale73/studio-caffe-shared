@@ -54,6 +54,39 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
     }
 }
 
+public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable {
+    
+    public init(id: UUID, communications: [ASLCommunicationDTO], sellingPointID: Int, site: String, currentlyInstalled: Bool) {
+        self.id = id
+        self.communications = communications
+        self.sellingPointID = sellingPointID
+        self.site = site
+        self.currentlyInstalled = currentlyInstalled
+    }
+    
+    public var id: UUID //sellingPointID
+    public var communications: [ASLCommunicationDTO]
+    public var sellingPointID: Int
+    public var site: String
+    public var currentlyInstalled: Bool
+}
+
+public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
+    public init(id: UUID, city: String, addressDescription: String, customer: String, sellingPoints: [ASLCommunicationsSellingPoint]) {
+        self.id = id
+        self.city = city
+        self.addressDescription = addressDescription
+        self.customer = customer
+        self.sellingPoints = sellingPoints
+    }
+    
+    public var id: UUID //addressID
+    public var city: String
+    public var addressDescription: String
+    public var customer: String
+    public var sellingPoints: [ASLCommunicationsSellingPoint]
+}
+
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
     public static var group = "asl_communication"
     
@@ -69,6 +102,15 @@ public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
         let parameters = [
             PathParameter(name: "index_by_selling_point", value: nil),
             PathParameter(name: "selling_point_id", value: .uuid(sellingPointID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
+    }
+    
+    public static func indexByAddress(customerID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_by_address", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
