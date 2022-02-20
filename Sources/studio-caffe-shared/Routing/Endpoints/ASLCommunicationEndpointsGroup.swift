@@ -109,6 +109,16 @@ public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
     public var addressDescription: String
     public var customer: String
     public var sellingPoints: [ASLCommunicationsSellingPoint]
+    
+    public var installedMachines: Int {
+        sellingPoints.filter({ $0.currentlyInstalled }).count
+    }
+    
+    public var communicationsBalance: Int {
+        sellingPoints.reduce(0) { partialResult, sp in
+            partialResult + sp.communicationsBalance()
+        }
+    }
 }
 
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
