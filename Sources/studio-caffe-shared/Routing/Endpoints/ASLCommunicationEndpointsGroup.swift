@@ -38,6 +38,30 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     }
 }
 
+public protocol ASLSellingPoint {
+    var communications: [ASLCommunicationDTO] { get set }
+    func communicationsBalance() -> Int
+    func communicationsAnomalies() -> Bool
+    func noCommunications() -> Bool
+}
+
+extension ASLSellingPoint {
+    public func communicationsBalance() -> Int {
+        let disinstallations = communications.filter({ $0.type == .disinstallazione }).count
+        let installations = communications.filter({ $0.type == .installazione }).count
+        return installations - disinstallations
+    }
+    
+    public func communicationsAnomalies() -> Bool {
+        let bal = communicationsBalance()
+        return bal < 0 || bal > 1
+    }
+    
+    public func noCommunications() -> Bool {
+        communications.isEmpty
+    }
+}
+
 public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
     public var id: UUID
     public var communications: [ASLCommunicationDTO]
