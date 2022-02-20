@@ -62,7 +62,7 @@ extension ASLSellingPoint {
     }
 }
 
-public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
+public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, ASLSellingPoint {
     public var id: UUID
     public var communications: [ASLCommunicationDTO]
     public var customer: String
@@ -78,7 +78,7 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
     }
 }
 
-public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable {
+public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable, ASLSellingPoint {
     
     public init(id: UUID, communications: [ASLCommunicationDTO], sellingPointID: Int, site: String, currentlyInstalled: Bool) {
         self.id = id
