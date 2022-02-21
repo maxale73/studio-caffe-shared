@@ -47,6 +47,7 @@ public protocol ASLSellingPoint {
     func notCommunicated() -> Bool
     func correctlyCommunicated() -> Bool
     func incorrectlyCommunicated() -> Bool
+    func notes() -> String
 }
 
 extension ASLSellingPoint {
@@ -75,6 +76,20 @@ extension ASLSellingPoint {
     
     public func incorrectlyCommunicated() -> Bool {
         (!currentlyInstalled && communicationsBalance() == 1) || communicationsAnomalies()
+    }
+    
+    public func notes() -> String {
+        var notes = ""
+        for com in ASLCommunicationDTO {
+            if !com.note.isEmpty {
+                notes.append(com.date.formatted(date: .short, time: .omitted))
+                notes.append(" - ")
+                notes.append(com.note)
+                notes.append("\n")
+            }
+        }
+        notes.removeLast()
+        return notes
     }
 }
 
