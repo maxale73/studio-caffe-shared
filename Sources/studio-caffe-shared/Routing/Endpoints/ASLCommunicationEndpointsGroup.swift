@@ -88,7 +88,9 @@ extension ASLSellingPoint {
                 notes.append("\n")
             }
         }
-        notes.removeLast()
+        if !notes.isEmpty {
+            notes.removeLast()
+        }
         return notes
     }
 }
