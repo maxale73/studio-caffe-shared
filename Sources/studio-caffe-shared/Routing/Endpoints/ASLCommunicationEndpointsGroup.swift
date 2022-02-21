@@ -40,9 +40,13 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
 
 public protocol ASLSellingPoint {
     var communications: [ASLCommunicationDTO] { get set }
+    var currentlyInstalled: Bool { get set }
     func communicationsBalance() -> Int
     func communicationsAnomalies() -> Bool
     func noCommunications() -> Bool
+    func notCommunicated() -> Bool
+    func correctlyCommunicated() -> Bool
+    func incorrectlyCommunicated() -> Bool
 }
 
 extension ASLSellingPoint {
@@ -59,6 +63,18 @@ extension ASLSellingPoint {
     
     public func noCommunications() -> Bool {
         communications.isEmpty
+    }
+    
+    public func notCommunicated() -> Bool {
+        currentlyInstalled && communicationsBalance() == 0
+    }
+    
+    public func correctlyCommunicated() -> Bool {
+        (!currentlyInstalled && communicationsBalance() == 0) || (currentlyInstalled && communicationsBalance() == 1)
+    }
+    
+    public func incorrectlyCommunicated() -> Bool {
+        (!currentlyInstalled && communicationsBalance() == 1) || communicationsAnomalies()
     }
 }
 
