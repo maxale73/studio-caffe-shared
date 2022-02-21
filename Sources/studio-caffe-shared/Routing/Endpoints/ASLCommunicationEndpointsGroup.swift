@@ -80,9 +80,9 @@ extension ASLSellingPoint {
     
     public func notes() -> String {
         var notes = ""
-        for com in ASLCommunicationDTO {
+        for com in communications {
             if !com.note.isEmpty {
-                notes.append(com.date.formatted(date: .short, time: .omitted))
+                notes.append(com.date.formatted(date: .numeric, time: .omitted))
                 notes.append(" - ")
                 notes.append(com.note)
                 notes.append("\n")
