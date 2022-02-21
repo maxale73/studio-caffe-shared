@@ -141,13 +141,12 @@ public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
     }
     
-    public static func indexByAddress(customerID: UUID? = nil) -> EndpointConfiguration {
+    public static func indexByAddress(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_by_address", value: nil),
-            PathParameter(name: "customer_id", value: .uuid(customerID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get, body: nil)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
     public static func delete(communicationID: UUID? = nil) -> EndpointConfiguration {
