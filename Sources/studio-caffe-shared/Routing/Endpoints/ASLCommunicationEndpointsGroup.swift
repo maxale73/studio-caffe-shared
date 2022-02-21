@@ -84,6 +84,7 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, ASLSellin
     public var customer: String
     public var sellingPoint: Int
     public var ubicazione: String
+    public var currentlyInstalled: Bool = false
     
     public init(id: UUID, communications: [ASLCommunicationDTO], customer: String, sellingPoint: Int, ubicazione: String) {
         self.id = id
