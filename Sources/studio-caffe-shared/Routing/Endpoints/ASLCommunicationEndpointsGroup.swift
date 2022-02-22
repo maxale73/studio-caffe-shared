@@ -156,6 +156,10 @@ public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
             partialResult + sp.communicationsBalance()
         }
     }
+    
+    public var notes: [String] {
+        sellingPoints.flatMap({ $0.notes() })
+    }
 }
 
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
