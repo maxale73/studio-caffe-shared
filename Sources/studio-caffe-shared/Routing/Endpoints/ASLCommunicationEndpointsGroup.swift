@@ -41,13 +41,14 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
 public protocol ASLSellingPoint {
     var communications: [ASLCommunicationDTO] { get set }
     var currentlyInstalled: Bool { get set }
+    var sellingPoint: Int { get set }
     func communicationsBalance() -> Int
     func communicationsAnomalies() -> Bool
     func noCommunications() -> Bool
     func notCommunicated() -> Bool
     func correctlyCommunicated() -> Bool
     func incorrectlyCommunicated() -> Bool
-    func notes() -> String
+    func notes() -> [String]
 }
 
 extension ASLSellingPoint {
@@ -78,10 +79,12 @@ extension ASLSellingPoint {
         (!currentlyInstalled && communicationsBalance() == 1) || communicationsAnomalies()
     }
     
-    public func notes() -> String {
-        var notes = ""
+    public func notes() -> [String] {
+        var notes = [String]()
         for com in communications {
             if !com.note.isEmpty {
+                notes.append(sellingPoint.textDescription)
+                notes.append(" - ")
                 notes.append(com.date.formatted(date: .numeric, time: .omitted))
                 notes.append(" - ")
                 notes.append(com.note)
@@ -114,17 +117,17 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, ASLSellin
 
 public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable, ASLSellingPoint {
     
-    public init(id: UUID, communications: [ASLCommunicationDTO], sellingPointID: Int, site: String, currentlyInstalled: Bool) {
+    public init(id: UUID, communications: [ASLCommunicationDTO], sellingPoint: Int, site: String, currentlyInstalled: Bool) {
         self.id = id
         self.communications = communications
-        self.sellingPointID = sellingPointID
+        self.sellingPoint = sellingPoint
         self.site = site
         self.currentlyInstalled = currentlyInstalled
     }
     
     public var id: UUID //sellingPointID
     public var communications: [ASLCommunicationDTO]
-    public var sellingPointID: Int
+    public var sellingPoint: Int
     public var site: String
     public var currentlyInstalled: Bool
 }

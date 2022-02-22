@@ -26,6 +26,18 @@ public extension Array where Element: StringProtocol {
         }
         return !retString.isEmpty ? String(retString.dropLast()) : ""
     }
+    
+    func toNewLineSeparated() -> String {
+        if self.isEmpty { return "" }
+        var retString = ""
+        for e in self {
+            if !e.isEmpty {
+                retString.append(contentsOf: e)
+                retString.append("\n")
+            }
+        }
+        return !retString.isEmpty ? String(retString.dropLast()) : ""
+    }
 }
 
 extension String: RequestBody {}
