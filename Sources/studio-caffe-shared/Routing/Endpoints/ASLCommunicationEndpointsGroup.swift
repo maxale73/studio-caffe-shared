@@ -83,16 +83,14 @@ extension ASLSellingPoint {
         var notes = [String]()
         for com in communications {
             if !com.note.isEmpty {
-                notes.append(sellingPoint.textDescription)
-                notes.append(" - ")
-                notes.append(com.date.formatted(date: .numeric, time: .omitted))
-                notes.append(" - ")
-                notes.append(com.note)
-                notes.append("\n")
+                var str = ""
+                str.append(sellingPoint.textDescription)
+                str.append(" - ")
+                str.append(com.date.formatted(date: .numeric, time: .omitted))
+                str.append(" - ")
+                str.append(com.note)
+                notes.append(str)
             }
-        }
-        if !notes.isEmpty {
-            notes.removeLast()
         }
         return notes
     }
