@@ -38,68 +38,68 @@ public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody
     }
 }
 
-public protocol ASLSellingPoint {
-    var communications: [ASLCommunicationDTO] { get set }
-    var currentlyInstalled: Bool { get set }
-    var sellingPoint: Int { get set }
-    func communicationsBalance() -> Int
-    func communicationsAnomalies() -> Bool
-    func noCommunications() -> Bool
-    func notCommunicated() -> Bool
-    func correctlyCommunicated() -> Bool
-    func incorrectlyCommunicated() -> Bool
-    func notes() -> [String]
-}
-
-extension ASLSellingPoint {
-    public func communicationsBalance() -> Int {
-        let disinstallations = communications.filter({ $0.type == .disinstallazione }).count
-        let installations = communications.filter({ $0.type == .installazione }).count
-        return installations - disinstallations
-    }
-    
-    public func communicationsAnomalies() -> Bool {
-        let bal = communicationsBalance()
-        return bal < -1 || bal > 1
-    }
-    
-    public func noCommunications() -> Bool {
-        communications.isEmpty
-    }
-    
-    public func notCommunicated() -> Bool {
-        (currentlyInstalled && communicationsBalance() == 0) || (!currentlyInstalled && communicationsBalance() == 1)
-    }
-    
-    public func correctlyCommunicated() -> Bool {
-        (!currentlyInstalled && communicationsBalance() == 0) || (currentlyInstalled && communicationsBalance() == 1)
-    }
-    
-    public func notes() -> [String] {
-        var notes = [String]()
-        for com in communications {
-            if !com.note.isEmpty {
-                var str = ""
-                str.append(sellingPoint.textDescription)
-                str.append(" - ")
-                str.append(com.date.formatted(date: .numeric, time: .omitted))
-                str.append(" - ")
-                str.append(com.note)
-                notes.append(str)
-            }
-        }
-        return notes
-    }
-}
-
-public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, ASLSellingPoint {
+//public protocol ASLSellingPoint {
+//    var communications: [ASLCommunicationDTO] { get set }
+//    var currentlyInstalled: Bool { get set }
+//    var sellingPoint: Int { get set }
+//    func communicationsBalance() -> Int
+//    func communicationsAnomalies() -> Bool
+//    func noCommunications() -> Bool
+//    func notCommunicated() -> Bool
+//    func correctlyCommunicated() -> Bool
+//    func communicationsAnomalies() -> Bool
+//    func notes() -> [String]
+//}
+//
+//extension ASLSellingPoint {
+//    public func communicationsBalance() -> Int {
+//        let disinstallations = communications.filter({ $0.type == .disinstallazione }).count
+//        let installations = communications.filter({ $0.type == .installazione }).count
+//        return installations - disinstallations
+//    }
+//
+//    public func communicationsAnomalies() -> Bool {
+//        let bal = communicationsBalance()
+//        return bal < -1 || bal > 1
+//    }
+//
+//    public func noCommunications() -> Bool {
+//        communications.isEmpty
+//    }
+//
+//    public func notCommunicated() -> Bool {
+//        (currentlyInstalled && communicationsBalance() == 0) || (!currentlyInstalled && communicationsBalance() == 1)
+//    }
+//
+//    public func correctlyCommunicated() -> Bool {
+//        (!currentlyInstalled && communicationsBalance() == 0) || (currentlyInstalled && communicationsBalance() == 1)
+//    }
+//
+//    public func notes() -> [String] {
+//        var notes = [String]()
+//        for com in communications {
+//            if !com.note.isEmpty {
+//                var str = ""
+//                str.append(sellingPoint.textDescription)
+//                str.append(" - ")
+//                str.append(com.date.formatted(date: .numeric, time: .omitted))
+//                str.append(" - ")
+//                str.append(com.note)
+//                notes.append(str)
+//            }
+//        }
+//        return notes
+//    }
+//}
+//
+public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
     public var id: UUID
     public var communications: [ASLCommunicationDTO]
     public var customer: String
     public var sellingPoint: Int
     public var ubicazione: String
     public var currentlyInstalled: Bool = false
-    
+
     public init(id: UUID, communications: [ASLCommunicationDTO], customer: String, sellingPoint: Int, ubicazione: String) {
         self.id = id
         self.communications = communications
@@ -109,7 +109,7 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, ASLSellin
     }
 }
 
-public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable, ASLSellingPoint {
+public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable {
     
     public init(id: UUID, communications: [ASLCommunicationDTO], sellingPoint: Int, site: String, currentlyInstalled: Bool) {
         self.id = id
@@ -140,20 +140,6 @@ public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
     public var addressDescription: String
     public var customer: String
     public var sellingPoints: [ASLCommunicationsSellingPoint]
-    
-    public var installedMachines: Int {
-        sellingPoints.filter({ $0.currentlyInstalled }).count
-    }
-    
-    public var communicationsBalance: Int {
-        sellingPoints.reduce(0) { partialResult, sp in
-            partialResult + sp.communicationsBalance()
-        }
-    }
-    
-    public var notes: [String] {
-        sellingPoints.flatMap({ $0.notes() })
-    }
 }
 
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
