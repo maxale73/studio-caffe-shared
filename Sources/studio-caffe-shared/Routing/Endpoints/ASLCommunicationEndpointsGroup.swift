@@ -60,7 +60,7 @@ extension ASLSellingPoint {
     
     public func communicationsAnomalies() -> Bool {
         let bal = communicationsBalance()
-        return bal < 0 || bal > 1
+        return bal < -1 || bal > 1
     }
     
     public func noCommunications() -> Bool {
