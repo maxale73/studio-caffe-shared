@@ -68,15 +68,11 @@ extension ASLSellingPoint {
     }
     
     public func notCommunicated() -> Bool {
-        currentlyInstalled && communicationsBalance() == 0
+        (currentlyInstalled && communicationsBalance() == 0) || (!currentlyInstalled && communicationsBalance() == 1)
     }
     
     public func correctlyCommunicated() -> Bool {
         (!currentlyInstalled && communicationsBalance() == 0) || (currentlyInstalled && communicationsBalance() == 1)
-    }
-    
-    public func incorrectlyCommunicated() -> Bool {
-        (!currentlyInstalled && communicationsBalance() == 1) || communicationsAnomalies()
     }
     
     public func notes() -> [String] {
