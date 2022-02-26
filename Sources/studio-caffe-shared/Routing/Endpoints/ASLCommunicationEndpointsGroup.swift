@@ -147,7 +147,15 @@ public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
     
     public static func save(communication: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "create", value: nil)
+            PathParameter(name: "save", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: communication)
+    }
+    
+    public static func batchCreate(communication: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "batch_create", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: communication)
