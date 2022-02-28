@@ -38,6 +38,14 @@ public extension Array where Element: StringProtocol {
         }
         return !retString.isEmpty ? String(retString.dropLast()) : ""
     }
+    
+    func toVerticalLineSeparated() -> String {
+        guard !isEmpty else { return "" }
+        let _n = reduce("") { partialResult, n in
+            partialResult.appending(" | \(n)")
+        }
+        return String(_n.dropFirst(2))
+    }
 }
 
 extension String: RequestBody {}
