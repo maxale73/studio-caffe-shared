@@ -142,6 +142,7 @@ public enum ServerCheckedAuditResult: String, RawRepresentable, Codable {
     case notExecuted = "da verificare"
     case pending = "in corso"
     case noPreviousReport = "no precedente"
+    case dateIDconflict = "anomalia ID lettura/data"
     case notInstalledDevice = "dispositivo non installato"
     case alreadyImported = "già importata"
     case readyToImport = "pronto"
