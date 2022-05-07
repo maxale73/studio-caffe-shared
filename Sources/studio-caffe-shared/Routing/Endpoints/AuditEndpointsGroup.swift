@@ -153,6 +153,8 @@ public enum ServerCheckedAuditResult: String, RawRepresentable, Codable {
 public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable {
     public let id: UUID
     public let previousRawReport: String
+    public let machineID: String
+    public let customer: String
     public let success: Bool
     public let message: String
     
