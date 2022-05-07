@@ -538,7 +538,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 let vgFormatter = DateFormatter()
                 vgFormatter.dateFormat = "yyyy-MM-ddTHH:mm:ss"
                 if let vgDate = vgFormatter.date(from: value) {
-                    dataLettura = vgDate
+                    dataLettura_EA3_02_03 = vgDate
                     let dateEvaFormatter = DateFormatter()
                     dateEvaFormatter.dateFormat = "yyMMdd"
                     let timeEvaFormatter = DateFormatter()
