@@ -65,7 +65,9 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         if detectedDeviceModel == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
             fixMissingPreviousDate(previousDate: old.dataLettura)
         }
-        if dataLetturaPrecedente_EA3_05_06 != old.dataLettura_EA3_02_03 {
+        let calendar = Calendar(identifier: .gregorian)
+        let comparison = calendar.compare(dataLetturaPrecedente_EA3_05_06, to: old.dataLettura_EA3_02_03, toGranularity: .minute)
+        if comparison != .orderedSame {
             errors.append(ImportError(identifier: .EA3_05_06, actualValue: dataLetturaPrecedente_EA3_05_06.textDescription, expectedValue: old.dataLettura_EA3_02_03.textDescription))
         }
     }
