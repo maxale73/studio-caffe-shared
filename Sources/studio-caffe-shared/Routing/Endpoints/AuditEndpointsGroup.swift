@@ -138,21 +138,25 @@ public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody {
     public let dataLetturaPrecedente: Date
 }
 
-public enum AuditImportFailureReason: String, RawRepresentable, Codable {
-    case exists = "esistente"
-    case noDevice = "nessun dispositivo"
-    case noSellingPoint = "non installato"
+public enum ServerCheckedAuditResult: String, RawRepresentable, Codable {
+    case notExecuted = "da verificare"
+    case pending = "in corso"
+    case noPreviousReport = "no precedente"
+    case notInstalledDevice = "dispositivo non installato"
+    case alreadyImported = "già importata"
+    case readyToImport = "pronto"
+    case importErrors = "anomalie EVA"
+    case noDevice = "dispositivo inesistente"
     case noPrevious = "nessuna rilevazione precedente"
-    case success = ""
 }
 
-public struct AuditCheckResult: Codable, Identifiable, Equatable, Hashable {
+public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable {
     public let id: UUID
     public let previousRawReport: String
     public let success: Bool
     public let message: String
     
-    public init(report: ToCheckAuditDTO, previuosRawReport: String, success: Bool, message: AuditImportFailureReason) {
+    public init(report: ToCheckAuditDTO, previuosRawReport: String, success: Bool, message: ServerCheckedAuditResult) {
         self.id = report.id
         self.previousRawReport = previuosRawReport
         self.success = success
