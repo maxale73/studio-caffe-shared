@@ -381,7 +381,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
-    mutating public func updateValue(id: String, newValue: String) {
+    mutating private func modifyRawReport(id: String, newValue: String) {
         let rawBlocks = rawReport.components(separatedBy: "\n")
         let indexes = id.components(separatedBy: "_")
         guard let blockName = indexes.first,
@@ -398,9 +398,13 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
             }
             newBlock.removeLast()
             rawReport = rawReport.replacingOccurrences(of: oldBlock, with: newBlock)
-            parsed = false
-            parseReport()
         }
+    }
+    
+    mutating public func updateValue(id: String, newValue: String) {
+        modifyRawReport(id: id, newValue: newValue)
+        parsed = false
+        parseReport()
     }
     
     mutating public func updateDate(id: String, newValue: Date) {
@@ -525,6 +529,23 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 dataLetturaPrecedente_EA3_05_06 = dataLetturaPrecedente
             } else {
                 missingValues.append(.EA3_05_06)
+            }
+        }
+        
+        //@$9 - Vendinguard parsed format date
+        if let $9Block = blocks.first(where: { $0.name == "@$9" }) {
+            if let value = $9Block.stringValue(for: 2) {
+                let vgFormatter = DateFormatter()
+                vgFormatter.dateFormat = "yyyy-MM-ddTHH:mm:ss"
+                if let vgDate = vgFormatter.date(from: value) {
+                    dataLettura = vgDate
+                    let dateEvaFormatter = DateFormatter()
+                    dateEvaFormatter.dateFormat = "yyMMdd"
+                    let timeEvaFormatter = DateFormatter()
+                    timeEvaFormatter.dateFormat = "HHmmss"
+                    modifyRawReport(id: "EA3_02", newValue: dateEvaFormatter.string(from: dataLettura))
+                    modifyRawReport(id: "EA3_03", newValue: timeEvaFormatter.string(from: dataLettura))
+                }
             }
         }
         
