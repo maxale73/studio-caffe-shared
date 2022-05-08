@@ -410,36 +410,18 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating public func updateDate(id: String, newValue: Date) {
-        //let rawBlocks = rawReport.components(separatedBy: "\n")
         guard id == "EA3_02_03" || id == "EA3_05_06" else { return }
-//        guard let old = rawBlocks.first(where: { $0.hasPrefix("EA3") }) else { return }
-//        var values = old.components(separatedBy: "*")
-//        guard values.count > 6 else { return }
-//        let customFormatter = DateFormatter()
-//        customFormatter.dateFormat = "yyMMdd*HHmmss"
-//        var new: String = ""
         let dateEvaFormatter = DateFormatter()
         dateEvaFormatter.dateFormat = "yyMMdd"
         let timeEvaFormatter = DateFormatter()
         timeEvaFormatter.dateFormat = "HHmmss"
         if id == "EA3_02_03" {
-//            values.remove(at: 2)
-//            values.remove(at: 3)
-//            values.insert(customFormatter.string(from: newValue), at: 2)
             modifyRawReport(id: "EA3_02", newValue: dateEvaFormatter.string(from: newValue))
             modifyRawReport(id: "EA3_03", newValue: timeEvaFormatter.string(from: newValue))
         } else if id == "EA3_05_06" {
-//            values.remove(at: 5)
-//            values.remove(at: 6)
-//            values.insert(customFormatter.string(from: newValue), at: 5)
             modifyRawReport(id: "EA3_05", newValue: dateEvaFormatter.string(from: newValue))
             modifyRawReport(id: "EA3_06", newValue: timeEvaFormatter.string(from: newValue))
         }
-//        for v in values {
-//            new.append(v + "*")
-//        }
-//        new.removeLast()
-//        rawReport = rawReport.replacingOccurrences(of: old, with: new)
         parsed = false
         parseReport()
     }
@@ -1485,35 +1467,3 @@ extension ParsedAuditBeta {
         return values
     }
 }
-
-//public struct RepresentableParsedValue: Identifiable {
-//    public let id: String { code }
-//    public let code: String
-//    public let description: String
-//    public let value: String
-//
-//    public init(code: String, description: String, value: String) {
-//        self.code = code
-//        self.description = description
-//        self.value = value
-//    }
-//}
-//
-//extension ParsedAuditBeta {
-//    func infoValues() -> [RepresentableParsedValue] {
-//        [
-//            RepresentableParsedValue(code: "DXS_01", description: "communicationID", value: communicationID_DXS_01 ),
-//            RepresentableParsedValue(code: "ID1_01", description: "dispositivoID", value: dispositivoID_ID1_01 ),
-//            RepresentableParsedValue(code: "ID1_02", description: "dispositivoModello", value: dispositivoModello_ID1_02 ),
-//            RepresentableParsedValue(code: "EA3_01", description: "letturaID", value: letturaID_EA3_01.textDescription ),
-//            RepresentableParsedValue(code: "EA3_02_03", description: "dataLettura", value: DateFormatter.localizedString(from: dataLettura_EA3_02_03, dateStyle: .short, timeStyle: .none) ),
-//            RepresentableParsedValue(code: "EA3_05_06", description: "dataLetturaPrecedente", value: DateFormatter.localizedString(from: dataLetturaPrecedente_EA3_05_06, dateStyle: .short, timeStyle: .none) ),
-//            RepresentableParsedValue(code: "BA1_01", description: "numeroSerialeLettoreBanconote", value: numeroSerialeLettoreBanconote_BA1_01 ?? "-" ),
-//            RepresentableParsedValue(code: "BA1_02", description: "modelloLettoreBanconote", value: modelloLettoreBanconote_BA1_02 ?? "-" ),
-//            RepresentableParsedValue(code: "BA1_03", description: "versioneSoftwareLettoreBanconote", value: versioneSoftwareLettoreBanconote_BA1_03 ?? "" ),
-//            RepresentableParsedValue(code: "CA1_01", description: "numeroSerialeValidatore", value: numeroSerialeValidatore_CA1_01?.textDescription ),
-//            RepresentableParsedValue(code: "CA1_02", description: "modelloValidatore", value: modelloValidatore_CA1_02?.textDescription ),
-//            RepresentableParsedValue(code: "CA1_03", description: "versioneSoftwareValidatore", value: versioneSoftwareValidatore_CA1_03?.textDescription )
-//        ]
-//    }
-//}
