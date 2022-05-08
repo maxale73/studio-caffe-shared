@@ -7,6 +7,13 @@
 
 import Foundation
 
+public struct ImportError: Hashable, Identifiable {
+    public var id: EvaValueIdentifier { identifier }
+    public let identifier: EvaValueIdentifier
+    public let actualValue: String
+    public let expectedValue: String
+}
+
 public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     
     public func hash(into hasher: inout Hasher) {
@@ -47,13 +54,6 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     let contato = 0.0
     
     public var missingValues: [EvaValueIdentifier] = []
-    
-    public struct ImportError: Hashable, Identifiable {
-        public var id: EvaValueIdentifier { identifier }
-        public let identifier: EvaValueIdentifier
-        public let actualValue: String
-        public let expectedValue: String
-    }
     
     mutating private func validate_letturaID_EA3_01(old: ParsedAuditBeta, errors: inout [ImportError]) {
         if letturaID_EA3_01 != old.letturaID_EA3_01 + 1 {
