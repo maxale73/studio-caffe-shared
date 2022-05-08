@@ -410,28 +410,38 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating public func updateDate(id: String, newValue: Date) {
-        let rawBlocks = rawReport.components(separatedBy: "\n")
+        //let rawBlocks = rawReport.components(separatedBy: "\n")
         guard id == "EA3_02_03" || id == "EA3_05_06" else { return }
-        guard let old = rawBlocks.first(where: { $0.hasPrefix("EA3") }) else { return }
-        var values = old.components(separatedBy: "*")
-        guard values.count > 6 else { return }
-        let customFormatter = DateFormatter()
-        customFormatter.dateFormat = "yyMMdd*HHmmss"
-        var new: String = ""
+//        guard let old = rawBlocks.first(where: { $0.hasPrefix("EA3") }) else { return }
+//        var values = old.components(separatedBy: "*")
+//        guard values.count > 6 else { return }
+//        let customFormatter = DateFormatter()
+//        customFormatter.dateFormat = "yyMMdd*HHmmss"
+//        var new: String = ""
+        let dateEvaFormatter = DateFormatter()
+        dateEvaFormatter.dateFormat = "yyMMdd"
+        let timeEvaFormatter = DateFormatter()
+        timeEvaFormatter.dateFormat = "HHmmss"
+        report?.parsed.updateValue(id: "EA3_05", newValue: dateEvaFormatter.string(from: oldParsed.dataLettura))
+        report?.parsed.updateValue(id: "EA3_06", newValue: timeEvaFormatter.string(from: oldParsed.dataLettura))
         if id == "EA3_02_03" {
-            values.remove(at: 2)
-            values.remove(at: 3)
-            values.insert(customFormatter.string(from: newValue), at: 2)
+//            values.remove(at: 2)
+//            values.remove(at: 3)
+//            values.insert(customFormatter.string(from: newValue), at: 2)
+            modifyRawReport(id: "EA3_02", newValue: dateEvaFormatter.string(from: newValue))
+            modifyRawReport(id: "EA3_03", newValue: timeEvaFormatter.string(from: newValue))
         } else if id == "EA3_05_06" {
-            values.remove(at: 5)
-            values.remove(at: 6)
-            values.insert(customFormatter.string(from: newValue), at: 5)
+//            values.remove(at: 5)
+//            values.remove(at: 6)
+//            values.insert(customFormatter.string(from: newValue), at: 5)
+            modifyRawReport(id: "EA3_05", newValue: dateEvaFormatter.string(from: newValue))
+            modifyRawReport(id: "EA3_06", newValue: timeEvaFormatter.string(from: newValue))
         }
-        for v in values {
-            new.append(v + "*")
-        }
-        new.removeLast()
-        rawReport = rawReport.replacingOccurrences(of: old, with: new)
+//        for v in values {
+//            new.append(v + "*")
+//        }
+//        new.removeLast()
+//        rawReport = rawReport.replacingOccurrences(of: old, with: new)
         parsed = false
         parseReport()
     }
