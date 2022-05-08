@@ -422,8 +422,6 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         dateEvaFormatter.dateFormat = "yyMMdd"
         let timeEvaFormatter = DateFormatter()
         timeEvaFormatter.dateFormat = "HHmmss"
-        report?.parsed.updateValue(id: "EA3_05", newValue: dateEvaFormatter.string(from: oldParsed.dataLettura))
-        report?.parsed.updateValue(id: "EA3_06", newValue: timeEvaFormatter.string(from: oldParsed.dataLettura))
         if id == "EA3_02_03" {
 //            values.remove(at: 2)
 //            values.remove(at: 3)
