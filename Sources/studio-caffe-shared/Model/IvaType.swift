@@ -9,6 +9,6 @@ public enum IvaType: Double, Codable, CaseIterable, Identifiable {
 
 extension IvaType: CustomStringConvertible {
     public var description: String {
-        NumberFormatter.decimalFormatter().string(from: .init(value: rawValue))!
+        NumberFormatter.localizedString(from: NSNumber(value: (rawValue / 100)), number: .percent)
     }
 }
