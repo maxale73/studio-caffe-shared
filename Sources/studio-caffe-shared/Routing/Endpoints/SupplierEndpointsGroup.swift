@@ -25,6 +25,14 @@ public struct SupplierEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func fetchSupplierByFiscalId(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_supplier_by_fiscal_id", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
     public static func save(supplier: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
