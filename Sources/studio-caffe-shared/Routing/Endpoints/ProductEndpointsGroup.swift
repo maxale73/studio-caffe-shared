@@ -8,6 +8,7 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     public var productCodes: String
     public var productCategory: ProductCategory
     public var iva: IvaType
+    public var searchTerms: String
     public var packages: [PackageDTO]
     public var tags: [TagDTO]
 
@@ -16,7 +17,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
          productDescription: String,
          productCodes: String,
          productCategory: ProductCategory,
-         iva: IvaType,
+        iva: IvaType,
+        searchTerms: String,
          packages: [PackageDTO],
          tags: [TagDTO]) {
         
@@ -26,12 +28,13 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
         self.productCodes = productCodes
         self.productCategory = productCategory
         self.iva = iva
+        self.searchTerms = searchTerms
         self.packages = packages
         self.tags = tags
     }
     
     public static var empty: ProductDTO {
-        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .prodotti, iva: .ventidue, packages: [], tags: [])
+        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .prodotti, iva: .ventidue, searchTerms: "", packages: [], tags: [])
     }
 }
 
