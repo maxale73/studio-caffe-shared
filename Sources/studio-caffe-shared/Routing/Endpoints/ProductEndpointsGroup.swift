@@ -90,6 +90,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func fetchProductsBySearchTerms(searchTerms: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_products_by_search_terms", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: searchTerms)
+    }
+    
     public static func save(product: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "save", value: nil),
