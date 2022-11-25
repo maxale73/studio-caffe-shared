@@ -503,6 +503,15 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
             }
         }
         
+        // AM1
+        if let AM1Block = blocks.first(where: { $0.name == "AM1" }) {
+            if let value = AM1Block.stringValue(for: 2) {
+                if detectedDeviceModel == .none {
+                    setPaymentSystem(ps: .type(from: value))
+                }
+            }
+        }
+        
         //EA3
         if let EA3Block = blocks.first(where: { $0.name == "EA3" }) {
             if let value = EA3Block.intValue(for: 1) {
