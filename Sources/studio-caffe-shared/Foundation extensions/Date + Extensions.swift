@@ -176,4 +176,12 @@ public extension Date {
         let formatter = ISO8601DateFormatter()
         return formatter.string(from: self)
     }
+    
+    static func dateFromDashSplitted(_ dashSplitted: String) -> Date? {
+        let stringComponents = dashSplitted.split(separator: "-")
+        guard stringComponents.count == 3 else { return nil }
+        let comp = DateComponents(calendar: Calendar(identifier: .gregorian), timeZone: .autoupdatingCurrent, year: Int(stringComponents[0]), month: Int(stringComponents[1]), day: Int(stringComponents[2]), hour: 12, minute: 0)
+
+        return Calendar(identifier: .gregorian).date(from: comp)
+    }
 }
