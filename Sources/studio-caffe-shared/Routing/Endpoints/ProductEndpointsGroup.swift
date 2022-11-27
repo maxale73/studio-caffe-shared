@@ -34,7 +34,7 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     }
     
     public static var empty: ProductDTO {
-        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .prodotti, iva: .ventidue, searchTerms: "", packages: [], tags: [])
+        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .undefined, iva: .ventidue, searchTerms: "", packages: [], tags: [])
     }
 }
 
