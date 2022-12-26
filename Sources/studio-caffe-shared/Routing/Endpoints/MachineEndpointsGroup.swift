@@ -1,5 +1,118 @@
 import Foundation
 
+public struct CustomerByMachine: Codable, Hashable, Identifiable, Equatable {
+    public var id: UUID
+    public var businessName: String
+    public var alias: String?
+}
+
+public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable {
+    public var id: UUID
+    public var address1: String
+    public var address2: String?
+    public var city: String
+    public var province: String
+    public var postalCode: String
+    public var isLegalAddress: Bool
+    public var customer: CustomerName
+    
+    public static func == (lhs: AddressByMachine, rhs: AddressByMachine) -> Bool {
+        return
+            lhs.id == rhs.id
+            && lhs.address1 == rhs.address1
+            && lhs.address2 == rhs.address2
+            && lhs.city == rhs.city
+            && lhs.province == rhs.province
+            && lhs.postalCode == rhs.postalCode
+            && lhs.isLegalAddress == rhs.isLegalAddress
+            && lhs.customer == rhs.customer
+    }
+    
+    public var toCopyAddress: String {
+        self.address1 + ", " + city + " (\(province))"
+    }
+    
+    public var twoLinesAddress: String {
+        var address: String {
+            let address2String = address2 ?? ""
+            return self.address1 + address2String
+        }
+        
+        return "\(address) - \(city)"
+    }
+    
+    public var addressTypeDescription: String {
+        if isLegalAddress {
+            return "sede legale"
+        } else {
+            return "sede operativa"
+        }
+    }
+    
+    public var capElementDescription: String {
+        "\(city)(\(province))"
+    }
+}
+
+public struct SellingPointBM: Codable, Hashable, Identifiable, Equatable {
+    
+    public var id: UUID
+    public var sellingPointID: Int
+    public var site: String
+    public var address: AddressByMachine
+}
+
+public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable {
+    
+    public var id: UUID
+    public var internalID: Int
+    public var factoryID: String
+    public var notes: [String]?
+    public var installation: InstallationType
+    
+    public var model: MachineModelDTO
+    public var sellingPoint: SellingPointBM?
+    public var adeDevice: AdeDeviceDTO?
+
+    public init(id: UUID,
+         internalID: Int,
+         factoryID: String,
+         notes: [String]?,
+         installation: InstallationType,
+         
+         sellingPoint: SellingPointBM?,
+         model: MachineModelDTO,
+         adeDevice: AdeDeviceDTO?)
+    {
+        
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.notes = notes
+        self.installation = installation
+        
+        self.sellingPoint = sellingPoint
+        self.model = model
+        self.adeDevice = adeDevice
+    }
+    
+    public static func == (lhs: MachineCompleteDTO, rhs: MachineCompleteDTO) -> Bool {
+        return
+            lhs.id == rhs.id
+            && lhs.internalID == rhs.internalID
+            && lhs.installation == rhs.installation
+            && lhs.sellingPoint == rhs.sellingPoint
+        && lhs.factoryID == rhs.factoryID
+        && lhs.model == rhs.model
+        && lhs.adeDevice == rhs.adeDevice
+    }
+    
+    public static var empty: MachineCompleteDTO {
+        MachineCompleteDTO(id: UUID(), internalID: 0, factoryID: "", notes: nil, installation: .deposito, sellingPoint: nil, model: .emptyModel, adeDevice: nil)
+    }
+}
+
+
 public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBody {
     
     public var id: UUID
