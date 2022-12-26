@@ -7,6 +7,18 @@ public struct CustomerByMachine: Codable, Hashable, Identifiable, Equatable {
 }
 
 public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable {
+    
+    public init(id: UUID, address1: String, address2: String? = nil, city: String, province: String, postalCode: String, isLegalAddress: Bool, customer: CustomerName) {
+        self.id = id
+        self.address1 = address1
+        self.address2 = address2
+        self.city = city
+        self.province = province
+        self.postalCode = postalCode
+        self.isLegalAddress = isLegalAddress
+        self.customer = customer
+    }
+    
     public var id: UUID
     public var address1: String
     public var address2: String?
@@ -55,6 +67,14 @@ public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable {
 }
 
 public struct SellingPointBM: Codable, Hashable, Identifiable, Equatable {
+    
+    public init(id: UUID, sellingPointID: Int, site: String, address: AddressByMachine) {
+        self.id = id
+        self.sellingPointID = sellingPointID
+        self.site = site
+        self.address = address
+    }
+    
     
     public var id: UUID
     public var sellingPointID: Int
