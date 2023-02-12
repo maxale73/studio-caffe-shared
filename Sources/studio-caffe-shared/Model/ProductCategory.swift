@@ -69,4 +69,38 @@ extension ProductCategory: CustomStringConvertible {
         case .C_75_01_025: return "energia elettrica (75.01.025)"
         }
     }
+    
+    public var codeDescription: String {
+        switch self {
+        case .undefined: return "nd"
+        case .C_13_05_045: return "13.05.045"
+            
+        case .C_73_01_550: return "73.01.550"
+        case .C_73_01_551: return "73.01.551"
+        case .C_73_01_552: return "73.01.552"
+        case .C_73_01_553: return "73.01.553"
+        case .C_73_01_554: return "73.01.554"
+            
+        case .C_73_01_560: return "73.01.560"
+        case .C_73_01_561: return "73.01.561"
+        case .C_73_01_562: return "73.01.562"
+        case .C_73_01_563: return "73.01.563"
+        case .C_73_01_564: return "73.01.564"
+            
+        case .C_73_01_565: return "73.01.565"
+        case .C_73_01_555: return "73.01.555"
+            
+        case .C_73_01_533: return "73.01.533"
+        case .C_73_01_534: return "73.01.534"
+        case .C_73_01_535: return "73.01.535"
+            
+        case .C_73_09_501: return "73.09.501"
+        case .C_73_09_502: return "73.09.502"
+        case .C_73_09_503: return "73.09.503"
+            
+        case .C_73_01_017: return "73.01.017"
+        case .C_73_09_006: return "73.09.006"
+        case .C_75_01_025: return "75.01.025"
+        }
+    }
 }
