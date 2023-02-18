@@ -10,6 +10,8 @@ public enum InstallationType: String, Codable, Identifiable, CaseIterable, RawRe
     case associato
     case deposito
     case dismesso
+    case venduto
+    case rottamato
 }
 
 extension InstallationType: CustomStringConvertible {
