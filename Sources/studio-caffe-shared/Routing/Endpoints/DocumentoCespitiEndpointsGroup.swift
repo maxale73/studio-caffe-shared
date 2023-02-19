@@ -29,3 +29,4 @@ public struct DocumentoCespitiEndpointGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
 }
+//
