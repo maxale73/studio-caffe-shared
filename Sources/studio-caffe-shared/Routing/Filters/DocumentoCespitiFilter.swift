@@ -2,7 +2,7 @@ import Foundation
 
 public struct DocumentiCespitiFilter: Equatable, Codable, Identifiable, RequestBody {
     
-    public init(supplierNameFilter: String? = nil, documentTypeFilter: DocumentoCespitiType? = nil) {
+    public init(supplierNameFilter: String? = nil, documentTypeFilter: AssetsDocumentType? = nil) {
         self.id = UUID()
         self.supplierNameFilter = supplierNameFilter
         self.documentTypeFilter = documentTypeFilter
@@ -10,5 +10,5 @@ public struct DocumentiCespitiFilter: Equatable, Codable, Identifiable, RequestB
     
     public var id: UUID
     public var supplierNameFilter: String?
-    public var documentTypeFilter: DocumentoCespitiType?
+    public var documentTypeFilter: AssetsDocumentType?
 }
