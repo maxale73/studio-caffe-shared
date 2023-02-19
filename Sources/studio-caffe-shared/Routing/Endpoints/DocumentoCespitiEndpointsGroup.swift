@@ -1,6 +1,14 @@
 import Foundation
 
 public struct DocumentoCespiteDTO: Codable, Identifiable, Hashable {
+    
+    public init(id: UUID, documentType: DocumentoCespitiType, documentRef: String, supplierName: String) {
+        self.id = id
+        self.documentType = documentType
+        self.documentRef = documentRef
+        self.supplierName = supplierName
+    }
+    
     public var id: UUID
     public var documentType: DocumentoCespitiType
     public var documentRef: String
