@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AssetsDocumentDTO: Codable, Identifiable, Hashable {
+public struct AssetsDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
     
     public init(id: UUID, documentType: AssetsDocumentType, documentRef: String, date: Date, supplierName: String) {
         self.id = id
@@ -31,9 +31,17 @@ public struct AssetDTO: Codable, Identifiable, Hashable {
     public var machine: FilteredMachineDTO
 }
 
-public struct DocumentoCespitiEndpointGroup: EndpointGroupType {
+public struct AssetsDocumentEndpointGroup: EndpointGroupType {
     
     public static var group = "assets_document"
+    
+    public static func saveNewEmptyDocument(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save_new_empty_document", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
+    }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
