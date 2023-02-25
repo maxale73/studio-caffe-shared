@@ -31,6 +31,26 @@ public struct AssetDTO: Codable, Identifiable, Hashable {
     public var machine: FilteredMachineDTO
 }
 
+public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable {
+    
+    public init(id: UUID, documentType: AssetsDocumentType, documentRef: String, date: Date, supplierName: String, assets: [AssetDTO]) {
+        self.id = id
+        self.documentType = documentType
+        self.documentRef = documentRef
+        self.date = date
+        self.supplierName = supplierName
+        self.assets = assets
+    }
+    
+    
+    public var id: UUID
+    public var documentType: AssetsDocumentType
+    public var documentRef: String
+    public var date: Date
+    public var supplierName: String
+    public var assets: [AssetDTO]
+}
+
 public struct AssetsDocumentEndpointGroup: EndpointGroupType {
     
     public static var group = "assets_document"
