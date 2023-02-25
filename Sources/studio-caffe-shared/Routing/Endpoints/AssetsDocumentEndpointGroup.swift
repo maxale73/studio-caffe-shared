@@ -59,5 +59,14 @@ public struct AssetsDocumentEndpointGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func fetchFreeAssests(documentType: String? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_free_asets", value: nil),
+            PathParameter(name: "type", value: .string(documentType))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 //
