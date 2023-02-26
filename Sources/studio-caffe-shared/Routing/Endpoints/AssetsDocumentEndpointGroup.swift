@@ -91,7 +91,15 @@ public struct AssetsDocumentEndpointGroup: EndpointGroupType {
     
     public static func addAssetsToDocument(document: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "add_assets_to__document", value: nil)
+            PathParameter(name: "add_assets_to_document", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
+    }
+    
+    public static func removeAssetsFromDocument(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "remove_assets_from_document", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
