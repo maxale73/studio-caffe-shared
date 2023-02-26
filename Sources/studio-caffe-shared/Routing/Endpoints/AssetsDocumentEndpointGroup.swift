@@ -80,13 +80,12 @@ public struct AssetsDocumentEndpointGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func fetchFreeAssests(documentType: String? = nil) -> EndpointConfiguration {
+    public static func fetchFreeAssests(document: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "fetch_free_asets", value: nil),
-            PathParameter(name: "type", value: .string(documentType))
+            PathParameter(name: "fetch_free_asets", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
     }
     
     public static func addAssetsToDocument(document: RequestBody? = nil) -> EndpointConfiguration {
