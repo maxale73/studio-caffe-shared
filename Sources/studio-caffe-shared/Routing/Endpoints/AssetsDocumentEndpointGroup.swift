@@ -31,7 +31,7 @@ public struct AssetDTO: Codable, Identifiable, Hashable {
     public var machine: FilteredMachineDTO
 }
 
-public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable {
+public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable, RequestBody {
     
     public init(id: UUID, documentType: AssetsDocumentType, documentRef: String, date: Date, supplierName: String, assets: [AssetDTO]) {
         self.id = id
@@ -87,6 +87,14 @@ public struct AssetsDocumentEndpointGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func addAssetsToDocument(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "add_assets_to__document", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
     }
 }
 //
