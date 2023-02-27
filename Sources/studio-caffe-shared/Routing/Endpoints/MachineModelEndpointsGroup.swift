@@ -1,5 +1,7 @@
 import Foundation
 
+public let emptyMachineModelID = UUID()
+
 public struct MachineModelDTO: Codable, Hashable, Identifiable, Equatable {
     
     public var id: UUID
@@ -33,7 +35,7 @@ public extension MachineModelDTO {
     }
     
     static var emptyModel: MachineModelDTO {
-        MachineModelDTO(id: UUID(), maker: "", model: "", type: .caldo)
+        MachineModelDTO(id: emptyMachineModelID, maker: "", model: "", type: .caldo)
     }
 }
 
