@@ -63,6 +63,14 @@ public struct AssetsDocumentEndpointGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
     }
     
+    public static func checkDocumentUniqueness(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "check_document_uniqueness", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
+    }
+    
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
