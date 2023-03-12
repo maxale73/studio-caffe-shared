@@ -19,7 +19,7 @@ public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
 
 public struct WHPurchaseDTO: Codable, Identifiable, Hashable {
     
-    internal init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, product: ProductDTO) {
+    public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, product: ProductDTO) {
         self.id = id
         self.quantity = quantity
         self.purchasePrice = purchasePrice
@@ -37,7 +37,7 @@ public struct WHPurchaseDTO: Codable, Identifiable, Hashable {
 
 public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody {
     
-    internal init(document: WHDocumentDTO, purchases: [WHPurchaseDTO]) {
+    public init(document: WHDocumentDTO, purchases: [WHPurchaseDTO]) {
         self.document = document
         self.purchases = purchases
     }
