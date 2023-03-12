@@ -2,7 +2,7 @@ import Foundation
 
 public struct WHDocumentFilter: Equatable, Codable, Identifiable, RequestBody {
     
-    internal init(supplierID: String? = nil, from: Date? = nil, to: Date? = nil, closed: Bool? = nil) {
+    public init(supplierID: String? = nil, from: Date? = nil, to: Date? = nil, closed: Bool? = nil) {
         self.id = UUID()
         self.supplierID = supplierID
         self.fromDate = from
