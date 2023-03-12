@@ -19,11 +19,13 @@ public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
 
 public struct WHPurchaseDTO: Codable, Identifiable, Hashable {
     
-    public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, product: ProductDTO) {
+    public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, index: Int, description: String, product: ProductDTO) {
         self.id = id
         self.quantity = quantity
         self.purchasePrice = purchasePrice
         self.lotto = lotto
+        self.index = index
+        self.description = description
         self.product = product
     }
     
@@ -32,6 +34,8 @@ public struct WHPurchaseDTO: Codable, Identifiable, Hashable {
     public var quantity: Double
     public var purchasePrice: Double
     public var lotto: String
+    public var index: Int
+    public var description: String
     public var product: ProductDTO
 }
 
