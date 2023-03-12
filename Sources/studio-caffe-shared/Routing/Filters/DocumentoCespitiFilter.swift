@@ -1,6 +1,6 @@
 import Foundation
 
-public struct DocumentiCespitiFilter: Equatable, Codable, Identifiable, RequestBody {
+public struct AssetsDocumentFilter: Equatable, Codable, Identifiable, RequestBody {
     
     public init(supplierNameFilter: String? = nil, documentTypeFilter: AssetsDocumentType? = nil) {
         self.id = UUID()
