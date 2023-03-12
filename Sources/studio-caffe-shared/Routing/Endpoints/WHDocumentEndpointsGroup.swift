@@ -79,6 +79,15 @@ public struct WHDocumentEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func fetchCompleteDocument(documentID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_complete_document", value: nil),
+            PathParameter(name: "document_id", value: .uuid(documentID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
     public static func purchasesByDocument(documentID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "purchases_by_document", value: nil),
