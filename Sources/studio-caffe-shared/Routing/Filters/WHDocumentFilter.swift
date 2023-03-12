@@ -2,25 +2,25 @@ import Foundation
 
 public struct WHDocumentFilter: Equatable, Codable, Identifiable, RequestBody {
     
-    internal init(supplierID: String? = nil, from: Date, to: Date, closed: Bool? = nil) {
+    internal init(supplierID: String? = nil, from: Date? = nil, to: Date? = nil, closed: Bool? = nil) {
         self.id = UUID()
         self.supplierID = supplierID
-        self.from = from
-        self.to = to
+        self.fromDate = from
+        self.toDate = to
         self.closed = closed
     }
     
     public var id: UUID
     public var supplierID: String?
-    public var from: Date
-    public var to: Date
+    public var fromDate: Date?
+    public var toDate: Date?
     public var closed: Bool?
     
     public var empty: Bool {
-        supplierID == nil && closed == nil
+        supplierID == nil && closed == nil && fromDate == nil && toDate == nil
     }
     
     public static var emptyFilter: WHDocumentFilter {
-        WHDocumentFilter(from: .defaultStartDate, to: Date())
+        WHDocumentFilter()
     }
 }
