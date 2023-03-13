@@ -51,6 +51,40 @@ public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody {
     public var purchases: [WHPurchaseDTO]
 }
 
+public struct WHPurchaseToSave: Codable, Identifiable, Hashable {
+    
+    public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, index: Int, description: String, product: IDType) {
+        self.id = id
+        self.quantity = quantity
+        self.purchasePrice = purchasePrice
+        self.lotto = lotto
+        self.index = index
+        self.description = description
+        self.product = product
+    }
+    
+    
+    public var id: UUID
+    public var quantity: Double
+    public var purchasePrice: Double
+    public var lotto: String
+    public var index: Int
+    public var description: String
+    public var product: IDType
+}
+
+public struct WHDocumentToSave: Codable, Identifiable, Hashable, RequestBody {
+    
+    public init(document: WHDocumentDTO, purchases: [WHPurchaseToSave]) {
+        self.document = document
+        self.purchases = purchases
+    }
+    
+    public var id: UUID { document.id }
+    public var document: WHDocumentDTO
+    public var purchases: [WHPurchaseToSave]
+}
+
 public struct WHDocumentEndpointsGroup: EndpointGroupType {
     
     public static var group = "wh_document"
@@ -95,6 +129,14 @@ public struct WHDocumentEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func saveDocumentWithPurchases(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save_document_with_purchases", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
     }
 }
 
