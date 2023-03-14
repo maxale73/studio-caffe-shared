@@ -138,6 +138,23 @@ public struct WHDocumentEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
     }
+    
+    public static func AddPurchaseToDocument(document: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "add_purchase_to_document", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: document)
+    }
+    
+    public static func markDocumentAsClosed(documentID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "mark_document_as_closed", value: nil),
+            PathParameter(name: "document_id", value: .uuid(documentID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 
 
