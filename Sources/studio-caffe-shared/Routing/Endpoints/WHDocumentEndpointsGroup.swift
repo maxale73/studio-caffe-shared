@@ -17,28 +17,6 @@ public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
     public var supplierName: String
 }
 
-public struct WHPurchaseDTO: Codable, Identifiable, Hashable {
-    
-    public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, index: Int, description: String, product: ProductDTO) {
-        self.id = id
-        self.quantity = quantity
-        self.purchasePrice = purchasePrice
-        self.lotto = lotto
-        self.index = index
-        self.description = description
-        self.product = product
-    }
-    
-    
-    public var id: UUID
-    public var quantity: Double
-    public var purchasePrice: Double
-    public var lotto: String
-    public var index: Int
-    public var description: String
-    public var product: ProductDTO
-}
-
 public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody {
     
     public init(document: WHDocumentDTO, purchases: [WHPurchaseDTO]) {
