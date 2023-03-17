@@ -39,7 +39,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
 }
 
 public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
-    public init(id: UUID = UUID(), quantity: Double, purchasePrice: Double, documentRef: String, lotto: String, date: Date, supplierName: String) {
+    
+    public init(id: UUID = UUID(), quantity: Double, purchasePrice: Double, documentRef: String, lotto: String, date: Date, supplierName: String, description: String) {
         self.id = id
         self.quantity = quantity
         self.purchasePrice = purchasePrice
@@ -47,7 +48,9 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
         self.lotto = lotto
         self.date = date
         self.supplierName = supplierName
+        self.description = description
     }
+    
     public let id: UUID
     public var quantity: Double
     public var purchasePrice: Double
@@ -55,6 +58,7 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
     public var lotto: String
     public var date: Date
     public var supplierName: String
+    public var description: String
 }
 
 public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, RequestBody {
