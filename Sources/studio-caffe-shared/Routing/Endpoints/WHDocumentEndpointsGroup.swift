@@ -141,6 +141,15 @@ public struct WHDocumentEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func deleteDocument(documentID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "delete_document", value: nil),
+            PathParameter(name: "document_id", value: .uuid(documentID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 
 
