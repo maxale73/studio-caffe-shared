@@ -233,7 +233,7 @@ public struct MachineBySP: Codable, Hashable, Identifiable {
     }
 }
 
-public struct MachineAsset {
+public struct MachineAsset: Codable, Hashable {
     
     public init(asset: AssetDTO? = nil, buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil) {
         self.asset = asset
