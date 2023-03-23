@@ -235,15 +235,19 @@ public struct MachineBySP: Codable, Hashable, Identifiable {
 
 public struct MachineAsset: Codable, Hashable {
     
-    public init(asset: AssetDTO? = nil, buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil) {
+    public init(asset: AssetDTO? = nil, buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil, buyPrice: Double? = nil, sellPrice: Double? = nil) {
         self.asset = asset
         self.buyDocument = buyDocument
         self.sellDocument = sellDocument
+        self.buyPrice = nil
+        self.sellPrice = nil
     }
     
     public var asset: AssetDTO?
     public var buyDocument: AssetsDocumentDTO?
     public var sellDocument: AssetsDocumentDTO?
+    public var buyPrice: Double?
+    public var sellPrice: Double?
 }
 
 public struct MachineEndpointsGroup: EndpointGroupType {
