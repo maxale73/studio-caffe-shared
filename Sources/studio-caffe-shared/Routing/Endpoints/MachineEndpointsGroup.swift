@@ -296,4 +296,13 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post)
     }
+    
+    public static func fetchAsset(machineID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_asset", value: nil),
+            PathParameter(name: "machine_id", value: .uuid(machineID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
