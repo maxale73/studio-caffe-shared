@@ -18,17 +18,19 @@ public struct AssetsDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
 }
 
 public struct AssetDTO: Codable, Identifiable, Hashable {
-    public init(id: UUID, buyPrice: Double, sellPrice: Double? = nil, machine: FilteredMachineDTO) {
+    public init(id: UUID, buyPrice: Double, sellPrice: Double? = nil, machine: FilteredMachineDTO, note: String) {
         self.id = id
         self.buyPrice = buyPrice
         self.sellPrice = sellPrice
         self.machine = machine
+        self.note = note
     }
     
     public var id: UUID
     public var buyPrice: Double
     public var sellPrice: Double?
     public var machine: FilteredMachineDTO
+    public var note: String
 }
 
 public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable, RequestBody {
