@@ -235,7 +235,7 @@ public struct MachineBySP: Codable, Hashable, Identifiable {
 
 public struct MachineAsset: Codable, Hashable {
     
-    public init(buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil, buyPrice: Double? = nil, sellPrice: Double? = nil, note: String?) {
+    public init(buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil, buyPrice: Double? = nil, sellPrice: Double? = nil, note: String? = nil) {
         self.buyDocument = buyDocument
         self.sellDocument = sellDocument
         self.buyPrice = buyPrice
