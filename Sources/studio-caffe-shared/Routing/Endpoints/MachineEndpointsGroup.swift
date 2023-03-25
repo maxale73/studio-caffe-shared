@@ -322,4 +322,12 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func indexWithAssets(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_with_assets", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
 }
