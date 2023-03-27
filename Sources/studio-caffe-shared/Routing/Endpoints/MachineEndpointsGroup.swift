@@ -251,6 +251,12 @@ public struct MachineAsset: Codable, Hashable {
 }
 
 public struct MachineWithAsset: Identifiable, Codable, Equatable {
+    
+    public init(machine: FilteredMachineDTO, asset: MachineAsset? = nil) {
+        self.machine = machine
+        self.asset = asset
+    }
+    
     public var id: UUID { machine.id }
     public var machine: FilteredMachineDTO
     public var asset: MachineAsset?
