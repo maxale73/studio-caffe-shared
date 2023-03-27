@@ -250,6 +250,12 @@ public struct MachineAsset: Codable, Hashable {
     public var note: String?
 }
 
+public struct MachineWithAsset: Identifiable, Codable {
+    public var id: UUID { machine.id }
+    public var machine: FilteredMachineDTO
+    public var asset: MachineAsset?
+}
+
 public struct MachineEndpointsGroup: EndpointGroupType {
     
     public static var group = "machine"
