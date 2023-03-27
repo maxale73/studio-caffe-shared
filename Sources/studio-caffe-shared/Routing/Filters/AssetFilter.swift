@@ -29,9 +29,18 @@ extension AssetStateFilter: CustomStringConvertible {
 }
 
 public struct AssetFilter: Identifiable, Equatable, Codable, RequestBody {
-    public var id: UUID = UUID()
-    public var textFilter: String = ""
+    
+    public init(id: UUID = UUID(), textFilter: String = "", supplierFilter: UUID? = nil, type: DocumentTypeFilter = .both, assetState: AssetStateFilter = .all) {
+        self.id = id
+        self.textFilter = textFilter
+        self.supplierFilter = supplierFilter
+        self.type = type
+        self.assetState = assetState
+    }
+    
+    public var id: UUID
+    public var textFilter: String
     public var supplierFilter: UUID?
-    public var type: DocumentTypeFilter = .both
-    public var assetState: AssetStateFilter = .all
+    public var type: DocumentTypeFilter
+    public var assetState: AssetStateFilter
 }

@@ -250,7 +250,7 @@ public struct MachineAsset: Codable, Hashable {
     public var note: String?
 }
 
-public struct MachineWithAsset: Identifiable, Codable {
+public struct MachineWithAsset: Identifiable, Codable, Equatable {
     public var id: UUID { machine.id }
     public var machine: FilteredMachineDTO
     public var asset: MachineAsset?
