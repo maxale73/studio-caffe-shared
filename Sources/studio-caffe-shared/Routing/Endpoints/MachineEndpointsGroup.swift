@@ -250,7 +250,7 @@ public struct MachineAsset: Codable, Hashable {
     public var note: String?
 }
 
-public struct MachineWithAsset: Identifiable, Codable, Equatable {
+public struct MachineWithAsset: Identifiable, Codable, Equatable, Hashable {
     
     public init(machine: FilteredMachineDTO, asset: MachineAsset? = nil) {
         self.machine = machine
