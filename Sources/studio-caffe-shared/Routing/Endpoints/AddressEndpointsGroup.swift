@@ -15,6 +15,8 @@ public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBo
     
     public init(id: UUID, latitude: Double? = nil, longitude: Double? = nil, address1: String, address2: String? = nil, city: String, province: String, postalCode: String, isLegalAddress: Bool, sellingPoints: [SellingPointBySP]) {
         self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
         self.address1 = address1
         self.address2 = address2
         self.city = city
@@ -27,6 +29,8 @@ public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBo
     public static func == (lhs: AddressBySP, rhs: AddressBySP) -> Bool {
         return
             lhs.id == rhs.id
+            && lhs.latitude == rhs.latitude
+            && lhs.longitude == rhs.longitude
             && lhs.address1 == rhs.address1
             && lhs.address2 == rhs.address2
             && lhs.city == rhs.city
