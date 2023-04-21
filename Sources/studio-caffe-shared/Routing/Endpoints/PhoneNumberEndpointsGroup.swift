@@ -2,6 +2,14 @@ import Foundation
 
 public struct PhoneNumberDTO: Codable, Equatable, Identifiable, Hashable {
     
+    public init(id: UUID, number: String, numberDescription: String, customer: IDType) {
+        self.id = id
+        self.number = number
+        self.numberDescription = numberDescription
+        self.customer = customer
+    }
+    
+    
     public var id: UUID
     
     public var number: String
