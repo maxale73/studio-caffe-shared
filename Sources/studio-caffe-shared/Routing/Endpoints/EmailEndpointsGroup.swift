@@ -27,6 +27,8 @@ public struct EmailDTO: Codable, Equatable, Identifiable, Hashable {
     }
 }
 
+extension EmailDTO: RequestBody {}
+
 public struct EmailEndpointsGroup: EndpointGroupType {
     
     public static var group = "email"

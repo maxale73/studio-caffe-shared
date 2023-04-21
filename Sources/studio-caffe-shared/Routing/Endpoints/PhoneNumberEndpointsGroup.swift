@@ -25,6 +25,8 @@ public struct PhoneNumberDTO: Codable, Equatable, Identifiable, Hashable {
     }
 }
 
+extension PhoneNumberDTO: RequestBody {}
+
 public struct PhoneNumberEndpointsGroup: EndpointGroupType {
     
     public static var group = "phoneNumber"

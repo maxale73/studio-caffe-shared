@@ -1,5 +1,44 @@
 import Foundation
 
+public struct RistornoDTO: Codable, Equatable, Identifiable, Hashable {
+    
+    public init(id: UUID, importoUnitario: Double, frequenza: FrequenzaRistorno, dataUltimoPagamento: Date, dataProssimoPagamento: Date, customerID: IDType) {
+        self.id = id
+        self.importoUnitario = importoUnitario
+        self.frequenza = frequenza
+        self.dataUltimoPagamento = dataUltimoPagamento
+        self.dataProssimoPagamento = dataProssimoPagamento
+        self.customerID = customerID
+    }
+    
+    
+    public var id: UUID
+    public var importoUnitario: Double
+    public var frequenza: FrequenzaRistorno
+    public var dataUltimoPagamento: Date
+    public var dataProssimoPagamento: Date
+    public var customerID: IDType
+    
+    public static func == (lhs: RistornoDTO, rhs: RistornoDTO) -> Bool {
+        return
+            lhs.id == rhs.id &&
+            lhs.importoUnitario == rhs.importoUnitario &&
+            lhs.frequenza == rhs.frequenza &&
+            lhs.dataUltimoPagamento == rhs.dataUltimoPagamento &&
+            lhs.dataProssimoPagamento == rhs.dataProssimoPagamento
+    }
+}
+
+extension RistornoDTO {
+    public mutating func scorporaIVA(si: Bool) {
+        if si {
+            self.importoUnitario = self.importoUnitario.scorporoIVA()
+        }
+    }
+}
+
+extension RistornoDTO: RequestBody {}
+
 public struct AuditConsumption: Codable, Identifiable, Equatable {
     public init(id: UUID, dataRilevazione: Date, erogazioni: Int) {
         self.id = id
