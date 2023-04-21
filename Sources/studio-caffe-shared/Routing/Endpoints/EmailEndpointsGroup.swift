@@ -1,5 +1,32 @@
 import Foundation
 
+public struct EmailDTO: Codable, Equatable, Identifiable, Hashable {
+    
+    public var id: UUID
+    public var address: String
+    public var emailDescription: String
+    public var customer: IDType
+
+    public init(id: UUID,
+         address: String,
+         emailDescription: String,
+         customer: IDType) {
+        
+        self.id = id
+        self.address = address
+        self.emailDescription = emailDescription
+        self.customer = customer
+    }
+    
+    public static func == (lhs: EmailDTO, rhs: EmailDTO) -> Bool {
+        return
+            lhs.id == rhs.id &&
+            lhs.address == rhs.address &&
+            lhs.emailDescription == rhs.emailDescription &&
+            lhs.customer == rhs.customer
+    }
+}
+
 public struct EmailEndpointsGroup: EndpointGroupType {
     
     public static var group = "email"
