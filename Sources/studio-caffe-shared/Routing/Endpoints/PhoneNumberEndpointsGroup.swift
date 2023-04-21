@@ -1,5 +1,22 @@
 import Foundation
 
+public struct PhoneNumberDTO: Codable, Equatable, Identifiable, Hashable {
+    
+    public var id: UUID
+    
+    public var number: String
+    public var numberDescription: String
+    public var customer: IDType
+    
+    public static func == (lhs: PhoneNumberDTO, rhs: PhoneNumberDTO) -> Bool {
+        return
+            lhs.id == rhs.id &&
+            lhs.number == rhs.number &&
+            lhs.numberDescription == rhs.numberDescription &&
+            lhs.customer == rhs.customer
+    }
+}
+
 public struct PhoneNumberEndpointsGroup: EndpointGroupType {
     
     public static var group = "phoneNumber"
