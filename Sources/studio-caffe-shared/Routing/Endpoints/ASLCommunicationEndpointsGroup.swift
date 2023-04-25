@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ASLCommunicationDTO: Identifiable, Equatable, Codable, RequestBody {
+public struct ASLCommunicationDTO: Identifiable, Hashable, Equatable, Codable, RequestBody {
     
     public init(id: UUID,
                 type: ASLCommunicationType,

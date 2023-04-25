@@ -8,7 +8,7 @@
 import Foundation
 
 public struct SellingPointBySP: Codable, Hashable, Identifiable {
-    public init(id: UUID, sellingPointID: Int, site: String, user: UserDTO, machines: [MachineBySP], brews: [BrewDTO], weekdays: [WeekdayDTO]) {
+    public init(id: UUID, sellingPointID: Int, site: String, user: UserDTO, machines: [MachineBySP], brews: [BrewDTO], weekdays: [WeekdayDTO], communications: [ASLCommunicationDTO]) {
         self.id = id
         self.sellingPointID = sellingPointID
         self.site = site
@@ -16,6 +16,7 @@ public struct SellingPointBySP: Codable, Hashable, Identifiable {
         self.machines = machines
         self.brews = brews
         self.weekdays = weekdays
+        self.communications = communications
     }
     
     
@@ -28,6 +29,7 @@ public struct SellingPointBySP: Codable, Hashable, Identifiable {
     
     public var brews: [BrewDTO]
     public var weekdays: [WeekdayDTO]
+    public var communications: [ASLCommunicationDTO]
     
     public static func == (lhs: SellingPointBySP, rhs: SellingPointBySP) -> Bool {
         lhs.id == rhs.id
@@ -36,7 +38,8 @@ public struct SellingPointBySP: Codable, Hashable, Identifiable {
         && lhs.user == rhs.user
         && lhs.brews == rhs.brews
         && lhs.weekdays == rhs.weekdays
-            && lhs.machines == rhs.machines
+        && lhs.machines == rhs.machines
+        && lhs.communications == rhs.communications
     }
     
     public var brewsDescription: String {
