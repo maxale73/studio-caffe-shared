@@ -87,12 +87,12 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
     public static var group = "adeDevice"
     
-    public static func uninstalled() -> EndpointConfiguration {
+    public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "uninstalled", value: nil),
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
     public static func mastersByAddress(addressID: UUID? = nil) -> EndpointConfiguration {
