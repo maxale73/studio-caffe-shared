@@ -1,5 +1,17 @@
 import Foundation
 
+public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
+    
+    public init(id: UUID, typologyDescription: String) {
+        self.id = id
+        self.typologyDescription = typologyDescription
+    }
+    
+    public var id: UUID
+    public var typologyDescription: String
+    
+}
+
 public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     
     public var id: UUID
@@ -9,18 +21,19 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     public var productCategory: ProductCategory
     public var iva: IvaType
     public var searchTerms: String
+    public var typology: ProductTypologyDTO?
     public var packages: [PackageDTO]
     public var tags: [TagDTO]
 
     public init(id: UUID,
-         
-         productDescription: String,
-         productCodes: String,
-         productCategory: ProductCategory,
-        iva: IvaType,
-        searchTerms: String,
-         packages: [PackageDTO],
-         tags: [TagDTO]) {
+                productDescription: String,
+                productCodes: String,
+                productCategory: ProductCategory,
+                iva: IvaType,
+                searchTerms: String,
+                typology: ProductTypologyDTO?,
+                packages: [PackageDTO],
+                tags: [TagDTO]) {
         
         self.id = id
         
@@ -29,12 +42,13 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
         self.productCategory = productCategory
         self.iva = iva
         self.searchTerms = searchTerms
+        self.typology = typology
         self.packages = packages
         self.tags = tags
     }
     
     public static var empty: ProductDTO {
-        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .undefined, iva: .ventidue, searchTerms: "", packages: [], tags: [])
+        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .undefined, iva: .ventidue, searchTerms: "", typology: nil, packages: [], tags: [])
     }
 }
 
