@@ -1,17 +1,5 @@
 import Foundation
 
-public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
-    
-    public init(id: UUID, typologyDescription: String) {
-        self.id = id
-        self.typologyDescription = typologyDescription
-    }
-    
-    public var id: UUID
-    public var typologyDescription: String
-    
-}
-
 public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     
     public var id: UUID
