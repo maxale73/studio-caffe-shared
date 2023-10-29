@@ -18,12 +18,12 @@ public struct ProductTypologyEndpointsGroup: EndpointGroupType {
     
     public static var group = "productTypology"
     
-    public static func index() -> EndpointConfiguration {
+    public static func index(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index", value: nil),
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
     public static func save(typology: RequestBody? = nil) -> EndpointConfiguration {
