@@ -58,9 +58,10 @@ public struct MachineModelEndpointsGroup: EndpointGroupType {
     
     public static var group = "machineModel"
     
-    public static func fetchModel(id: RequestBody? = nil) -> EndpointConfiguration {
+    public static func fetchModel(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
-            PathParameter(name: "fetch_model", value: nil)
+            PathParameter(name: "fetch_model", value: nil),
+            PathParameter(name: "modelID", value: .uuid(id))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
