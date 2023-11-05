@@ -54,6 +54,18 @@ public struct MachineByModel: Codable, Hashable, Identifiable, Equatable {
     public var installation: InstallationType
 }
 
+public struct ModelWithStocks: Codable, Hashable, Identifiable, Equatable {
+    public init(id: UUID, model: MachineModelDTO, stocks: [AverageStockDTO]) {
+        self.id = id
+        self.model = model
+        self.stocks = stocks
+    }
+    
+    public var id: UUID
+    public var model: MachineModelDTO
+    public var stocks: [AverageStockDTO]
+}
+
 public struct MachineModelEndpointsGroup: EndpointGroupType {
     
     public static var group = "machineModel"
@@ -61,6 +73,15 @@ public struct MachineModelEndpointsGroup: EndpointGroupType {
     public static func fetchModel(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "fetch_model", value: nil),
+            PathParameter(name: "modelID", value: .uuid(id))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
+    public static func fetchModelWithStocks(id: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_model_with_stocks", value: nil),
             PathParameter(name: "modelID", value: .uuid(id))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)

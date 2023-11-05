@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AverageStockDTO: Identifiable, Equatable, Codable {
+public struct AverageStockDTO: Identifiable, Equatable, Codable, Hashable {
     
     public init(id: UUID, amount: Double, productTypology: ProductTypologyDTO) {
         self.id = id
