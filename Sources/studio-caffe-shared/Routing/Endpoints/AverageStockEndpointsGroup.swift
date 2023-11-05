@@ -2,7 +2,7 @@ import Foundation
 
 public struct AverageStockDTO: Identifiable, Equatable, Codable {
     
-    public init(id: UUID, modelID: UUID, amount: Double, productTypology: ProductTypologyDTO) {
+    public init(id: UUID, amount: Double, productTypology: ProductTypologyDTO) {
         self.id = id
         self.amount = amount
         self.productTypology = productTypology
