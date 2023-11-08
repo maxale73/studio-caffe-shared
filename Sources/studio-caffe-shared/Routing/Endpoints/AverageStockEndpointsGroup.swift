@@ -35,5 +35,12 @@ public struct AverageStockEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: stocks)
     }
+    
+    public static func inventory() -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "inventory", value: nil)
+                           ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 
