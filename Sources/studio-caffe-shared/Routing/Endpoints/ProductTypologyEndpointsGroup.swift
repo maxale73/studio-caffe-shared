@@ -12,6 +12,36 @@ public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
     
 }
 
+public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
+    
+    internal init(id: UUID, amount: Double, date: Date) {
+        self.id = id
+        self.amount = amount
+        self.date = date
+    }
+    
+    public var id: UUID
+    public var amount: Double
+    public var date: Date
+}
+
+public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
+    
+    internal init(id: UUID, description: String, lastPrice: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
+        self.id = id
+        self.description = description
+        self.lastPrice = lastPrice
+        self.iva = iva
+        self.purchases = purchases
+    }
+    
+    public var id: UUID
+    public var description: String
+    public var lastPrice: Double
+    public var iva: IvaType
+    public var purchases: [InventoryPurchaseDTO]
+}
+
 extension ProductTypologyDTO: RequestBody {}
 
 public struct ProductTypologyEndpointsGroup: EndpointGroupType {
@@ -32,6 +62,15 @@ public struct ProductTypologyEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: typology)
+    }
+    
+    public static func productsByTypology(typologyID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "products_by_typology", value: nil),
+            PathParameter(name: "typology_id", value: .uuid(typologyID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
 }
