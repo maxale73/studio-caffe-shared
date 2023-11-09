@@ -64,10 +64,11 @@ public struct ProductTypologyEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: typology)
     }
     
-    public static func productsByTypology(typologyID: UUID? = nil) -> EndpointConfiguration {
+    public static func productsByTypology(typologyID: UUID? = nil, date: Date? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "products_by_typology", value: nil),
-            PathParameter(name: "typology_id", value: .uuid(typologyID))
+            PathParameter(name: "typology_id", value: .uuid(typologyID)),
+            PathParameter(name: "date", value: .date(date))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
