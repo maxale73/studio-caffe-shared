@@ -14,7 +14,7 @@ public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
 
 public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
     
-    internal init(id: UUID, amount: Double, date: Date) {
+    public init(id: UUID, amount: Double, date: Date) {
         self.id = id
         self.amount = amount
         self.date = date
@@ -27,7 +27,7 @@ public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
 
 public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
     
-    internal init(id: UUID, description: String, lastPrice: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
+    public init(id: UUID, description: String, lastPrice: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
         self.id = id
         self.description = description
         self.lastPrice = lastPrice
