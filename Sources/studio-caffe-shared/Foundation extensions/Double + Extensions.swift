@@ -42,6 +42,10 @@ public extension Double {
     func scorporoIVA() -> Double {
         (100 * self) / (100 + IVA)
     }
+    
+    func round(granularity: Double) -> Double {
+        ((self / granularity) * granularity).rounded()
+    }
 }
 
 public extension NumberFormatter {
