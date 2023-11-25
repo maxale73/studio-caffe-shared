@@ -46,6 +46,7 @@ public extension Double {
     func round(granularity: Double) -> Double {
         ((self / granularity) * granularity).rounded()
     }
+    
 }
 
 public extension NumberFormatter {
