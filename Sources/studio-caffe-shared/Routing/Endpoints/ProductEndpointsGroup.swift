@@ -80,6 +80,21 @@ extension ProductAndPurchases {
     }
 }
 
+public struct ProductAndTypology: Identifiable, Codable, Equatable, Hashable, RequestBody {
+    
+    public init(id: UUID, typologyID: UUID, productDescription: String, typologyDescription: String) {
+        self.id = id
+        self.typologyID = typologyID
+        self.productDescription = productDescription
+        self.typologyDescription = typologyDescription
+    }
+    
+    public var id: UUID
+    public var typologyID: UUID
+    public var productDescription: String
+    public var typologyDescription: String
+}
+
 extension ProductDTO: RequestBody {}
 extension ProductsFilter: RequestBody {}
 extension ProductPurchase: RequestBody {}
@@ -94,6 +109,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func indexWithTypology() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "index_with_typology", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
     public static func fetchProductsBySearchTerms(searchTerms: RequestBody? = nil) -> EndpointConfiguration {
