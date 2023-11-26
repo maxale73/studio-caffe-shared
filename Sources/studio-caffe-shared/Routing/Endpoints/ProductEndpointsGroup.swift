@@ -135,6 +135,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: product)
     }
     
+    public static func saveWithTypology(products: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "save_with_typology", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: products)
+    }
+    
     public static func fetchPurchases(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "fetch_purchases", value: nil),
