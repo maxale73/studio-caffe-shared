@@ -82,7 +82,7 @@ extension ProductAndPurchases {
 
 public struct ProductAndTypology: Identifiable, Codable, Equatable, Hashable, RequestBody {
     
-    public init(id: UUID, typologyID: UUID, productDescription: String, typologyDescription: String) {
+    public init(id: UUID, typologyID: UUID?, productDescription: String, typologyDescription: String?) {
         self.id = id
         self.typologyID = typologyID
         self.productDescription = productDescription
@@ -90,9 +90,9 @@ public struct ProductAndTypology: Identifiable, Codable, Equatable, Hashable, Re
     }
     
     public var id: UUID
-    public var typologyID: UUID
+    public var typologyID: UUID?
     public var productDescription: String
-    public var typologyDescription: String
+    public var typologyDescription: String?
 }
 
 extension ProductDTO: RequestBody {}
