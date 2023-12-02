@@ -27,11 +27,10 @@ public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
 
 public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
     
-    public init(id: UUID, description: String, packageGranularity: Double, lastPrice: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
+    public init(id: UUID, description: String, packageGranularity: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
         self.id = id
         self.description = description
         self.packageGranularity = packageGranularity
-        self.lastPrice = lastPrice
         self.iva = iva
         self.purchases = purchases
     }
@@ -39,7 +38,6 @@ public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
     public var id: UUID
     public var description: String
     public var packageGranularity: Double
-    public var lastPrice: Double
     public var iva: IvaType
     public var purchases: [InventoryPurchaseDTO]
 }
