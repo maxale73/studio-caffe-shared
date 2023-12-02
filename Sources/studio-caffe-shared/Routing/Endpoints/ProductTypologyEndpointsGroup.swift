@@ -14,14 +14,16 @@ public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
 
 public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
     
-    public init(id: UUID, amount: Double, date: Date) {
+    public init(id: UUID, amount: Double, price: Double, date: Date) {
         self.id = id
         self.amount = amount
+        self.price = price
         self.date = date
     }
     
     public var id: UUID
     public var amount: Double
+    public var price: Double
     public var date: Date
 }
 
