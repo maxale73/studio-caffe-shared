@@ -36,7 +36,8 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     }
     
     public static var empty: ProductDTO {
-        ProductDTO(id: UUID(), productDescription: "nuovo prodotto", productCodes: "", productCategory: .undefined, iva: .ventidue, searchTerms: "", typology: nil, packages: [], tags: [])
+        let productID = UUID()
+        return ProductDTO(id: productID, productDescription: "nuovo prodotto", productCodes: "", productCategory: .undefined, iva: .ventidue, searchTerms: "", typology: nil, packages: [PackageDTO(id: .init(), uom: .pezzi, quantity: 1.0, product: .init(id: productID))], tags: [])
     }
 }
 
