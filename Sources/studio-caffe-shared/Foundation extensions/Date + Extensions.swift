@@ -41,19 +41,19 @@ public extension Date {
     static func ultimoMese(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -1, to: to) ?? Date.defaultStartDate
-        return (.beginOfDay(from: from), to)
+        return (.beginOfDay(from: from), .endOfDay(from: to))
     }
     
     static func ultimi3Mesi(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -3, to: to) ?? Date.defaultStartDate
-        return (.beginOfDay(from: from), to)
+        return (.beginOfDay(from: from), .endOfDay(from: to))
     }
     
     static func ultimi6Mesi(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .month, value: -6, to: to) ?? Date.defaultStartDate
-        return (.beginOfDay(from: from), to)
+        return (.beginOfDay(from: from), endOfDay(from: to))
     }
     
     static func mesePrecedente(calendar: Calendar) -> (from: Date, to: Date) {
@@ -68,16 +68,7 @@ public extension Date {
         let to = Date()
         let bowComp = DateComponents(hour: 0, minute: 1, weekday: calendar.firstWeekday)
         let beginOfWeeKDate = calendar.nextDate(after: to, matching: bowComp, matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .backward)
-        return (beginOfWeeKDate!, to)
-//        if calendar.isDateInWeekend(to) {
-//            let lastWeekend = calendar.date(byAdding: .day, value: -14, to: to)!
-//            let lastWeekendInterval = calendar.nextWeekend(startingAfter: lastWeekend)!
-//            return (lastWeekendInterval.end, to)
-//        } else {
-//            let lastWeekend = calendar.date(byAdding: .day, value: -7, to: to)!
-//            let lastWeekendInterval = calendar.nextWeekend(startingAfter: lastWeekend)!
-//            return (lastWeekendInterval.end, to)
-//        }
+        return (beginOfWeeKDate!, endOfDay(from: to))
     }
     
     static func ultimaSettimana(calendar: Calendar) -> (from: Date, to: Date) {
@@ -183,5 +174,12 @@ public extension Date {
         let comp = DateComponents(calendar: Calendar(identifier: .gregorian), timeZone: .autoupdatingCurrent, year: Int(stringComponents[0]), month: Int(stringComponents[1]), day: Int(stringComponents[2]), hour: 12, minute: 0)
 
         return Calendar(identifier: .gregorian).date(from: comp)
+    }
+    
+    var twoDigitsComponentsFormatted: String {
+        self.formatted(Date.FormatStyle()
+            .day(.twoDigits)
+            .year(.defaultDigits)
+            .month(.twoDigits))
     }
 }

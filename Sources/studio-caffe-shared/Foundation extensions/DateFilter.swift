@@ -25,7 +25,7 @@ public enum DateFilter: String, CaseIterable, Identifiable {
     case settimanaPrecedente = "settimana precedente"
     case oggi = "oggi"
     case ieri = "ieri"
-    case imposta = "imposta"
+    case custom = "custom"
     case giorno = "giorno"
     
     public var extretemes: (from: Date, to: Date) {
@@ -46,7 +46,7 @@ public enum DateFilter: String, CaseIterable, Identifiable {
             case .settimanaPrecedente: return Date.settimanaPrecedente(calendar: calendar)
             case .oggi: return Date.oggi(calendar: calendar)
             case .ieri: return Date.ieri(calendar: calendar)
-            case .imposta: return (.defaultStartDate, Date())
+            case .custom: return (.defaultStartDate, Date())
             case .giorno: return(.beginOfDay(from: Date()), .endOfDay(from: Date()))
         }
     }
