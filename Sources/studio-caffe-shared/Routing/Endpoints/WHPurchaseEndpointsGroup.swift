@@ -22,6 +22,19 @@ public struct WHPurchaseDTO: Codable, Identifiable, Hashable, RequestBody {
     public var product: ProductDTO
 }
 
+public struct PurchaseHistoryItem: Identifiable {
+    public let id: UUID
+    
+    public let productID: UUID
+    public let productTypologyID: UUID?
+    public let productCategory: ProductCategory
+    public let iva: IvaType
+    
+    public let quantity: Double
+    public let price: Double
+    public let date: Date
+}
+
 public struct WHPurchaseEndpointsGroup: EndpointGroupType {
     
     public static var group = "wh_purchase"
@@ -35,11 +48,19 @@ public struct WHPurchaseEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
     
-    public static func upsatePurchase(purchase: RequestBody? = nil) -> EndpointConfiguration {
+    public static func updatePurchase(purchase: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "update_purchase", value: nil),
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: purchase)
+    }
+    
+    public static func fetchHistory() -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_history", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
 }
