@@ -22,17 +22,29 @@ public struct WHPurchaseDTO: Codable, Identifiable, Hashable, RequestBody {
     public var product: ProductDTO
 }
 
-public struct PurchaseHistoryItem: Identifiable {
-    public let id: UUID
+public struct PurchaseHistoryItem: Identifiable, Codable, Hashable {
     
-    public let productID: UUID
-    public let productTypologyID: UUID?
-    public let productCategory: ProductCategory
-    public let iva: IvaType
+    public init(id: UUID, productID: UUID, productTypologyID: UUID? = nil, productCategory: ProductCategory, iva: IvaType, quantity: Double, price: Double, date: Date) {
+        self.id = id
+        self.productID = productID
+        self.productTypologyID = productTypologyID
+        self.productCategory = productCategory
+        self.iva = iva
+        self.quantity = quantity
+        self.price = price
+        self.date = date
+    }
     
-    public let quantity: Double
-    public let price: Double
-    public let date: Date
+    public var id: UUID
+    
+    public var productID: UUID
+    public var productTypologyID: UUID?
+    public var productCategory: ProductCategory
+    public var iva: IvaType
+    
+    public var quantity: Double
+    public var price: Double
+    public var date: Date
 }
 
 public struct WHPurchaseEndpointsGroup: EndpointGroupType {
