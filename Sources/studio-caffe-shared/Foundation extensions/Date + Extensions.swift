@@ -184,11 +184,4 @@ public extension Date {
 
         return Calendar(identifier: .gregorian).date(from: comp)
     }
-    
-    var twoDigitsComponentsFormatted: String {
-        self.formatted(Date.FormatStyle()
-            .day(.twoDigits)
-            .year(.defaultDigits)
-            .month(.twoDigits))
-    }
 }
