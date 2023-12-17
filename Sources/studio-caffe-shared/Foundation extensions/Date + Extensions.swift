@@ -8,6 +8,7 @@
 import Foundation
 
 public extension Date {
+    
     static func nowComponents(calendar: Calendar) -> DateComponents {
         calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
     }
@@ -16,6 +17,14 @@ public extension Date {
         let beginOfLastYear = calendar.date(byAdding: .year, value: -1, to: .beginOfYear)
         let endOfLastYearDay = calendar.date(byAdding: .day, value: -1, to: .beginOfYear)
         return (beginOfLastYear!, .endOfDay(from: endOfLastYearDay!))
+    }
+    
+    static func pastYears(calendar: Calendar, offset: Int) -> (from: Date, to: Date, year: Int) {
+        let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
+        let year = nowComponents.year! - offset
+        let beginOfYear = calendar.date(from: DateComponents(calendar: calendar, year: year, month: 1, day: 1, hour: 0, minute: 1))
+        let endOfYear = calendar.date(from: DateComponents(calendar: calendar, year: year, month: 12, day: 31, hour: 11, minute: 59))
+        return (beginOfYear!, endOfYear!, year)
     }
     
     static func ultimoAnno(calendar: Calendar) -> (from: Date, to: Date) {
