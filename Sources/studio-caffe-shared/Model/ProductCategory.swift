@@ -33,6 +33,8 @@ public enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Id
     case C_73_01_017
     case C_73_09_006
     case C_75_01_025
+    
+    case C_75_11_509
 }
 
 extension ProductCategory: CustomStringConvertible {
@@ -67,6 +69,7 @@ extension ProductCategory: CustomStringConvertible {
         case .C_73_01_017: return "materiale di consumo (73.01.017)"
         case .C_73_09_006: return "carburanti (73.09.006)"
         case .C_75_01_025: return "energia elettrica (75.01.025)"
+        case .C_75_11_509: return "ristorni (75.11.509)"
         }
     }
     
@@ -101,6 +104,7 @@ extension ProductCategory: CustomStringConvertible {
         case .C_73_01_017: return "73.01.017"
         case .C_73_09_006: return "73.09.006"
         case .C_75_01_025: return "75.01.025"
+        case .C_75_11_509: return "75.11.509"
         }
     }
 }
