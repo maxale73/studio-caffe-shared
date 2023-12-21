@@ -29,19 +29,19 @@ public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
 
 public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
     
-    public init(id: UUID, description: String, packageGranularity: Double, iva: IvaType, purchases: [InventoryPurchaseDTO]) {
+    public init(id: UUID, description: String, iva: IvaType, purchases: [InventoryPurchaseDTO], packages: [PackageDTO]) {
         self.id = id
         self.description = description
-        self.packageGranularity = packageGranularity
         self.iva = iva
         self.purchases = purchases
+        self.packages = packages
     }
     
     public var id: UUID
     public var description: String
-    public var packageGranularity: Double
     public var iva: IvaType
     public var purchases: [InventoryPurchaseDTO]
+    public var packages: [PackageDTO]
 }
 
 extension ProductTypologyDTO: RequestBody {}
