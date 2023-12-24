@@ -31,4 +31,12 @@ public struct PackageEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: package)
     }
     
+    public static func checkBarcodeAvailability(barcode: String? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "barcode", value: .string(barcode))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+    
 }
