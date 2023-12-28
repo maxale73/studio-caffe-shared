@@ -49,13 +49,15 @@ public struct PurchaseHistoryItem: Identifiable, Codable, Hashable {
 
 public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBody {
     
-    public init(products: [UUID], tags: [UUID]) {
+    public init(description: String, products: [UUID], tags: [UUID]) {
         self.id = .init()
+        self.filterDescription = description
         self.products = products
         self.tags = tags
     }
     
     public var id: UUID
+    public var filterDescription: String
     public var products: [UUID]
     public var tags: [UUID]
 }
