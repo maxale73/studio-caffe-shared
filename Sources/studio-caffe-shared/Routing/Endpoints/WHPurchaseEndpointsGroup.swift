@@ -62,6 +62,19 @@ public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBod
     public var tags: [UUID]
 }
 
+public struct PurchaseHistoryFilterObjects: Identifiable ,Codable, Hashable {
+    
+    public init(id: UUID, products: [ProductDTO], tags: [TagDTO]) {
+        self.id = id
+        self.products = products
+        self.tags = tags
+    }
+    
+    public var id: UUID
+    public var products: [ProductDTO]
+    public var tags: [TagDTO]
+}
+
 public struct WHPurchaseEndpointsGroup: EndpointGroupType {
     
     public static var group = "wh_purchase"
@@ -94,6 +107,14 @@ public struct WHPurchaseEndpointsGroup: EndpointGroupType {
     public static func fetchHistoryWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "fetch_history_with_filter", value: nil)
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func objectsForFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "objects_for_filter", value: nil)
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
