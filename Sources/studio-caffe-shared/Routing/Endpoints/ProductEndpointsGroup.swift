@@ -41,6 +41,17 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
     }
 }
 
+public struct ProductID: Identifiable, Codable, Equatable, Hashable {
+    
+    public init(id: UUID, productDescription: String) {
+        self.id = id
+        self.productDescription = productDescription
+    }
+    
+    public let id: UUID
+    public let productDescription: String
+}
+
 public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
     
     public init(id: UUID = UUID(), quantity: Double, purchasePrice: Double, documentRef: String, lotto: String, date: Date, supplierName: String, description: String) {
@@ -107,6 +118,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "index_with_filter", value: nil),
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func lightIndexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "light_index_with_filter", value: nil),
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
