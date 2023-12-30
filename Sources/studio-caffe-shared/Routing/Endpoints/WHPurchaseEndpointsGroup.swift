@@ -64,14 +64,14 @@ public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBod
 
 public struct PurchaseHistoryFilterObjects: Identifiable ,Codable, Hashable {
     
-    public init(id: UUID, products: [ProductDTO], tags: [TagDTO]) {
+    public init(id: UUID, products: [ProductID], tags: [TagDTO]) {
         self.id = id
         self.products = products
         self.tags = tags
     }
     
     public var id: UUID
-    public var products: [ProductDTO]
+    public var products: [ProductID]
     public var tags: [TagDTO]
 }
 
