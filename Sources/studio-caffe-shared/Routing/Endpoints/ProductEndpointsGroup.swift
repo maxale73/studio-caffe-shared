@@ -198,5 +198,14 @@ public struct ProductEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func productDTO(id: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "product_dto", value: nil),
+            PathParameter(name: "id", value: .uuid(id))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
 
