@@ -52,22 +52,17 @@ public struct AuditConsumption: Codable, Identifiable, Equatable {
 }
 
 public struct AuditsRistorno: Codable, Identifiable, Equatable {
-    public init(id: UUID, cliente: String, importoUnitario: Double, frequenza: FrequenzaRistorno, dataUltimoPagamento: Date, dataProssimoPagamento: Date, evaReports: [AuditConsumption]) {
-        self.id = id
+    
+    public init(ristorno: RistornoDTO, cliente: String, evaReports: [AuditConsumption]) {
+        self.id = ristorno.id
         self.cliente = cliente
-        self.importoUnitario = importoUnitario
-        self.frequenza = frequenza
-        self.dataUltimoPagamento = dataUltimoPagamento
-        self.dataProssimoPagamento = dataProssimoPagamento
+        self.ristorno = ristorno
         self.evaReports = evaReports
     }
     
     public var id: UUID
     public var cliente: String
-    public var importoUnitario: Double
-    public var frequenza: FrequenzaRistorno
-    public var dataUltimoPagamento: Date
-    public var dataProssimoPagamento: Date
+    public var ristorno: RistornoDTO
     public var evaReports: [AuditConsumption]
 }
 
