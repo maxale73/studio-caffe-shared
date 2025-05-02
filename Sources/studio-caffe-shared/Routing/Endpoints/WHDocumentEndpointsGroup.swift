@@ -65,7 +65,7 @@ public struct WHDocumentToSave: Codable, Identifiable, Hashable, RequestBody {
 
 public struct WHDocumentEndpointsGroup: EndpointGroupType {
     
-    public static var group = "wh_document"
+    public static var group: String { "wh_document" }
     
     public static func saveNewEmptyDocument(document: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

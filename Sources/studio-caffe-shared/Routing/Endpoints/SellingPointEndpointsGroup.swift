@@ -94,7 +94,7 @@ extension SellingPointBySP: CustomStringConvertible, RequestBody {
 
 public struct SellingPointEndpointsGroup: EndpointGroupType {
     
-    public static var group = "sellingPoint"
+    public static var group: String { "sellingPoint" }
     
     public static func createWithAddress(sellingPoint: RequestBody? = nil, addressID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

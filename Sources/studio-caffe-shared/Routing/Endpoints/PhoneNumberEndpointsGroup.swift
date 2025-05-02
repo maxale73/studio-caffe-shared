@@ -29,7 +29,7 @@ extension PhoneNumberDTO: RequestBody {}
 
 public struct PhoneNumberEndpointsGroup: EndpointGroupType {
     
-    public static var group = "phoneNumber"
+    public static var group: String { "phoneNumber" }
     
     public static func save(phoneNumber: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

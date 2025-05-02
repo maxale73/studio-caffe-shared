@@ -85,7 +85,7 @@ public struct FetchedDevice: Codable, Equatable, Identifiable {
 
 public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
-    public static var group = "adeDevice"
+    public static var group: String { "adeDevice" }
     
     public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

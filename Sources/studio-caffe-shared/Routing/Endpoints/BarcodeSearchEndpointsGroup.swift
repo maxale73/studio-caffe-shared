@@ -2,7 +2,7 @@ import Foundation
 
 public struct BarcodeEndpointsGroup: EndpointGroupType {
     
-    public static var group = "barcode"
+    public static var group: String { "barcode" }
     
     public static func search(searchTerm: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

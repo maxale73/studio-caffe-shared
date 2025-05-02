@@ -85,7 +85,7 @@ public extension AdeDeviceConfigurationDTO {
 
 public struct AdeDeviceConfigurationEndpointsGroup: EndpointGroupType {
     
-    public static var group = "adeDeviceConfiguration"
+    public static var group: String { return "adeDeviceConfiguration"}
     
     public static func find(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

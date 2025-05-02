@@ -15,7 +15,7 @@ extension SuppliersFilter: RequestBody {}
 
 public struct SupplierEndpointsGroup: EndpointGroupType {
     
-    public static var group = "supplier"
+    public static var group: String { "supplier" }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

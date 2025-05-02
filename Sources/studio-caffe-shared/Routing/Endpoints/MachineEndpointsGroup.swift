@@ -264,7 +264,7 @@ public struct MachineWithAsset: Identifiable, Codable, Equatable, Hashable {
 
 public struct MachineEndpointsGroup: EndpointGroupType {
     
-    public static var group = "machine"
+    public static var group: String { "machine" }
     
     public static func save(machine: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

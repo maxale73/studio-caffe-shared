@@ -30,7 +30,7 @@ public struct UserDTO: Codable, Identifiable, Hashable, Equatable {
 
 public struct UserEndpointsGroup: EndpointGroupType {
     
-    public static var group = "user"
+    public static var group: String { "user" }
     
     public static func me() -> EndpointConfiguration {
         let parameters = [

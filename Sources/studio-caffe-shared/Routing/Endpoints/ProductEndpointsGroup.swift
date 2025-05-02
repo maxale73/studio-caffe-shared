@@ -113,7 +113,7 @@ extension ProductPurchase: RequestBody {}
 
 public struct ProductEndpointsGroup: EndpointGroupType {
     
-    public static var group = "product"
+    public static var group: String { "product" }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

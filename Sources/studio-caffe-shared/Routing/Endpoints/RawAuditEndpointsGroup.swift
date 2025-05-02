@@ -23,7 +23,7 @@ public struct RawAuditInfo: Identifiable, Codable, Equatable {
 
 public struct RawAuditEndpointsGroup: EndpointGroupType {
     
-    public static var group = "rawAudit"
+    public static var group: String { "rawAudit" }
     
     public static func find(auditID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

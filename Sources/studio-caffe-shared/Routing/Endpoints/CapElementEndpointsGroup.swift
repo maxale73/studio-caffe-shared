@@ -2,7 +2,7 @@ import Foundation
 
 public struct CapElementEndpointsGroup: EndpointGroupType {
     
-    public static var group = "capElement"
+    public static var group: String { "capElement" }
     
     public static func index() -> EndpointConfiguration {
         let parameters = [

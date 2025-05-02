@@ -143,7 +143,7 @@ public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
 }
 
 public struct ASLCommunicationEndpointsGroup: EndpointGroupType {
-    public static var group = "asl_communication"
+    public static var group: String { "asl_communication" }
     
     public static func save(communication: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

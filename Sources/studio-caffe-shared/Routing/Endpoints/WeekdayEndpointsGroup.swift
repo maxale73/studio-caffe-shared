@@ -21,7 +21,7 @@ public struct WeekdayDTO: Codable, Hashable, Identifiable {
 
 public struct WeekdayEndpointsGroup: EndpointGroupType {
     
-    public static var group = "weekdays"
+    public static var group: String { "weekdays" }
     
     public static func index() -> EndpointConfiguration {
         let parameters = [

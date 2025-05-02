@@ -126,7 +126,7 @@ public struct CustomerName: Codable, Identifiable, Equatable, Hashable {
 
 public struct CustomerEndpointsGroup: EndpointGroupType {
     
-    public static var group = "customer"
+    public static var group: String { "customer" }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

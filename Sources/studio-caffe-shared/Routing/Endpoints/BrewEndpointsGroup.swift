@@ -21,7 +21,7 @@ public struct BrewDTO: Codable, Equatable, Hashable, Identifiable {
 
 public struct BrewEndpointsGroup: EndpointGroupType {
     
-    public static var group = "brew"
+    public static var group: String { "brew" }
     
     public static func index() -> EndpointConfiguration {
         let parameters = [

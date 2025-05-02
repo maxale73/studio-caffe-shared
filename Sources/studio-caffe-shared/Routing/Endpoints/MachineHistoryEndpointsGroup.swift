@@ -64,7 +64,7 @@ public struct HistoryDTO: Identifiable, Equatable, Codable, Hashable {
 
 public struct MachineHistoryEndpointsGroup: EndpointGroupType {
     
-    public static var group = "machine_history"
+    public static var group: String { "machine_history" }
     
     public static func fetchSellingPoints(machineID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

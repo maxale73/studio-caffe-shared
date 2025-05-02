@@ -31,7 +31,7 @@ extension EmailDTO: RequestBody {}
 
 public struct EmailEndpointsGroup: EndpointGroupType {
     
-    public static var group = "email"
+    public static var group: String { "email" }
     
     public static func save(email: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

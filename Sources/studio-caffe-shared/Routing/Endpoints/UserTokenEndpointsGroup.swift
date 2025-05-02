@@ -16,7 +16,7 @@ public struct SavedToken: Codable, Equatable {
 
 public struct UserTokenEndpointsGroup: EndpointGroupType {
     
-    public static var group = ""
+    public static var group: String { "" }
     
     public static func login(email: String? = nil, password: String? = nil) -> EndpointConfiguration {
         var base64LoginString: String? = nil

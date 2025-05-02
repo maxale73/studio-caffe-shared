@@ -17,7 +17,7 @@ extension AverageStockDTO: RequestBody {}
 
 public struct AverageStockEndpointsGroup: EndpointGroupType {
     
-    public static var group = "average_stock"
+    public static var group: String { "average_stock" }
     
     public static func fetchByModel(modelID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

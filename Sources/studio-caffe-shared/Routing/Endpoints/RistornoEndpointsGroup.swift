@@ -68,7 +68,7 @@ public struct AuditsRistorno: Codable, Identifiable, Equatable {
 
 public struct RistornoEndpointsGroup: EndpointGroupType {
     
-    public static var group = "ristorno"
+    public static var group: String { "ristorno" }
     
     public static func save(ristorno: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

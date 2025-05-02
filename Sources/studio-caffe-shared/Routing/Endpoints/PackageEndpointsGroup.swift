@@ -21,7 +21,7 @@ extension PackageDTO: RequestBody {}
 
 public struct PackageEndpointsGroup: EndpointGroupType {
     
-    public static var group = "package"
+    public static var group: String { "package" }
     
     public static func save(package: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

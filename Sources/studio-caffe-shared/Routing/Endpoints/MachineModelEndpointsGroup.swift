@@ -68,7 +68,7 @@ public struct ModelWithStocks: Codable, Hashable, Identifiable, Equatable {
 
 public struct MachineModelEndpointsGroup: EndpointGroupType {
     
-    public static var group = "machineModel"
+    public static var group: String { "machineModel" }
     
     public static func fetchModel(id: UUID? = nil) -> EndpointConfiguration {
         let parameters = [

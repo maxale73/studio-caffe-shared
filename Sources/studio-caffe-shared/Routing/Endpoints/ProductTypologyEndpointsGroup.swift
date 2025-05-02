@@ -48,7 +48,7 @@ extension ProductTypologyDTO: RequestBody {}
 
 public struct ProductTypologyEndpointsGroup: EndpointGroupType {
     
-    public static var group = "productTypology"
+    public static var group: String { "productTypology" }
     
     public static func index(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

@@ -2,7 +2,7 @@ import Foundation
 
 public struct PurchaseEndpointsGroup: EndpointGroupType {
     
-    public static var group = "purchase"
+    public static var group: String { "purchase" }
     
     public static func createDocument(document: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

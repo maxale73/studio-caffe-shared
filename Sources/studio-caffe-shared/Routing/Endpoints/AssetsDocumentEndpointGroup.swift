@@ -55,7 +55,7 @@ public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable, Request
 
 public struct AssetsDocumentEndpointGroup: EndpointGroupType {
     
-    public static var group = "assets_document"
+    public static var group: String { "assets_document" }
     
     public static func saveNewEmptyDocument(document: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

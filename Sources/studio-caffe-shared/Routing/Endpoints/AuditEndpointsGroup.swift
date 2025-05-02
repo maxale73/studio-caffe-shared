@@ -246,7 +246,7 @@ public struct LastReportByMachine: Identifiable, Codable, Equatable {
 
 public struct AuditEndpointsGroup: EndpointGroupType {
     
-    public static var group = "evaReport"
+    public static var group: String { "evaReport" }
     
     public static func index(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "index", value: nil) ]
