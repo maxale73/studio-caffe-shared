@@ -79,6 +79,8 @@ public struct PurchaseHistoryFilterObjects: Identifiable ,Codable, Hashable {
 
 public struct WHPurchaseEndpointsGroup: EndpointGroupType {
     
+    // test
+    
     public static var group: String { "wh_purchase" }
     
     public static func deletePurchase(purchaseID: UUID? = nil) -> EndpointConfiguration {
