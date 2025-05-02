@@ -43,7 +43,7 @@ public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBo
 
 public struct AddressEndpointsGroup: EndpointGroupType {
     
-    public static var group = "address"
+    static public var group: String { return "address" }
     
     public static func save(address: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
