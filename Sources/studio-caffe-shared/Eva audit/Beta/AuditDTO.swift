@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AuditDTO: Identifiable, Codable, Equatable, Hashable {
+public struct AuditDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     public init(id: UUID,
                 
                 deviceId: String,

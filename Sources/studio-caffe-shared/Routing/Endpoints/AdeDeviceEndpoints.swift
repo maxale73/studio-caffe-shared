@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, RequestBody {
+public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, RequestBody, Sendable {
 
     public var id: UUID
     public var adeID: String
@@ -42,7 +42,7 @@ public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Request
     }
 }
 
-public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
+public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable, Sendable {
     public init(id: UUID, adeID: String, model: AdeDeviceModel) {
         self.id = id
         self.adeID = adeID
@@ -54,7 +54,7 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable {
     public let model: AdeDeviceModel
 }
 
-public struct FetchedDevice: Codable, Equatable, Identifiable {
+public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
     
     public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfigurationDTO, machineModel: MachineModelDTO? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil) {
         self.id = id

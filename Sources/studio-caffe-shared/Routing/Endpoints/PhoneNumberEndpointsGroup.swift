@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PhoneNumberDTO: Codable, Equatable, Identifiable, Hashable {
+public struct PhoneNumberDTO: Codable, Equatable, Identifiable, Hashable, Sendable {
     
     public init(id: UUID, number: String, numberDescription: String, customer: IDType) {
         self.id = id

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WeekdayDTO: Codable, Hashable, Identifiable {
+public struct WeekdayDTO: Codable, Hashable, Identifiable, Sendable {
     
     public var id: UUID
     

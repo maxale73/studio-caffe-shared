@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SupplierName: Codable, Identifiable, Equatable, Hashable {
+public struct SupplierName: Codable, Identifiable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, businessName: String) {
         self.id = id

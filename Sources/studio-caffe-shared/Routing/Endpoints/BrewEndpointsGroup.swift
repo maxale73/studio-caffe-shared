@@ -1,6 +1,6 @@
 import Foundation
 
-public struct BrewDTO: Codable, Equatable, Hashable, Identifiable {
+public struct BrewDTO: Codable, Equatable, Hashable, Identifiable, Sendable {
     
     public var id: UUID
     

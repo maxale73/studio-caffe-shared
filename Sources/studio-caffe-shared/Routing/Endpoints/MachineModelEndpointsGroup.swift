@@ -2,7 +2,7 @@ import Foundation
 
 public let emptyMachineModelID = UUID()
 
-public struct MachineModelDTO: Codable, Hashable, Identifiable, Equatable {
+public struct MachineModelDTO: Codable, Hashable, Identifiable, Equatable, Sendable {
     
     public var id: UUID
     public var maker: String
@@ -39,7 +39,7 @@ public extension MachineModelDTO {
     }
 }
 
-public struct MachineByModel: Codable, Hashable, Identifiable, Equatable {
+public struct MachineByModel: Codable, Hashable, Identifiable, Equatable, Sendable {
     
     public init(id: UUID, internalID: Int, factoryID: String, installation: InstallationType) {
         self.id = id

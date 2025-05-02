@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
+public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, typologyDescription: String) {
         self.id = id
@@ -12,7 +12,7 @@ public struct ProductTypologyDTO: Identifiable, Codable, Equatable, Hashable {
     
 }
 
-public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
+public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, amount: Double, price: Double, date: Date) {
         self.id = id
@@ -27,7 +27,7 @@ public struct InventoryPurchaseDTO: Identifiable, Codable, Equatable, Hashable {
     public var date: Date
 }
 
-public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable {
+public struct InventoryProductDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, description: String, iva: IvaType, purchases: [InventoryPurchaseDTO], packages: [PackageDTO]) {
         self.id = id

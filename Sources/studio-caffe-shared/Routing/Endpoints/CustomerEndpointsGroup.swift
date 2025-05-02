@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CustomerCompleteDTO: Codable, Identifiable, Hashable, Equatable {
+public struct CustomerCompleteDTO: Codable, Identifiable, Hashable, Equatable, Sendable {
     
     public init(id: UUID, businessName: String, alias: String? = nil, partitaIva: String? = nil, codiceFiscale: String? = nil, cuFatturazione: String? = nil, iban: String? = nil, referencePerson: String, notes: [String]? = nil, addresses: [AddressBySP], phoneNumbers: [PhoneNumberDTO], emails: [EmailDTO], ristorni: [RistornoDTO]) {
         self.id = id
@@ -55,7 +55,7 @@ public struct CustomerCompleteDTO: Codable, Identifiable, Hashable, Equatable {
 }
 
 
-public struct CustomerBySP: Codable, Identifiable, Hashable, Equatable, RequestBody {
+public struct CustomerBySP: Codable, Identifiable, Hashable, Equatable, RequestBody, Sendable {
     public var id: UUID
     
     public var businessName: String
@@ -84,7 +84,7 @@ public struct CustomerBySP: Codable, Identifiable, Hashable, Equatable, RequestB
     }
 }
 
-public struct CustomerDTO: Codable, Identifiable, Hashable {
+public struct CustomerDTO: Codable, Identifiable, Hashable, Sendable {
     
     public init(id: UUID, businessName: String, alias: String, partitaIva: String, codiceFiscale: String, cuFatturazione: String, iban: String, referencePerson: String, notes: [String]? = nil) {
         self.id = id
@@ -111,7 +111,7 @@ public struct CustomerDTO: Codable, Identifiable, Hashable {
     
 }
 
-public struct CustomerName: Codable, Identifiable, Equatable, Hashable {
+public struct CustomerName: Codable, Identifiable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, businessName: String, alias: String? = nil) {
         self.id = id

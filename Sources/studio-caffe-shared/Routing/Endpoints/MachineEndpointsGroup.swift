@@ -1,12 +1,12 @@
 import Foundation
 
-public struct CustomerByMachine: Codable, Hashable, Identifiable, Equatable {
+public struct CustomerByMachine: Codable, Hashable, Identifiable, Equatable, Sendable {
     public var id: UUID
     public var businessName: String
     public var alias: String?
 }
 
-public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable {
+public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable, Sendable {
     
     public init(id: UUID, address1: String, address2: String? = nil, city: String, province: String, postalCode: String, isLegalAddress: Bool, customer: CustomerName) {
         self.id = id
@@ -179,7 +179,7 @@ public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBod
     }
 }
 
-public struct FilteredMachineDTO: Equatable, Identifiable, Hashable, Codable {
+public struct FilteredMachineDTO: Equatable, Identifiable, Hashable, Codable, Sendable {
     
     public var id: UUID
     public var internalID: Int
@@ -201,7 +201,7 @@ public struct FilteredMachineDTO: Equatable, Identifiable, Hashable, Codable {
     }
 }
 
-public struct MachineBySP: Codable, Hashable, Identifiable {
+public struct MachineBySP: Codable, Hashable, Identifiable, Sendable {
     public init(id: UUID, internalID: Int, factoryID: String, notes: [String]? = nil, installation: InstallationType, model: MachineModelDTO, adeDevice: AdeDeviceDTO? = nil) {
         self.id = id
         self.internalID = internalID

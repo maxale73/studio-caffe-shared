@@ -564,7 +564,7 @@ public struct EvaResumeValues {
     public var valoreVenditeLibere: Double
 }
 
-public struct EvaAdeValues: Codable, Equatable {
+public struct EvaAdeValues: Codable, Equatable, Sendable {
     public init(cashBox: Double, contato: Double, differenza: Double, incassato: Double, incassatoVendita: Double, incassatoRicarica: Double, venduto: Double, vendutoContante: Double, vendutoNoContante: Double, caricatoTubiResto: Double, resoTubiResto: Double, caricatoManualeTubiResto: Double, resoManualeTubiResto: Double, residuoChiavi: Double, cashOverpay: Double) {
         self.cashBox = cashBox
         self.contato = contato

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AssetsDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
+public struct AssetsDocumentDTO: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(id: UUID, documentType: AssetsDocumentType, documentRef: String, date: Date, supplierName: String) {
         self.id = id
@@ -17,7 +17,7 @@ public struct AssetsDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
     public var supplierName: String
 }
 
-public struct AssetDTO: Codable, Identifiable, Hashable {
+public struct AssetDTO: Codable, Identifiable, Hashable, Sendable {
     public init(id: UUID, buyPrice: Double, sellPrice: Double? = nil, machine: FilteredMachineDTO, note: String) {
         self.id = id
         self.buyPrice = buyPrice
@@ -33,7 +33,7 @@ public struct AssetDTO: Codable, Identifiable, Hashable {
     public var note: String
 }
 
-public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable, RequestBody {
+public struct AssetsDocumentWithAssets: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(id: UUID, documentType: AssetsDocumentType, documentRef: String, date: Date, supplierName: String, assets: [AssetDTO]) {
         self.id = id

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DataPoint: Codable, Equatable {
+public struct DataPoint: Codable, Equatable, Sendable {
     
     public init(date: Date, amount: Double) {
         self.date = date
@@ -18,7 +18,7 @@ public struct DataPoint: Codable, Equatable {
     public var amount: Double
 }
 
-public struct AveragePoint: Identifiable {
+public struct AveragePoint: Identifiable, Sendable {
     public init(date: Date, relativePointInTime: TimeInterval, average: Int) {
         self.date = date
         self.relativePointInTime = relativePointInTime
@@ -31,7 +31,7 @@ public struct AveragePoint: Identifiable {
     public var average: Int
 }
 
-public enum MovingAveragePeriod: String, Identifiable, RawRepresentable, CaseIterable {
+public enum MovingAveragePeriod: String, Identifiable, RawRepresentable, CaseIterable, Sendable {
     public var id: String { rawValue }
     case oneMonth = "un mese"
     case threeMonths = "tre mesi"

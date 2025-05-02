@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WHPurchaseDTO: Codable, Identifiable, Hashable, RequestBody {
+public struct WHPurchaseDTO: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, index: Int, description: String, product: ProductDTO) {
         self.id = id

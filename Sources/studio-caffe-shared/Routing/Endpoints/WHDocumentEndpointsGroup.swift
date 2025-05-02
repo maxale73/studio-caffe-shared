@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
+public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(id: UUID, documentRef: String, date: Date, closed: Bool, supplierName: String) {
         self.id = id
@@ -17,7 +17,7 @@ public struct WHDocumentDTO: Codable, Identifiable, Hashable, RequestBody {
     public var supplierName: String
 }
 
-public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody {
+public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(document: WHDocumentDTO, purchases: [WHPurchaseDTO]) {
         self.document = document
@@ -29,7 +29,7 @@ public struct WHDocumentComplete: Codable, Identifiable, Hashable, RequestBody {
     public var purchases: [WHPurchaseDTO]
 }
 
-public struct WHPurchaseToSave: Codable, Identifiable, Hashable {
+public struct WHPurchaseToSave: Codable, Identifiable, Hashable, Sendable {
     
     public init(id: UUID, quantity: Double, purchasePrice: Double, lotto: String, index: Int, description: String, product: IDType) {
         self.id = id
@@ -51,7 +51,7 @@ public struct WHPurchaseToSave: Codable, Identifiable, Hashable {
     public var product: IDType
 }
 
-public struct WHDocumentToSave: Codable, Identifiable, Hashable, RequestBody {
+public struct WHDocumentToSave: Codable, Identifiable, Hashable, RequestBody, Sendable {
     
     public init(document: WHDocumentDTO, purchases: [WHPurchaseToSave]) {
         self.document = document

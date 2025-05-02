@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MachineHistoryDTO: Identifiable, Equatable, Codable {
+public struct MachineHistoryDTO: Identifiable, Equatable, Codable, Sendable {
     public init(id: UUID, machineID: UUID, sellingPointID: UUID, installation: InstallationType, date: Date, sellingPoitCode: Int, customer: String) {
         self.id = id
         self.machineID = machineID
@@ -38,7 +38,7 @@ public struct MachineHistoryDTO: Identifiable, Equatable, Codable {
     }
 }
 
-public struct HistoryDTO: Identifiable, Equatable, Codable, Hashable {
+public struct HistoryDTO: Identifiable, Equatable, Codable, Hashable, Sendable {
     public init(id: UUID, machineID: Int, model: String, machineType: MachineModelType, installation: InstallationType, date: Date, customer: String, address: String, city: String) {
         self.id = id
         self.machineID = machineID

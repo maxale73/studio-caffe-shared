@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PackageDTO: Identifiable, Codable, Equatable, Hashable {
+public struct PackageDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     public init(id: UUID, uom: Uom, barcode: String? = nil, quantity: Double, product: IDType) {
         self.id = id
         self.uom = uom

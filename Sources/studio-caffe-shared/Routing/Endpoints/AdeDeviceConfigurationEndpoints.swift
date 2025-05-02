@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AdeDeviceConfigurationDTO: Codable, Identifiable, Hashable {
+public struct AdeDeviceConfigurationDTO: Codable, Identifiable, Hashable, Sendable {
     
     public var id: UUID
     

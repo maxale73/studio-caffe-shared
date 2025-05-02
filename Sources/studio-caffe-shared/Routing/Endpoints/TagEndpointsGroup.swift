@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TagDTO: Codable, Identifiable, Hashable, Equatable {
+public struct TagDTO: Codable, Identifiable, Hashable, Equatable, Sendable {
     
     public init(id: UUID, tag: String) {
         self.id = id

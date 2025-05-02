@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ProductDTO: Identifiable, Codable, Equatable, Hashable {
+public struct ProductDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public var id: UUID
     
@@ -52,7 +52,7 @@ public struct ProductID: Identifiable, Codable, Equatable, Hashable {
     public let productDescription: String
 }
 
-public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
+public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(id: UUID = UUID(), quantity: Double, purchasePrice: Double, documentRef: String, lotto: String, date: Date, supplierName: String, description: String) {
         self.id = id
@@ -75,7 +75,7 @@ public struct ProductPurchase: Identifiable, Codable, Equatable, Hashable {
     public var description: String
 }
 
-public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, RequestBody {
+public struct ProductAndPurchases: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
     public init(productDTO: ProductDTO, purchases: [ProductPurchase]) {
         self.productDTO = productDTO
         self.purchases = purchases

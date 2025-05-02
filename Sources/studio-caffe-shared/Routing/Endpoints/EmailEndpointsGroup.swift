@@ -1,6 +1,6 @@
 import Foundation
 
-public struct EmailDTO: Codable, Equatable, Identifiable, Hashable {
+public struct EmailDTO: Codable, Equatable, Identifiable, Hashable, Sendable {
     
     public var id: UUID
     public var address: String

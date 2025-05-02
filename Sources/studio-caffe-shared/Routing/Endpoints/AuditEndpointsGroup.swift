@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ReportAroundDate:Codable, Equatable, Identifiable {
+public struct ReportAroundDate:Codable, Equatable, Identifiable, Sendable {
     
     public init(adeID: String, machineID: Int? = nil, previousDate: Date? = nil, nextDate: Date? = nil, venduto: Double? = nil, customer: String, site: String, note: String) {
         self.adeID = adeID
@@ -25,7 +25,7 @@ public struct ReportAroundDate:Codable, Equatable, Identifiable {
     public var note: String
 }
 
-public struct ReportsBySellingPoint: Identifiable, Equatable, Codable {
+public struct ReportsBySellingPoint: Identifiable, Equatable, Codable, Sendable {
     public init(customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, reports: [DataPoint]) {
         self.customer = customer
         self.sellingPoint = sellingPoint
@@ -48,7 +48,7 @@ public struct ReportsBySellingPoint: Identifiable, Equatable, Codable {
     public var reports: [DataPoint]
 }
 
-public struct ReportsByCustomer: Codable, Identifiable, Equatable {
+public struct ReportsByCustomer: Codable, Identifiable, Equatable, Sendable {
     
     public init(id: UUID, customerName: String, reports: [AuditDTO]) {
         self.id = id
@@ -61,7 +61,7 @@ public struct ReportsByCustomer: Codable, Identifiable, Equatable {
     public var reports: [AuditDTO]
 }
 
-public struct ReportByRistorno: Codable, Identifiable, Equatable {
+public struct ReportByRistorno: Codable, Identifiable, Equatable, Sendable {
     
     public init(id: UUID, erogazioni: Int, machineID: Int, machineModel: String, site: String, readingDate: Date) {
         self.id = id
@@ -80,7 +80,7 @@ public struct ReportByRistorno: Codable, Identifiable, Equatable {
     public var readingDate: Date
 }
 
-public struct ReportByMachine: Identifiable, Equatable, Codable {
+public struct ReportByMachine: Identifiable, Equatable, Codable, Sendable {
     public init(auditID: UUID, customer: String, sellingPoint: Int, site: String, deviceID: String, deviceModel: String, date: Date) {
         self.id = auditID
         self.customer = customer
@@ -100,7 +100,7 @@ public struct ReportByMachine: Identifiable, Equatable, Codable {
     public var date: Date
 }
 
-public struct ReportByDevice: Identifiable, Equatable, Codable {
+public struct ReportByDevice: Identifiable, Equatable, Codable, Sendable {
     public init(auditID: UUID, customer: String, sellingPoint: Int, site: String, machineID: Int, machineModel: String, machineType: String, date: Date) {
         self.id = auditID
         self.customer = customer
@@ -122,7 +122,7 @@ public struct ReportByDevice: Identifiable, Equatable, Codable {
     public var date: Date
 }
 
-public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody {
+public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody, Sendable {
     public init(id: UUID, deviceId: String, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date) {
         self.id = id
         self.deviceId = deviceId
@@ -138,7 +138,7 @@ public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody {
     public let dataLetturaPrecedente: Date
 }
 
-public enum ServerCheckedAuditResult: String, RawRepresentable, Codable {
+public enum ServerCheckedAuditResult: String, RawRepresentable, Codable, Sendable {
     case notExecuted = "da verificare"
     case pending = "in corso"
     case noPreviousReport = "no precedente"
@@ -151,7 +151,7 @@ public enum ServerCheckedAuditResult: String, RawRepresentable, Codable {
     case noPrevious = "nessuna rilevazione precedente"
 }
 
-public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable {
+public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable, Sendable {
     public let id: UUID
     public let previousRawReport: String
     public let machineID: String
@@ -169,7 +169,7 @@ public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable {
     }
 }
 
-public struct ParsedAuditToSave: Codable, RequestBody {
+public struct ParsedAuditToSave: Codable, RequestBody, Sendable {
     public var id: UUID
     public var rawReport: String
     public var dataLettura: Date
@@ -183,7 +183,7 @@ public struct ParsedAuditToSave: Codable, RequestBody {
     }
 }
 
-public struct CorrispettiviPerData: Codable, Equatable, Identifiable {
+public struct CorrispettiviPerData: Codable, Equatable, Identifiable, Sendable {
     public init(date: Date, values: EvaAdeValues) {
         self.id = UUID()
         self.date = date
@@ -205,7 +205,7 @@ public struct CorrispettiviPerData: Codable, Equatable, Identifiable {
     }
 }
 
-public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody {
+public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody, Sendable {
     
     public var id: UUID
     public var amount: Double
@@ -216,7 +216,7 @@ public struct TallyToSave: Codable, Identifiable, Equatable, RequestBody {
     }
 }
 
-public struct LastReportByMachine: Identifiable, Codable, Equatable {
+public struct LastReportByMachine: Identifiable, Codable, Equatable, Sendable {
     public init(id: UUID, customer: String, site: String, city: String, province: String, machineID: Int, machineModel: String, machineType: MachineModelType, deviceModel: AdeDeviceModel, deciceID: String, date: Date) {
         self.id = id
         self.customer = customer

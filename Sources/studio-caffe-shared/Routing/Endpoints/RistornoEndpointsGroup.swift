@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RistornoDTO: Codable, Equatable, Identifiable, Hashable {
+public struct RistornoDTO: Codable, Equatable, Identifiable, Hashable, Sendable {
     
     public init(id: UUID, importoUnitario: Double, frequenza: FrequenzaRistorno, dataUltimoPagamento: Date, dataProssimoPagamento: Date, customerID: IDType) {
         self.id = id

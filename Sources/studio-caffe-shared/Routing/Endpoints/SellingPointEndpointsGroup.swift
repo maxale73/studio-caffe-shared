@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SellingPointBySP: Codable, Hashable, Identifiable {
+public struct SellingPointBySP: Codable, Hashable, Identifiable, Sendable {
     public init(id: UUID, sellingPointID: Int, site: String, user: UserDTO, machines: [MachineBySP], brews: [BrewDTO], weekdays: [WeekdayDTO], communications: [ASLCommunicationDTO]) {
         self.id = id
         self.sellingPointID = sellingPointID

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UserDTO: Codable, Identifiable, Hashable, Equatable {
+public struct UserDTO: Codable, Identifiable, Hashable, Equatable, Sendable {
 
     public var id: UUID
     public var name: String

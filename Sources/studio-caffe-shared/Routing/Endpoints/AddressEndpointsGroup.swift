@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBody {
+public struct AddressBySP: Codable, Identifiable, Equatable, Hashable, RequestBody, Sendable {
     public var id: UUID
     
     public var latitude: Double?

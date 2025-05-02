@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SavedToken: Codable, Equatable {
+public struct SavedToken: Codable, Equatable, Sendable {
     public init(id: UUID, username: String, role: String, token: String) {
         self.id = id
         self.username = username
