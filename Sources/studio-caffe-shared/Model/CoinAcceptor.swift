@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CoinAcceptor: String, Codable, CaseIterable, Identifiable {
+public enum CoinAcceptor: String, Codable, CaseIterable, Identifiable, Sendable {
     public var id: String {
         rawValue
     }

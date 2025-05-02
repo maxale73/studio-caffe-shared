@@ -1,6 +1,6 @@
 import Foundation
 
-public enum MachineModelType: String, Codable, CaseIterable, RawRepresentable, Identifiable {
+public enum MachineModelType: String, Codable, CaseIterable, RawRepresentable, Identifiable, Sendable {
     public var id: String {
         rawValue
     }

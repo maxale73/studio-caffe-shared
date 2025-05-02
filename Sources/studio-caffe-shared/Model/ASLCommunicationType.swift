@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ASLCommunicationType: String, Codable, Identifiable, CaseIterable, RawRepresentable {
+public enum ASLCommunicationType: String, Codable, Identifiable, CaseIterable, RawRepresentable, Sendable {
     
     public var id: String {
         rawValue

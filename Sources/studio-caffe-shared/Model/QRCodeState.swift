@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum QRCodeState: String {
+public enum QRCodeState: String, Sendable {
     case generato
     case nonGenerato = "non generato"
     case nonValido = "non valido"

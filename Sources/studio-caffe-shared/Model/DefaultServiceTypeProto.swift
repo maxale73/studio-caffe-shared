@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DefaultServiceTypeProto: String, CaseIterable, RawRepresentable {
+public enum DefaultServiceTypeProto: String, CaseIterable, RawRepresentable, Sendable {
     case counterID
     case refillID
     case espressoGroupSubstitutionID

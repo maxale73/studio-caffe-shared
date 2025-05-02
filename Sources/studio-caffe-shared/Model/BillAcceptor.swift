@@ -1,6 +1,6 @@
 import Foundation
 
-public enum BillAcceptor: String, Codable, CaseIterable, Identifiable {
+public enum BillAcceptor: String, Codable, CaseIterable, Identifiable, Sendable {
     public var id: String {
         rawValue
     }

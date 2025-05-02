@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Uom: String, Codable, CaseIterable, Identifiable {
+public enum Uom: String, Codable, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
     case kg
     case pezzi

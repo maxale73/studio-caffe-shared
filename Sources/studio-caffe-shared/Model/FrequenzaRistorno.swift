@@ -1,6 +1,6 @@
 import Foundation
 
-public enum FrequenzaRistorno: String, Codable, CaseIterable, Identifiable {
+public enum FrequenzaRistorno: String, Codable, CaseIterable, Identifiable, Sendable {
     
     public var id: String { rawValue }
     case mensile

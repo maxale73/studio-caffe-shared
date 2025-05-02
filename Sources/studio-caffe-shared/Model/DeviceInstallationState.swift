@@ -1,7 +1,7 @@
 
 import Foundation
 
-public enum DeviceInstallationState: String, CaseIterable, RawRepresentable, Identifiable, Codable {
+public enum DeviceInstallationState: String, CaseIterable, RawRepresentable, Identifiable, Codable, Sendable {
     
     public var id: String {
         rawValue

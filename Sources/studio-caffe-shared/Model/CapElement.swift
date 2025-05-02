@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CapElement: Codable, Identifiable, Hashable {
+public struct CapElement: Codable, Identifiable, Hashable, Sendable {
     public var id: UUID
     public let name: String
     public let cap: String?

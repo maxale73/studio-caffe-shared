@@ -1,6 +1,6 @@
 import Foundation
 
-public enum InstallationType: String, Codable, Identifiable, CaseIterable, RawRepresentable {
+public enum InstallationType: String, Codable, Identifiable, CaseIterable, RawRepresentable, Sendable {
     
     public var id: String {
         rawValue

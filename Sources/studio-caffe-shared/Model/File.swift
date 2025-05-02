@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CustomTimeInterval: Equatable, Codable {
+public struct CustomTimeInterval: Equatable, Codable, Sendable {
     
     public init(from: Date, to: Date, intervalDescription: String) {
         self.from = from

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Identifiable {
+public enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Identifiable, Sendable {
     
     public var id: String { rawValue }
     
