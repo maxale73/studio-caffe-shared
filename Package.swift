@@ -24,12 +24,7 @@ let package = Package(
         .target(
             name: "studio-caffe-shared",
             dependencies: [],
-            swiftSettings: [
-                .unsafeFlags(["-cross-module-optimization"], .when(configuration: .release)),
-
-                        /// Xcode 15 & 16. Remove `=targeted` to use the default `complete`. Potentially isolate to a platform to further reduce scope.
-                .enableExperimentalFeature("StrictConcurrency=complete")
-                ]),
+            swiftSettings: []),
         
         .testTarget(
             name: "studio-caffe-sharedTests",
