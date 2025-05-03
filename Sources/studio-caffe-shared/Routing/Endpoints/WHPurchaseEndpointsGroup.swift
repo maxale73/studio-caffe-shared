@@ -22,7 +22,7 @@ public struct WHPurchaseDTO: Codable, Identifiable, Hashable, RequestBody, Senda
     public var product: ProductDTO
 }
 
-public struct PurchaseHistoryItem: Identifiable, Codable, Hashable {
+public struct PurchaseHistoryItem: Identifiable, Codable, Hashable, Sendable {
     
     public init(id: UUID, productID: UUID, productTypologyID: UUID? = nil, productCategory: ProductCategory, iva: IvaType, quantity: Double, price: Double, date: Date) {
         self.id = id
@@ -47,7 +47,7 @@ public struct PurchaseHistoryItem: Identifiable, Codable, Hashable {
     public var date: Date
 }
 
-public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBody {
+public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBody, Sendable {
     
     public init(description: String, products: [UUID], tags: [UUID], categories: [ProductCategory]) {
         self.id = .init()
@@ -64,7 +64,7 @@ public struct PurchaseHistoryFilter: Identifiable, Codable, Hashable, RequestBod
     public var categories: [ProductCategory]
 }
 
-public struct PurchaseHistoryFilterObjects: Identifiable ,Codable, Hashable {
+public struct PurchaseHistoryFilterObjects: Identifiable ,Codable, Hashable, Sendable {
     
     public init(id: UUID, products: [ProductID], tags: [TagDTO]) {
         self.id = id

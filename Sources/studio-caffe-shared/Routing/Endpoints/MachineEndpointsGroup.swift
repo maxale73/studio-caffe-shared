@@ -66,7 +66,7 @@ public struct AddressByMachine: Codable, Hashable, Identifiable, Equatable, Send
     }
 }
 
-public struct SellingPointBM: Codable, Hashable, Identifiable, Equatable {
+public struct SellingPointBM: Codable, Hashable, Identifiable, Equatable, Sendable {
     
     public init(id: UUID, sellingPointID: Int, site: String, address: AddressByMachine) {
         self.id = id
@@ -82,7 +82,7 @@ public struct SellingPointBM: Codable, Hashable, Identifiable, Equatable {
     public var address: AddressByMachine
 }
 
-public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable {
+public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable, Sendable {
     
     public var id: UUID
     public var internalID: Int
@@ -133,7 +133,7 @@ public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable {
 }
 
 
-public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBody {
+public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBody, Sendable {
     
     public var id: UUID
     public var internalID: Int = 1001
@@ -233,7 +233,7 @@ public struct MachineBySP: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
-public struct MachineAsset: Codable, Hashable {
+public struct MachineAsset: Codable, Hashable, Sendable {
     
     public init(buyDocument: AssetsDocumentDTO? = nil, sellDocument: AssetsDocumentDTO? = nil, buyPrice: Double? = nil, sellPrice: Double? = nil, note: String? = nil) {
         self.buyDocument = buyDocument
@@ -250,7 +250,7 @@ public struct MachineAsset: Codable, Hashable {
     public var note: String?
 }
 
-public struct MachineWithAsset: Identifiable, Codable, Equatable, Hashable {
+public struct MachineWithAsset: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(machine: FilteredMachineDTO, asset: MachineAsset? = nil) {
         self.machine = machine

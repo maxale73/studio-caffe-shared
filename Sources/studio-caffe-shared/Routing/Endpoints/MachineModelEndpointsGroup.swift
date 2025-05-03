@@ -54,7 +54,7 @@ public struct MachineByModel: Codable, Hashable, Identifiable, Equatable, Sendab
     public var installation: InstallationType
 }
 
-public struct ModelWithStocks: Codable, Hashable, Identifiable, Equatable {
+public struct ModelWithStocks: Codable, Hashable, Identifiable, Equatable, Sendable {
     public init(id: UUID, model: MachineModelDTO, stocks: [AverageStockDTO]) {
         self.id = id
         self.model = model

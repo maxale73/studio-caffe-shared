@@ -92,7 +92,7 @@ public struct ASLCommunicationDTO: Identifiable, Hashable, Equatable, Codable, R
 //    }
 //}
 //
-public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
+public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable, Sendable {
     public var id: UUID
     public var communications: [ASLCommunicationDTO]
     public var customer: String
@@ -109,7 +109,7 @@ public struct ASLCommunicationsBySP: Identifiable, Equatable, Codable {
     }
 }
 
-public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable {
+public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable, Sendable {
     
     public init(id: UUID, communications: [ASLCommunicationDTO], sellingPoint: Int, site: String, currentlyInstalled: Bool) {
         self.id = id
@@ -126,7 +126,7 @@ public struct ASLCommunicationsSellingPoint: Identifiable, Equatable, Codable {
     public var currentlyInstalled: Bool
 }
 
-public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable {
+public struct ASLCommunicationsByAddress: Identifiable, Equatable, Codable, Sendable {
     public init(id: UUID, city: String, addressDescription: String, customer: String, sellingPoints: [ASLCommunicationsSellingPoint]) {
         self.id = id
         self.city = city

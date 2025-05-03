@@ -41,7 +41,7 @@ public struct ProductDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     }
 }
 
-public struct ProductID: Identifiable, Codable, Equatable, Hashable {
+public struct ProductID: Identifiable, Codable, Equatable, Hashable, Sendable {
     
     public init(id: UUID, productDescription: String) {
         self.id = id
@@ -92,7 +92,7 @@ extension ProductAndPurchases {
     }
 }
 
-public struct ProductAndTypology: Identifiable, Codable, Equatable, Hashable, RequestBody {
+public struct ProductAndTypology: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
     
     public init(id: UUID, typologyID: UUID?, productDescription: String, typologyDescription: String?) {
         self.id = id
