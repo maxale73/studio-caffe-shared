@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WHDocumentFilter: Equatable, Codable, Identifiable, RequestBody {
+public struct WHDocumentFilter: Equatable, Codable, Identifiable, RequestBody, Sendable {
     
     public init(supplierID: String? = nil, from: Date? = nil, to: Date? = nil, closed: Bool? = nil) {
         self.id = UUID()

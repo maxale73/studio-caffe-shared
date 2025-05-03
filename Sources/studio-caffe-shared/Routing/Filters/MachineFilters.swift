@@ -3,7 +3,7 @@ import Foundation
 extension MachineModelType: CustomRawRepresentable {}
 extension InstallationType: CustomRawRepresentable {}
 
-public struct MachineFilters: Equatable, Codable, RequestBody {
+public struct MachineFilters: Equatable, Codable, RequestBody, Sendable {
     
     public var typeFilters: [MachineModelType]
     public var installationFilters: [InstallationType]

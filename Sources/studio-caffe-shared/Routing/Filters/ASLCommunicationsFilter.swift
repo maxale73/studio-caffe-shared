@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ASLCommunicationsFilter: Equatable, Codable, Identifiable, RequestBody {
+public struct ASLCommunicationsFilter: Equatable, Codable, Identifiable, RequestBody, Sendable {
     
     public init(customerFilter: UUID? = nil, cityFilter: String? = nil, addressFilter: UUID? = nil, sellingPointFilter: UUID? = nil) {
         self.id = UUID()

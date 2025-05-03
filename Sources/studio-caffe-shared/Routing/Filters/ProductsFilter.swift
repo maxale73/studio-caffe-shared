@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ProductsFilter: Equatable, Codable, Identifiable {
+public struct ProductsFilter: Equatable, Codable, Identifiable, Sendable {
     
     public init(textFilter: String = "", supplierID: UUID? = nil, category: ProductCategory? = nil, barcode: String? = nil) {
         self.id = UUID()

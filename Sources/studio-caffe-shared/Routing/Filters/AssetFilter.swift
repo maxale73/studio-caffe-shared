@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DocumentTypeFilter: String, RawRepresentable, CaseIterable, Identifiable, Codable {
+public enum DocumentTypeFilter: String, RawRepresentable, CaseIterable, Identifiable, Codable, Sendable {
     case both = "tutti i documenti"
     case buy = "documenti di acquisto"
     case sell = "documenti di vendita"

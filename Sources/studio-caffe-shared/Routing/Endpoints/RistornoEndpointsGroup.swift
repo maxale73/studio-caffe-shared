@@ -39,7 +39,7 @@ extension RistornoDTO {
 
 extension RistornoDTO: RequestBody {}
 
-public struct AuditConsumption: Codable, Identifiable, Equatable {
+public struct AuditConsumption: Codable, Identifiable, Equatable, Sendable {
     public init(id: UUID, dataRilevazione: Date, erogazioni: Int) {
         self.id = id
         self.dataRilevazione = dataRilevazione
@@ -51,7 +51,7 @@ public struct AuditConsumption: Codable, Identifiable, Equatable {
     public var erogazioni: Int
 }
 
-public struct AuditsRistorno: Codable, Identifiable, Equatable {
+public struct AuditsRistorno: Codable, Identifiable, Equatable, Sendable {
     
     public init(ristorno: RistornoDTO, cliente: String, evaReports: [AuditConsumption]) {
         self.id = ristorno.id

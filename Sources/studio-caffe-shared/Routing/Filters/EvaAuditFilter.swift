@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EvaAuditFilter: Codable, RequestBody, Equatable {
+public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
     public init(id: UUID = UUID(), customerID: UUID? = nil, sellingPointID: UUID? = nil, deviceID: String? = nil, machineID: Int? = nil, deviceModel: AdeDeviceModel, fromDate: Date, toDate: Date) {
         self.id = id
         self.customerID = customerID

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PurchaseDocumentsFilter: Codable, Equatable, Identifiable, RequestBody {
+public struct PurchaseDocumentsFilter: Codable, Equatable, Identifiable, RequestBody, Sendable {
     
     public init(supplierID: UUID? = nil, from: Date, to: Date) {
         self.id = UUID()

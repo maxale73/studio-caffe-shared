@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CustomersFilter: Equatable, Codable, Identifiable, RequestBody {
+public struct CustomersFilter: Equatable, Codable, Identifiable, RequestBody, Sendable {
     public var id: UUID
     public var textFilter: String
     

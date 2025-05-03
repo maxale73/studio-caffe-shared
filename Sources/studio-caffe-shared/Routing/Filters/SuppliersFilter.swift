@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SuppliersFilter: Equatable, Codable, Identifiable {
+public struct SuppliersFilter: Equatable, Codable, Identifiable, Sendable {
     public var id: UUID
     public var textFilter: String
     
