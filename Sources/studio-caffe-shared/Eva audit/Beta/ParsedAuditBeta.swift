@@ -383,6 +383,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
+    //TODO: implement anomalies batch correction
     mutating private func modifyRawReport(id: String, newValue: String) {
         let rawBlocks = rawReport.components(separatedBy: "\n")
         let indexes = id.components(separatedBy: "_")
@@ -405,6 +406,14 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     
     mutating public func updateValue(id: String, newValue: String) {
         modifyRawReport(id: id, newValue: newValue)
+        parsed = false
+        parseReport()
+    }
+    
+    mutating public func updateValues(from errors: [ImportError]) {
+        errors.forEach {
+            modifyRawReport(id: $0.id.rawValue, newValue: $0.expectedValue)
+        }
         parsed = false
         parseReport()
     }
