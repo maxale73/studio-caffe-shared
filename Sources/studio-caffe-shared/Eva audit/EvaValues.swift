@@ -358,6 +358,11 @@ public enum EvaValueIdentifier: String, Identifiable, Equatable {
     
     public var id: String { rawValue }
     
+    public var mappedID: String {
+        let indexes = rawValue.components(separatedBy: " ")
+        return indexes.first ?? rawValue
+    }
+    
     case ID1_01 = "ID dispositivo"
     case ID1_02 = "modello dispositivo"
     
@@ -481,6 +486,10 @@ extension Double: ParsedValueType {
         self == Double.invalidValue ? 0.0 : self
     }
     public var isValid: Bool { self != Self.invalidValue}
+    
+    public var EVAStandardized: String {
+        return self.currencyFormatted().filter { ("0"..."9").contains($0) }
+    }
 }
 
 extension Int: ParsedValueType {
@@ -493,6 +502,8 @@ extension Int: ParsedValueType {
         self == Int.invalidValue ? 0 : self
     }
     public var isValid: Bool { self != Self.invalidValue}
+    
+    public var EVAStandardized: String { return String(self) }
 }
 
 extension String: ParsedValueType {
@@ -501,6 +512,7 @@ extension String: ParsedValueType {
     public var textDescription: String { self }
     public var fallBackValue: String { "nd" }
     public var isValid: Bool { self != Self.invalidValue}
+    public var EVAStandardized: String { self }
 }
 
 extension Date: ParsedValueType {
@@ -511,6 +523,11 @@ extension Date: ParsedValueType {
     }
     public var fallBackValue: Date { .legalDistantPast }
     public var isValid: Bool { self != Self.invalidValue}
+    public var EVAStandardized: String {
+        let customFormatter = DateFormatter()
+        customFormatter.dateFormat = "yyMMdd*HHmmss"
+        return customFormatter.string(from: self)
+    }
 }
 
 public struct ParsedValue<T: ParsedValueType> {

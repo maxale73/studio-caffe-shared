@@ -12,6 +12,7 @@ public struct ImportError: Hashable, Identifiable {
     public let identifier: EvaValueIdentifier
     public let actualValue: String
     public let expectedValue: String
+    public let EVAStandardizedExpectedValue: String
 }
 
 public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
@@ -56,8 +57,9 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     public var missingValues: [EvaValueIdentifier] = []
     
     mutating private func validate_letturaID_EA3_01(old: ParsedAuditBeta, errors: inout [ImportError]) {
-        if letturaID_EA3_01 != old.letturaID_EA3_01 + 1 {
-            errors.append(ImportError(identifier: .EA3_01, actualValue: letturaID_EA3_01.textDescription, expectedValue: (old.letturaID_EA3_01 + 1).textDescription))
+        let expected = old.letturaID_EA3_01 + 1
+        if letturaID_EA3_01 != expected {
+            errors.append(ImportError(identifier: .EA3_01, actualValue: letturaID_EA3_01.textDescription, expectedValue: expected.textDescription, EVAStandardizedExpectedValue: expected.EVAStandardized))
         }
     }
     
@@ -65,10 +67,11 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         if detectedDeviceModel == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
             fixMissingPreviousDate(previousDate: old.dataLettura)
         }
+        let expected = old.dataLettura_EA3_02_03
         let calendar = Calendar(identifier: .gregorian)
-        let comparison = calendar.compare(dataLetturaPrecedente_EA3_05_06, to: old.dataLettura_EA3_02_03, toGranularity: .minute)
+        let comparison = calendar.compare(dataLetturaPrecedente_EA3_05_06, to: expected, toGranularity: .minute)
         if comparison != .orderedSame {
-            errors.append(ImportError(identifier: .EA3_05_06, actualValue: dataLetturaPrecedente_EA3_05_06.textDescription, expectedValue: old.dataLettura_EA3_02_03.textDescription))
+            errors.append(ImportError(identifier: .EA3_05_06, actualValue: dataLetturaPrecedente_EA3_05_06.textDescription, expectedValue: expected.textDescription, EVAStandardizedExpectedValue: expected.EVAStandardized))
         }
     }
     
@@ -76,7 +79,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoVendutoCash_CA2_01.isValid && importoVendutoCash_CA2_01.isValid && importoVendutoCash_CA2_03.isValid else { return }
         let importoVendutoCash = (importoVendutoCash_CA2_01 - old.importoVendutoCash_CA2_01).round(to: 2)
         if importoVendutoCash != importoVendutoCash_CA2_03.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA2_03, actualValue: importoVendutoCash_CA2_03.textDescription, expectedValue: importoVendutoCash.textDescription))
+            errors.append(ImportError(identifier: .CA2_03, actualValue: importoVendutoCash_CA2_03.textDescription, expectedValue: importoVendutoCash.textDescription, EVAStandardizedExpectedValue: importoVendutoCash.EVAStandardized))
         }
     }
     
@@ -84,7 +87,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_04.isValid else { return }
         let numeroVenditeCash = numeroVenditeCash_CA2_02 - old.numeroVenditeCash_CA2_02
         if numeroVenditeCash != numeroVenditeCash_CA2_04 {
-            errors.append(ImportError(identifier: .CA2_04, actualValue: numeroVenditeCash_CA2_04.textDescription, expectedValue: numeroVenditeCash.textDescription))
+            errors.append(ImportError(identifier: .CA2_04, actualValue: numeroVenditeCash_CA2_04.textDescription, expectedValue: numeroVenditeCash.textDescription, EVAStandardizedExpectedValue: numeroVenditeCash.EVAStandardized))
         }
     }
     
@@ -92,7 +95,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.totaleCashInserito_CA3_05.isValid && totaleCashInserito_CA3_05.isValid && totaleCashInserito_CA3_01.isValid else { return }
         let totaleCashInserito = (totaleCashInserito_CA3_05 - old.totaleCashInserito_CA3_05).round(to: 2)
         if totaleCashInserito != totaleCashInserito_CA3_01.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA3_01, actualValue: totaleCashInserito_CA3_01.textDescription, expectedValue: totaleCashInserito.textDescription))
+            errors.append(ImportError(identifier: .CA3_01, actualValue: totaleCashInserito_CA3_01.textDescription, expectedValue: totaleCashInserito.textDescription, EVAStandardizedExpectedValue: totaleCashInserito.EVAStandardized))
         }
     }
     
@@ -100,7 +103,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.moneteInCassetta_CA3_06.isValid && moneteInCassetta_CA3_06.isValid && moneteInCassetta_CA3_02.isValid else { return }
         let moneteInCassetta = (moneteInCassetta_CA3_06 - old.moneteInCassetta_CA3_06).round(to: 2)
         if moneteInCassetta != moneteInCassetta_CA3_02.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA3_02, actualValue: moneteInCassetta_CA3_02.textDescription, expectedValue: moneteInCassetta.textDescription))
+            errors.append(ImportError(identifier: .CA3_02, actualValue: moneteInCassetta_CA3_02.textDescription, expectedValue: moneteInCassetta.textDescription, EVAStandardizedExpectedValue: moneteInCassetta.EVAStandardized))
         }
     }
     
@@ -110,7 +113,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.banconoteInCassetta_CA3_08.isValid && banconoteInCassetta_CA3_08.isValid && bic.isValid else { return }
         let banconoteInCassetta04 = (banconoteInCassetta_CA3_08 - old.banconoteInCassetta_CA3_08).round(to: 2)
         if banconoteInCassetta04 != bic.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA3_04, actualValue: bic.textDescription, expectedValue: banconoteInCassetta04.textDescription))
+            errors.append(ImportError(identifier: .CA3_04, actualValue: bic.textDescription, expectedValue: banconoteInCassetta04.textDescription, EVAStandardizedExpectedValue: banconoteInCassetta04.EVAStandardized))
         }
     }
     
@@ -118,7 +121,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.cashOverpay_CA8_02.isValid && cashOverpay_CA8_02.isValid && cashOverpay_CA8_01.isValid else { return }
         let cashOverpay = (cashOverpay_CA8_02 - old.cashOverpay_CA8_02).round(to: 2)
         if cashOverpay != cashOverpay_CA8_01.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA8_01, actualValue: cashOverpay_CA8_01.textDescription, expectedValue: cashOverpay.textDescription))
+            errors.append(ImportError(identifier: .CA8_01, actualValue: cashOverpay_CA8_01.textDescription, expectedValue: cashOverpay.textDescription, EVAStandardizedExpectedValue: cashOverpay.EVAStandardized))
         }
     }
     
@@ -126,7 +129,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.caricoManualeTubi_CA10_02.isValid && caricoManualeTubi_CA10_02.isValid && caricoManualeTubi_CA10_01.isValid else { return }
         let caricoManualeTubi = (caricoManualeTubi_CA10_02 - old.caricoManualeTubi_CA10_02).round(to: 2)
         if caricoManualeTubi != caricoManualeTubi_CA10_01.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA10_01, actualValue: caricoManualeTubi_CA10_01.textDescription, expectedValue: caricoManualeTubi.textDescription))
+            errors.append(ImportError(identifier: .CA10_01, actualValue: caricoManualeTubi_CA10_01.textDescription, expectedValue: caricoManualeTubi.textDescription, EVAStandardizedExpectedValue: caricoManualeTubi.EVAStandardized))
         }
     }
     
@@ -134,7 +137,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.totaleScaricoTubi_CA4_03.isValid && totaleScaricoTubi_CA4_03.isValid && totaleScaricoTubi_CA4_01.isValid else { return }
         let totaleScaricoTubi = (totaleScaricoTubi_CA4_03 - old.totaleScaricoTubi_CA4_03).round(to: 2)
         if totaleScaricoTubi != totaleScaricoTubi_CA4_01.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA4_01, actualValue: totaleScaricoTubi_CA4_01.fbValue.textDescription, expectedValue: totaleScaricoTubi.textDescription))
+            errors.append(ImportError(identifier: .CA4_01, actualValue: totaleScaricoTubi_CA4_01.fbValue.textDescription, expectedValue: totaleScaricoTubi.textDescription, EVAStandardizedExpectedValue: totaleScaricoTubi.EVAStandardized))
         }
     }
     
@@ -142,7 +145,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.scaricoTubiSoloManuale_CA4_04.isValid && scaricoTubiSoloManuale_CA4_04.isValid && scaricoTubiSoloManuale_CA4_02.isValid else { return }
         let scaricoTubiManuale = (scaricoTubiSoloManuale_CA4_04 - old.scaricoTubiSoloManuale_CA4_04).round(to: 2)
         if scaricoTubiManuale != scaricoTubiSoloManuale_CA4_02.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA4_02, actualValue: scaricoTubiSoloManuale_CA4_02.textDescription, expectedValue: scaricoTubiManuale.textDescription))
+            errors.append(ImportError(identifier: .CA4_02, actualValue: scaricoTubiSoloManuale_CA4_02.textDescription, expectedValue: scaricoTubiManuale.textDescription, EVAStandardizedExpectedValue: scaricoTubiManuale.EVAStandardized))
         }
     }
     
@@ -150,7 +153,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.moneteVersoTubi_CA3_07.isValid && moneteVersoTubi_CA3_07.isValid && moneteVersoTubi_CA3_03.isValid else { return }
         let moneteVersoTubi = (moneteVersoTubi_CA3_07 - old.moneteVersoTubi_CA3_07).round(to: 2)
         if moneteVersoTubi != moneteVersoTubi_CA3_03.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .CA3_03, actualValue: moneteVersoTubi_CA3_03.textDescription, expectedValue: moneteVersoTubi.textDescription))
+            errors.append(ImportError(identifier: .CA3_03, actualValue: moneteVersoTubi_CA3_03.textDescription, expectedValue: moneteVersoTubi.textDescription, EVAStandardizedExpectedValue: moneteVersoTubi.EVAStandardized))
         }
     }
     
@@ -158,7 +161,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.numeroVendite_LA1_05.isValid && numeroVendite_LA1_05.isValid && numeroVendite_LA1_04.isValid else { return }
         let diff = numeroVendite_LA1_05 - old.numeroVendite_LA1_05
         if diff != numeroVendite_LA1_04 {
-            errors.append(ImportError(identifier: .LA1_04, actualValue: numeroVendite_LA1_04.fbValue.textDescription, expectedValue: diff.textDescription))
+            errors.append(ImportError(identifier: .LA1_04, actualValue: numeroVendite_LA1_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
         }
     }
     
@@ -166,7 +169,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_03.isValid else { return }
         let diff = (importoVendutoCashless1_DA2_01 - old.importoVendutoCashless1_DA2_01).round(to: 2)
         if diff != importoVendutoCashless1_DA2_03.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .DA2_01, actualValue: importoVendutoCashless1_DA2_03.fbValue.textDescription, expectedValue: diff.textDescription))
+            errors.append(ImportError(identifier: .DA2_01, actualValue: importoVendutoCashless1_DA2_03.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
         }
     }
     
@@ -174,7 +177,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_04.isValid else { return }
         let diff = erogazioniCashless1_DA2_02 - old.erogazioniCashless1_DA2_02
         if diff != erogazioniCashless1_DA2_04 {
-            errors.append(ImportError(identifier: .DA2_04, actualValue: erogazioniCashless1_DA2_04.fbValue.textDescription, expectedValue: diff.textDescription))
+            errors.append(ImportError(identifier: .DA2_04, actualValue: erogazioniCashless1_DA2_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
         }
     }
     
@@ -182,7 +185,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoPrelevatoDaCashless1_DA3_01.isValid && importoPrelevatoDaCashless1_DA3_01.isValid && importoPrelevatoDaCashless1_DA3_02.isValid else { return }
         let diff = (importoPrelevatoDaCashless1_DA3_01 - old.importoPrelevatoDaCashless1_DA3_01).round(to: 2)
         if diff != importoPrelevatoDaCashless1_DA3_02.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .DA3_02, actualValue: importoPrelevatoDaCashless1_DA3_02.fbValue.textDescription, expectedValue: diff.textDescription))
+            errors.append(ImportError(identifier: .DA3_02, actualValue: importoPrelevatoDaCashless1_DA3_02.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
         }
     }
     
@@ -190,7 +193,103 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoAccreditatoSuCashless1_DA4_01.isValid && importoAccreditatoSuCashless1_DA4_01.isValid && importoAccreditatoSuCashless1_DA4_02.isValid else { return }
         let diff = (importoAccreditatoSuCashless1_DA4_01 - old.importoAccreditatoSuCashless1_DA4_01).round(to: 2)
         if diff != importoAccreditatoSuCashless1_DA4_02.fbValue.round(to: 2) {
-            errors.append(ImportError(identifier: .DA4_02, actualValue: importoAccreditatoSuCashless1_DA4_02.fbValue.textDescription, expectedValue: diff.textDescription))
+            errors.append(ImportError(identifier: .DA4_02, actualValue: importoAccreditatoSuCashless1_DA4_02.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_importoVendutoCashless2_DB2_03(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.importoVendutoCashless2_DB2_01.isValid && importoVendutoCashless2_DB2_01.isValid && importoVendutoCashless2_DB2_03.isValid else { return }
+        let diff = (importoVendutoCashless2_DB2_01 - old.importoVendutoCashless2_DB2_01).round(to: 2)
+        if diff != importoVendutoCashless2_DB2_03.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .DB2_01, actualValue: importoVendutoCashless2_DB2_03.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_erogazioniCashless2_DB2_04(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.erogazioniCashless2_DB2_02.isValid && erogazioniCashless2_DB2_02.isValid && erogazioniCashless2_DB2_04.isValid else { return }
+        let diff = erogazioniCashless2_DB2_02 - old.erogazioniCashless2_DB2_02
+        if diff != erogazioniCashless2_DB2_04 {
+            errors.append(ImportError(identifier: .DA2_04, actualValue: erogazioniCashless2_DB2_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_importoPrelevatoDaCashless2_DB3_02(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.importoPrelevatoDaCashless2_DB3_01.isValid && importoPrelevatoDaCashless2_DB3_01.isValid && importoPrelevatoDaCashless2_DB3_02.isValid else { return }
+        let diff = (importoPrelevatoDaCashless2_DB3_01 - old.importoPrelevatoDaCashless2_DB3_01).round(to: 2)
+        if diff != importoPrelevatoDaCashless2_DB3_02.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .DA3_02, actualValue: importoPrelevatoDaCashless2_DB3_02.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_importoAccreditatoSuCashless2_DB4_02(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.importoAccreditatoSuCashless2_DB4_01.isValid && importoAccreditatoSuCashless2_DB4_01.isValid && importoAccreditatoSuCashless2_DB4_02.isValid else { return }
+        let diff = (importoAccreditatoSuCashless2_DB4_01 - old.importoAccreditatoSuCashless2_DB4_01).round(to: 2)
+        if diff != importoAccreditatoSuCashless2_DB4_02.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .DB4_02, actualValue: importoAccreditatoSuCashless2_DB4_02.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_venduto_VA1_03(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.venduto_VA1_01.isValid && venduto_VA1_01.isValid && venduto_VA1_03.isValid else { return }
+        let diff = (venduto_VA1_01 - old.venduto_VA1_01).round(to: 2)
+        if diff != venduto_VA1_03.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .VA1_03, actualValue: venduto_VA1_03.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_erogazioni_VA1_04(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.erogazioni_VA1_02.isValid && erogazioni_VA1_02.isValid && erogazioni_VA1_04.isValid else { return }
+        let diff = (erogazioni_VA1_02 - old.erogazioni_VA1_02)
+        if diff != erogazioni_VA1_04 {
+            errors.append(ImportError(identifier: .VA1_04, actualValue: erogazioni_VA1_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_valoreScontato_VA1_07(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.valoreScontato_VA1_05.isValid && valoreScontato_VA1_05.isValid && valoreScontato_VA1_07.isValid else { return }
+        let diff = (valoreScontato_VA1_05 - old.valoreScontato_VA1_05).round(to: 2)
+        if diff != valoreScontato_VA1_07.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .VA1_07, actualValue: valoreScontato_VA1_07.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_erogazioniScontate_VA1_08(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.erogazioniScontate_VA1_06.isValid && erogazioniScontate_VA1_06.isValid && erogazioniScontate_VA1_08.isValid else { return }
+        let diff = (erogazioniScontate_VA1_06 - old.erogazioniScontate_VA1_06)
+        if diff != erogazioniScontate_VA1_08 {
+            errors.append(ImportError(identifier: .VA1_08, actualValue: erogazioniScontate_VA1_08.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_valoreProve_VA2_03(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.valoreProve_VA2_01.isValid && valoreProve_VA2_01.isValid && valoreProve_VA2_03.isValid else { return }
+        let diff = (valoreProve_VA2_01 - old.valoreProve_VA2_01).round(to: 2)
+        if diff != valoreProve_VA2_03.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .VA2_03, actualValue: valoreProve_VA2_03.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_erogazioniProva_VA2_04(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.erogazioniProva_VA2_02.isValid && erogazioniProva_VA2_02.isValid && erogazioniProva_VA2_04.isValid else { return }
+        let diff = (erogazioniProva_VA2_02 - old.erogazioniProva_VA2_02)
+        if diff != erogazioniProva_VA2_04 {
+            errors.append(ImportError(identifier: .VA2_04, actualValue: erogazioniProva_VA2_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_valoreErogazioniGratuite_VA3_03(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.valoreErogazioniGratuite_VA3_01.isValid && valoreErogazioniGratuite_VA3_01.isValid && valoreErogazioniGratuite_VA3_03.isValid else { return }
+        let diff = (valoreErogazioniGratuite_VA3_01 - old.valoreErogazioniGratuite_VA3_01).round(to: 2)
+        if diff != valoreErogazioniGratuite_VA3_03.fbValue.round(to: 2) {
+            errors.append(ImportError(identifier: .VA3_03, actualValue: valoreErogazioniGratuite_VA3_03.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
+        }
+    }
+    
+    mutating private func validate_erogazioniGratuite_VA3_04(old: ParsedAuditBeta, errors: inout [ImportError]) {
+        guard old.erogazioniGratuite_VA3_02.isValid && erogazioniGratuite_VA3_02.isValid && erogazioniGratuite_VA3_04.isValid else { return }
+        let diff = (erogazioniGratuite_VA3_02 - old.erogazioniGratuite_VA3_02)
+        if diff != erogazioniGratuite_VA3_04 {
+            errors.append(ImportError(identifier: .VA3_04, actualValue: erogazioniGratuite_VA3_04.fbValue.textDescription, expectedValue: diff.textDescription, EVAStandardizedExpectedValue: diff.EVAStandardized))
         }
     }
     
@@ -208,7 +307,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         var errors: [ImportError] = []
         
         if detectedDeviceModel == .none {
-            errors.append(ImportError(identifier: .ID1_02, actualValue: "sconosiuto", expectedValue: "___________"))
+            errors.append(ImportError(identifier: .ID1_02, actualValue: "sconosiuto", expectedValue: "___________", EVAStandardizedExpectedValue: "sconosciuto"))
         }
         
         validate_letturaID_EA3_01(old: old, errors: &errors)
@@ -221,12 +320,12 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         validate_banconoteInCassetta(old: old, errors: &errors)
         validate_cashOverpay_CA8_01(old: old, errors: &errors)
         
-        if rilevataRendiresto() {
+//        if rilevataRendiresto() {
             validate_caricoManualeTubi_CA10_01(old: old, errors: &errors)
             validate_totaleScaricoTubi_CA4_01(old: old, errors: &errors)
             validate_scaricoTubiSoloManuale_CA4_02(old: old, errors: &errors)
             validate_moneteVersoTubi_CA3_03(old: old, errors: &errors)
-        }
+//        }
         
         validate_numeroVendite_LA1_04(old: old, errors: &errors)
         
@@ -234,6 +333,23 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         validate_erogazioniCashless1_DA2_04(old: old, errors: &errors)
         validate_importoPrelevatoDaCashless1_DA3_02(old: old, errors: &errors)
         validate_importoAccreditatoSuCashless1_DA4_02(old: old, errors: &errors)
+        
+        validate_importoVendutoCashless2_DB2_03(old: old, errors: &errors)
+        validate_erogazioniCashless2_DB2_04(old: old, errors: &errors)
+        validate_importoPrelevatoDaCashless2_DB3_02(old: old, errors: &errors)
+        validate_importoAccreditatoSuCashless2_DB4_02(old: old, errors: &errors)
+        
+        validate_venduto_VA1_03(old: old, errors: &errors)
+        validate_erogazioni_VA1_04(old: old, errors: &errors)
+        
+        validate_valoreScontato_VA1_07(old: old, errors: &errors)
+        validate_erogazioniScontate_VA1_08(old: old, errors: &errors)
+        
+        validate_valoreProve_VA2_03(old: old, errors: &errors)
+        validate_erogazioniProva_VA2_04(old: old, errors: &errors)
+        
+        validate_valoreErogazioniGratuite_VA3_03(old: old, errors: &errors)
+        validate_erogazioniGratuite_VA3_04(old: old, errors: &errors)
         
         return errors
     }
@@ -412,7 +528,17 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     
     mutating public func updateValues(from errors: [ImportError]) {
         errors.forEach {
-            modifyRawReport(id: $0.id.rawValue, newValue: $0.expectedValue)
+            if $0.id == .EA3_05_06 {
+                let standardized = $0.EVAStandardizedExpectedValue.components(separatedBy: "*")
+                if standardized.count == 2 {
+                    let dateComponent = standardized[0]
+                    let timeComponent = standardized[1]
+                    modifyRawReport(id: "EA3_05", newValue: dateComponent)
+                    modifyRawReport(id: "EA3_06", newValue: timeComponent)
+                }
+            } else {
+                modifyRawReport(id: $0.id.mappedID, newValue: $0.EVAStandardizedExpectedValue)
+            }
         }
         parsed = false
         parseReport()
