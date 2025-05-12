@@ -474,6 +474,7 @@ public protocol ParsedValueType {
     var isValid: Bool { get }
     var fallBackValue: Self { get }
     var textDescription: String { get }
+    var EVAStandardized: String { get }
 }
 
 extension Double: ParsedValueType {
@@ -520,6 +521,7 @@ extension Date: ParsedValueType {
     public static var nullValue: Date { .legalDistantPast }
     public var textDescription: String {
         DateFormatter.localizedString(from: self, dateStyle: .short, timeStyle: .short)
+//        self.EVAStandardized
     }
     public var fallBackValue: Date { .legalDistantPast }
     public var isValid: Bool { self != Self.invalidValue}

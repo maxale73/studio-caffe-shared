@@ -28,6 +28,10 @@ let package = Package(
         
         .testTarget(
             name: "studio-caffe-sharedTests",
-            dependencies: ["studio-caffe-shared"]),
+            dependencies: ["studio-caffe-shared"],
+            resources: [.copy("ELKATT_sample.txt"),
+                        .copy("ELKATT_old_sample.txt"),
+                        .copy("missingReportOldFile.txt"),
+                        .copy("missingReportNewFile.txt")]),
     ]
 )

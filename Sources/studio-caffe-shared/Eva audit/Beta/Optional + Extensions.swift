@@ -26,6 +26,18 @@ extension Optional {
                 } else {
                     return self.unsafelyUnwrapped
                 }
+            case is Optional<Date>:
+                if self == nil {
+                    return Optional.some(Date.distantPast as! Wrapped)!
+                } else {
+                    return self.unsafelyUnwrapped
+                }
+            case is Optional<String>:
+                if self == nil {
+                    return Optional.some("unknown" as! Wrapped)!
+                } else {
+                    return self.unsafelyUnwrapped
+                }
             default:
                 return nil
         }
@@ -42,6 +54,12 @@ extension Optional {
                     return "null"
                 } else {
                     return String(describing: self!)
+                }
+            case is Optional<Date>:
+                if self == nil {
+                    return "undefined"
+                } else {
+                    return DateFormatter.localizedString(from: self.unsafelyUnwrapped as! Date, dateStyle: .medium, timeStyle: .medium)
                 }
             default:
                 return "null"
