@@ -24,9 +24,12 @@ struct HelperTests {
         
         #expect(new.venduto_VA1_03 == 0.0)
         
-        let errors = new.validateImport(old: old)
+        new.validateImport(old: old)
+        let numberOfErrors = new.errors.count
+        let numberOfFixedErrors = new.errors.filter { $0.isFixed }.count
         
-        new.updateValues(from: errors)
+        new.fixAllErrors()
+        
         #expect(new.venduto_VA1_03 == 216.10)
         #expect(new.erogazioni_VA1_04 == 431)
         #expect(new.dataLetturaPrecedente.EVAStandardized == "250418*071300")
@@ -36,19 +39,9 @@ struct HelperTests {
         #expect(new.erogazioniProva_VA2_04 == 10)
         #expect(new.valoreErogazioniGratuite_VA3_03 == 1.00)
         #expect(new.erogazioniGratuite_VA3_04 == 10)
-    }
-    
-    @Test func resource() async throws {
-        let oldFileURL = Bundle.module.url(forResource: "ELKATT_old_sample", withExtension: "txt")!
-        let newFileURL = Bundle.module.url(forResource: "ELKATT_sample", withExtension: "txt")!
-        let oldFile = try String(contentsOf: oldFileURL, encoding: .utf8)
-        let newFile = try String(contentsOf: newFileURL, encoding: .utf8)
         
-        var new = ParsedAuditBeta(rawReport: newFile)!
-        var old = ParsedAuditBeta(rawReport: oldFile)!
-        
-        new.parseReport()
-        old.parseReport()
+        #expect(new.errors.count == numberOfErrors)
+        #expect(new.errors.filter { $0.isFixed }.count == numberOfErrors)
     }
     
     @Test func autofixDataRilevazionePrecedente() async throws {
@@ -77,13 +70,18 @@ struct HelperTests {
         new.parseReport()
         old.parseReport()
         
-        let errors = new.validateImport(old: old)
+        new.validateImport(old: old)
         
-        #expect(errors.count == 1)
-        let error = errors[0]
+        #expect(new.errors.count == 1)
+        let error = new.errors[0]
         #expect(error.isFixed == true)
         #expect(new.dataLetturaPrecedente.EVAStandardized == "250501*112900")
-        print(errors)
+        
+        new.revertFixedError(error: error)
+        
+        #expect(new.errors.count == 1)
+        #expect(new.dataLetturaPrecedente.EVAStandardized == "250501*060700")
+        #expect(new.errors[0].isFixed == false)
     }
     
     @Test func optionalParsing() async throws {

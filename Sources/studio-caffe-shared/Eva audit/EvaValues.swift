@@ -363,8 +363,8 @@ public enum EvaValueIdentifier: String, Identifiable, Equatable {
         return indexes.first ?? rawValue
     }
     
-    case ID1_01 = "ID dispositivo"
-    case ID1_02 = "modello dispositivo"
+    case ID1_01 = "ID1_01 ID dispositivo"
+    case ID1_02 = "ID1_02 modello dispositivo"
     
     case EA3_01 = "EA3_01 progressivo lettura"
     case EA3_02_03 = "EA3_02_03 data lettura attuale"
