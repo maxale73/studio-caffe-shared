@@ -630,6 +630,9 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
         error.toggleFixed()
         updateErrors(with: error)
+        
+        parsed = false
+        parseReport()
     }
     
     mutating public func revertFixedError(error: ImportError) {
