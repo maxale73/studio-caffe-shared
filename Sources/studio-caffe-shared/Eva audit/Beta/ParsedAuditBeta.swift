@@ -206,7 +206,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_01.isValid && importoVendutoCashless1_DA2_03.isValid else { return }
         let diff = (importoVendutoCashless1_DA2_01 - old.importoVendutoCashless1_DA2_01).round(to: 2)
         if diff != importoVendutoCashless1_DA2_03.fbValue.round(to: 2) {
-            let error = ImportError(identifier: .DA2_01, currentValue: importoVendutoCashless1_DA2_03, expectedValue: diff)
+            let error = ImportError(identifier: .DA2_03, currentValue: importoVendutoCashless1_DA2_03, expectedValue: diff)
             errors.append(error)
         }
     }
@@ -614,6 +614,22 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
         parsed = false
         parseReport()
+    }
+    
+    mutating public func manageError(_ error: inout ImportError) {
+        if error.id == .EA3_05_06 {
+            let standardized = error.EVAStandardizedExpectedValue.components(separatedBy: "*")
+            if standardized.count == 2 {
+                let dateComponent = standardized[0]
+                let timeComponent = standardized[1]
+                modifyRawReport(id: "EA3_05", newValue: dateComponent)
+                modifyRawReport(id: "EA3_06", newValue: timeComponent)
+            }
+        } else {
+            modifyRawReport(id: error.id.mappedID, newValue: error.EVAStandardizedExpectedValue)
+        }
+        error.toggleFixed()
+        updateErrors(with: error)
     }
     
     mutating public func revertFixedError(error: ImportError) {
