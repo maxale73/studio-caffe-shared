@@ -44,6 +44,34 @@ struct HelperTests {
         #expect(new.errors.filter { $0.isFixed }.count == numberOfErrors)
     }
     
+    @Test func manageSingleError() async throws {
+        let oldFileURL = Bundle.module.url(forResource: "missingReportOldFile", withExtension: "txt")!
+        let newFileURL = Bundle.module.url(forResource: "missingReportNewFile", withExtension: "txt")!
+        let oldFile = try String(contentsOf: oldFileURL, encoding: .utf8)
+        let newFile = try String(contentsOf: newFileURL, encoding: .utf8)
+        
+        var new = ParsedAuditBeta(rawReport: newFile)!
+        var old = ParsedAuditBeta(rawReport: oldFile)!
+        
+        new.parseReport()
+        old.parseReport()
+        
+        #expect(new.venduto_VA1_03 == 0.0)
+        
+        new.validateImport(old: old)
+        
+        #expect(new.venduto_VA1_03 == 0.0)
+        let vendutoError = new.errors.first { $0.id == .VA1_03 }!
+        new.manageError(vendutoError.id)
+        
+        #expect(new.venduto_VA1_03 == 216.10)
+        let errorVenduto = new.errors.first { $0.id == .VA1_03 }
+        #expect(errorVenduto?.isFixed == true)
+        
+        new.manageError(.VA1_03)
+        #expect(new.venduto_VA1_03 == 0.0)
+    }
+    
     @Test func autofixDataRilevazionePrecedente() async throws {
         
         let newFile =

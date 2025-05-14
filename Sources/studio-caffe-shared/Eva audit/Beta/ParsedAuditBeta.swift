@@ -356,7 +356,9 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         dataLetturaPrecedente_EA3_05_06 = previousDate
     }
     
+    private var validated : Bool = false
     public mutating func validateImport(old: ParsedAuditBeta) {
+        if validated { return }
         errors = []
         
         if detectedDeviceModel == .none {
@@ -402,6 +404,8 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         
         validate_valoreErogazioniGratuite_VA3_03(old: old)
         validate_erogazioniGratuite_VA3_04(old: old)
+        
+        validated = true
     }
     
     // *********** INFO ****************
@@ -616,9 +620,11 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         parseReport()
     }
     
-    mutating public func manageError(_ error: inout ImportError) {
+    mutating public func manageError(_ errorID: EvaValueIdentifier) {
+        guard var error = errors.first(where: { $0.id == errorID }) else { return }
+        let newStandardizedValue = error.isFixed ? error.EVAStandardizedActualValue : error.EVAStandardizedExpectedValue
         if error.id == .EA3_05_06 {
-            let standardized = error.EVAStandardizedExpectedValue.components(separatedBy: "*")
+            let standardized = newStandardizedValue.components(separatedBy: "*")
             if standardized.count == 2 {
                 let dateComponent = standardized[0]
                 let timeComponent = standardized[1]
@@ -626,7 +632,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 modifyRawReport(id: "EA3_06", newValue: timeComponent)
             }
         } else {
-            modifyRawReport(id: error.id.mappedID, newValue: error.EVAStandardizedExpectedValue)
+            modifyRawReport(id: error.id.mappedID, newValue: newStandardizedValue)
         }
         error.toggleFixed()
         updateErrors(with: error)
