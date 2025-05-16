@@ -358,114 +358,217 @@ public enum EvaValueIdentifier: String, Identifiable, Equatable {
     
     public var id: String { rawValue }
     
-    public var mappedID: String {
-        let indexes = rawValue.components(separatedBy: " ")
-        return indexes.first ?? rawValue
+    case ID1_01
+    case ID1_02
+    
+    case EA3_01
+    case EA3_02_03
+    case EA3_05_06
+    
+    case BA1_01
+    case BA1_02
+    case BA1_03
+    
+    case CA1_01
+    case CA1_02
+    case CA1_03
+    
+    case CA2_01
+    case CA2_02
+    case CA2_03
+    case CA2_04
+    
+    case CA3_01
+    case CA3_02
+    case CA3_03
+    case CA3_04
+    case CA3_05
+    case CA3_06
+    case CA3_07
+    case CA3_08
+    case CA3_09
+    
+    case CA4_01
+    case CA4_02
+    case CA4_03
+    case CA4_04
+    
+    case CA8_01
+    case CA8_02
+    
+    case CA10_01
+    case CA10_02
+    
+    case CA15_01
+    
+    
+    case LA1_04
+    case LA1_05
+    
+    case DA2_01
+    case DA2_02
+    case DA2_03
+    case DA2_04
+    
+    case DA3_01
+    case DA3_02
+    
+    case DA4_01
+    case DA4_02
+    
+    case DA5_01
+    case DA5_02
+    case DA5_03
+    case DA5_04
+    
+    case DA6_01
+    case DA6_02
+    
+    case DB2_01
+    case DB2_02
+    case DB2_03
+    case DB2_04
+    
+    case DB3_01
+    case DB3_02
+    
+    case DB4_01
+    case DB4_02
+    
+    case DB5_01
+    case DB5_02
+    case DB5_03
+    case DB5_04
+    
+    case DB6_01
+    case DB6_02
+    
+    case VA1_01
+    case VA1_02
+    case VA1_03
+    case VA1_04
+    case VA1_05
+    case VA1_06
+    case VA1_07
+    case VA1_08
+    
+    case VA2_01
+    case VA2_02
+    case VA2_03
+    case VA2_04
+    
+    case VA3_01
+    case VA3_02
+    case VA3_03
+    case VA3_04
+    
+    public var textDescription: String {
+        switch self {
+        case .ID1_01: "ID1_01 ID dispositivo"
+        case .ID1_02: "ID1_02 modello dispositivo"
+        
+        case .EA3_01: "EA3_01 progressivo lettura"
+        case .EA3_02_03: "EA3_02_03 data lettura attuale"
+        case .EA3_05_06: "EA3_05_06 data lettura precedente"
+        
+        case .BA1_01:  "BA1_01 numero seriale lettore banconote"
+        case .BA1_02:  "BA1_02 modello lettore banconote"
+        case .BA1_03:  "BA1_03 revisione software lettore banconote"
+        
+        case .CA1_01:  "CA1_01 numero seriale validatore"
+        case .CA1_02:  "CA1_02 modello validatore"
+        case .CA1_03:  "CA1_03 revisione software validatore"
+        
+        case .CA2_01:  "CA2_01 importo venduto cash cumulato"
+        case .CA2_02:  "CA2_02 numero vendite cash cumulato"
+        case .CA2_03:  "CA2_03 importo venduto cash resettato"
+        case .CA2_04:  "CA2_04 numero vendite cash resettato"
+        
+        case .CA3_01:  "CA3_01 totale cash inserito resettato (monete + banconote)"
+        case .CA3_02:  "CA3_02 monete in cassetta resettato"
+        case .CA3_03:  "CA3_03 monete verso i tubi resettato"
+        case .CA3_04:  "CA3_04 banconote in cassetta resettato"
+        case .CA3_05:  "CA3_05 totale cash inserito cumulato (monete + banconote)"
+        case .CA3_06:  "CA3_06 monete in cassetta cumulato"
+        case .CA3_07:  "CA3_07 monete verso i tubi cumulato"
+        case .CA3_08:  "CA3_08 banconote in cassetta cumulato"
+        case .CA3_09:  "CA3_09 banconote in cassetta resettato CA3 09"
+        
+        case .CA4_01:  "CA4_01 monete in uscita dai tubi (resto + manuale) resettato"
+        case .CA4_02:  "CA4_02 monete in uscita dai tubi (solo manuale) resettato"
+        case .CA4_03:  "CA4_03 monete in uscita dai tubi (resto + manuale) cumulato"
+        case .CA4_04:  "CA4_04 monete in uscita dai tubi (solo manuale) cumulato"
+        
+        case .CA8_01:  "CA8_01 cash overpay resettato"
+        case .CA8_02:  "CA8_02 cash overpay cumulato"
+        
+        case .CA10_01: "CA10_01 riempimento manuale tubi resettato"
+        case .CA10_02: "CA10_02 riempimento manuale tubi cumulato"
+        
+        case .CA15_01: "CA15_01 valore totale tubi"
+        
+        
+        case .LA1_04:  "LA1_04 numero totale vendite resettato calcolato sulla somma dei b.lo:chi LA1"
+        case .LA1_05:  "LA1_05 numero totale vendite cumulato calcolato sulla somma dei b.locchi: A1"
+        
+        case .DA2_01:  "DA2_01 importo venduto cashless 1 cumulato"
+        case .DA2_02:  "DA2_02 numero venditye cashless 1 cumulato"
+        case .DA2_03:  "DA2_03 importo venduto cashless 1 resettato"
+        case .DA2_04:  "DA2_04 numero venditye cashless 1 resettato"
+        
+        case .DA3_01:  "DA3_01 importo prelevato da cashless 1 cumulato"
+        case .DA3_02:  "DA3_02 importo prelevato da cashless 1 resettato"
+        
+        case .DA4_01:  "DA4_01 importo accreditato su cashless 1 cumulato"
+        case .DA4_02:  "DA4_02 importo accreditato su cashless 1 resettato"
+        
+        case .DA5_01:  "DA5_01 importo sconti cashless 1 resettato"
+        case .DA5_02:  "DA5_02 numero vendite scontate cashless 1 resettato"
+        case .DA5_03:  "DA5_03 importo sconti cashless 1 cumulato"
+        case .DA5_04:  "DA5_04 numero vendite scontate cashless 1 cumulato"
+        
+        case .DA6_01:  "DA6_01 bonus accreditato su cashless 1 cumulato"
+        case .DA6_02:  "DA6_02 bonus accreditato su cashless 1 resettato"
+        
+        case .DB2_01:  "DB2_01 importo venduto cashless 2 cumulato"
+        case .DB2_02:  "DB2_02 numero venditye cashless 2 cumulato"
+        case .DB2_03:  "DB2_03 importo venduto cashless 2 resettato"
+        case .DB2_04:  "DB2_04 numero venditye cashless 2 resettato"
+        
+        case .DB3_01:  "DB3_01 importo prelevato da cashless 2 cumulato"
+        case .DB3_02:  "DB3_02 importo prelevato da cashless 2 resettato"
+        
+        case .DB4_01:  "DB4_01 importo accreditato su cashless 2 cumulato"
+        case .DB4_02:  "DB4_02 importo accreditato su cashless 2 resettato"
+        
+        case .DB5_01:  "DB5_01 importo sconti cashless 2 resettato"
+        case .DB5_02:  "DB5_02 numero vendite scontate cashless 2 resettato"
+        case .DB5_03:  "DB5_03 importo sconti cashless 2 cumulato"
+        case .DB5_04:  "DB5_04 numero vendite scontate cashless 2 cumulato"
+        
+        case .DB6_01:  "DB6_01 bonus accreditato su cashless 2 cumulato"
+        case .DB6_02:  "DB6_02 bonus accreditato su cashless 2 resettato"
+        
+        case .VA1_01:  "VA1_01 totale venduto cumulato"
+        case .VA1_02:  "VA1_02 numero vendite cumulato"
+        case .VA1_03:  "VA1_03 totale venduto resettato"
+        case .VA1_04:  "VA1_04 numero vendite resettato"
+        case .VA1_05:  "VA1_05 totale scontato cumulato"
+        case .VA1_06:  "VA1_06 numero vendite scontate cumulato"
+        case .VA1_07:  "VA1_07 totale scontato resettato"
+        case .VA1_08:  "VA1_08 numero vendite scontate resettato"
+        
+        case .VA2_01:  "VA2_01 valore prove cumulato"
+        case .VA2_02:  "VA2_02 numero prove cumulato"
+        case .VA2_03:  "VA2_03 valore prove resettato"
+        case .VA2_04:  "VA2_04 numero prove resettato"
+        
+        case .VA3_01:  "VA3_01 valore vendite libere cumulato"
+        case .VA3_02:  "VA3_02 numero vendite libere cumulato"
+        case .VA3_03:  "VA3_03 valore vendite libere resettato"
+        case .VA3_04:  "VA3_04 numero vendite libere resettato"
+        }
     }
-    
-    case ID1_01 = "ID1_01 ID dispositivo"
-    case ID1_02 = "ID1_02 modello dispositivo"
-    
-    case EA3_01 = "EA3_01 progressivo lettura"
-    case EA3_02_03 = "EA3_02_03 data lettura attuale"
-    case EA3_05_06 = "EA3_05_06 data lettura precedente"
-    
-    case BA1_01 = "BA1_01 numero seriale lettore banconote"
-    case BA1_02 = "BA1_02 modello lettore banconote"
-    case BA1_03 = "BA1_03 revisione software lettore banconote"
-    
-    case CA1_01 = "CA1_01 numero seriale validatore"
-    case CA1_02 = "CA1_02 modello validatore"
-    case CA1_03 = "CA1_03 revisione software validatore"
-    
-    case CA2_01 = "CA2_01 importo venduto cash cumulato"
-    case CA2_02 = "CA2_02 numero vendite cash cumulato"
-    case CA2_03 = "CA2_03 importo venduto cash resettato"
-    case CA2_04 = "CA2_04 numero vendite cash resettato"
-    
-    case CA3_01 = "CA3_01 totale cash inserito resettato (monete + banconote)"
-    case CA3_02 = "CA3_02 monete in cassetta resettato"
-    case CA3_03 = "CA3_03 monete verso i tubi resettato"
-    case CA3_04 = "CA3_04 banconote in cassetta resettato"
-    case CA3_05 = "CA3_05 totale cash inserito cumulato (monete + banconote)"
-    case CA3_06 = "CA3_06 monete in cassetta cumulato"
-    case CA3_07 = "CA3_07 monete verso i tubi cumulato"
-    case CA3_08 = "CA3_08 banconote in cassetta cumulato"
-    case CA3_09 = "CA3_09 banconote in cassetta resettato CA3 09"
-    
-    case CA4_01 = "CA4_01 monete in uscita dai tubi (resto + manuale) resettato"
-    case CA4_02 = "CA4_02 monete in uscita dai tubi (solo manuale) resettato"
-    case CA4_03 = "CA4_03 monete in uscita dai tubi (resto + manuale) cumulato"
-    case CA4_04 = "CA4_04 monete in uscita dai tubi (solo manuale) cumulato"
-    
-    case CA8_01 = "CA8_01 cash overpay resettato"
-    case CA8_02 = "CA8_02 cash overpay cumulato"
-    
-    case CA10_01 = "CA10_01 riempimento manuale tubi resettato"
-    case CA10_02 = "CA10_02 riempimento manuale tubi cumulato"
-    
-    case CA15_01 = "CA15_01 valore totale tubi"
-    
-    
-    case LA1_04 = "LA1_04 numero totale vendite resettato calcolato sulla somma dei blocchi LA1"
-    case LA1_05 = "LA1_05 numero totale vendite cumulato calcolato sulla somma dei blocchi LA1"
-    
-    case DA2_01 = "DA2_01 importo venduto cashless 1 cumulato"
-    case DA2_02 = "DA2_02 numero venditye cashless 1 cumulato"
-    case DA2_03 = "DA2_03 importo venduto cashless 1 resettato"
-    case DA2_04 = "DA2_04 numero venditye cashless 1 resettato"
-    
-    case DA3_01 = "DA3_01 importo prelevato da cashless 1 cumulato"
-    case DA3_02 = "DA3_02 importo prelevato da cashless 1 resettato"
-    
-    case DA4_01 = "DA4_01 importo accreditato su cashless 1 cumulato"
-    case DA4_02 = "DA4_02 importo accreditato su cashless 1 resettato"
-    
-    case DA5_01 = "DA5_01 importo sconti cashless 1 resettato"
-    case DA5_02 = "DA5_02 numero vendite scontate cashless 1 resettato"
-    case DA5_03 = "DA5_03 importo sconti cashless 1 cumulato"
-    case DA5_04 = "DA5_04 numero vendite scontate cashless 1 cumulato"
-    
-    case DA6_01 = "DA6_01 bonus accreditato su cashless 1 cumulato"
-    case DA6_02 = "DA6_02 bonus accreditato su cashless 1 resettato"
-    
-    case DB2_01 = "DB2_01 importo venduto cashless 2 cumulato"
-    case DB2_02 = "DB2_02 numero venditye cashless 2 cumulato"
-    case DB2_03 = "DB2_03 importo venduto cashless 2 resettato"
-    case DB2_04 = "DB2_04 numero venditye cashless 2 resettato"
-    
-    case DB3_01 = "DB3_01 importo prelevato da cashless 2 cumulato"
-    case DB3_02 = "DB3_02 importo prelevato da cashless 2 resettato"
-    
-    case DB4_01 = "DB4_01 importo accreditato su cashless 2 cumulato"
-    case DB4_02 = "DB4_02 importo accreditato su cashless 2 resettato"
-    
-    case DB5_01 = "DB5_01 importo sconti cashless 2 resettato"
-    case DB5_02 = "DB5_02 numero vendite scontate cashless 2 resettato"
-    case DB5_03 = "DB5_03 importo sconti cashless 2 cumulato"
-    case DB5_04 = "DB5_04 numero vendite scontate cashless 2 cumulato"
-    
-    case DB6_01 = "DB6_01 bonus accreditato su cashless 2 cumulato"
-    case DB6_02 = "DB6_02 bonus accreditato su cashless 2 resettato"
-    
-    case VA1_01 = "VA1_01 totale venduto cumulato"
-    case VA1_02 = "VA1_02 numero vendite cumulato"
-    case VA1_03 = "VA1_03 totale venduto resettato"
-    case VA1_04 = "VA1_04 numero vendite resettato"
-    case VA1_05 = "VA1_05 totale scontato cumulato"
-    case VA1_06 = "VA1_06 numero vendite scontate cumulato"
-    case VA1_07 = "VA1_07 totale scontato resettato"
-    case VA1_08 = "VA1_08 numero vendite scontate resettato"
-    
-    case VA2_01 = "VA2_01 valore prove cumulato"
-    case VA2_02 = "VA2_02 numero prove cumulato"
-    case VA2_03 = "VA2_03 valore prove resettato"
-    case VA2_04 = "VA2_04 numero prove resettato"
-    
-    case VA3_01 = "VA3_01 valore vendite libere cumulato"
-    case VA3_02 = "VA3_02 numero vendite libere cumulato"
-    case VA3_03 = "VA3_03 valore vendite libere resettato"
-    case VA3_04 = "VA3_04 numero vendite libere resettato"
 }
 
 public protocol ParsedValueType {

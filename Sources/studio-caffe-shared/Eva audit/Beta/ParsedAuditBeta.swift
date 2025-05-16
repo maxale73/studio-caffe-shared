@@ -21,9 +21,9 @@ public struct ImportError: Hashable, Identifiable {
     fileprivate init(identifier: EvaValueIdentifier, currentValue: ParsedValueType?, expectedValue: ParsedValueType?) {
         self.fixed = false
         self.identifier = identifier
-        self.actualValue = currentValue.textDescription
+        self.actualValue = currentValue.fbValue.textDescription
         self.EVAStandardizedActualValue = currentValue.fbValue.EVAStandardized
-        self.expectedValue = expectedValue.textDescription
+        self.expectedValue = expectedValue.fbValue.textDescription
         self.EVAStandardizedExpectedValue = expectedValue.fbValue.EVAStandardized
     }
     
@@ -592,7 +592,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                     modifyRawReport(id: "EA3_06", newValue: timeComponent)
                 }
             } else {
-                modifyRawReport(id: $0.id.mappedID, newValue: $0.EVAStandardizedExpectedValue)
+                modifyRawReport(id: $0.id.rawValue, newValue: $0.EVAStandardizedExpectedValue)
             }
         }
         parsed = false
@@ -611,7 +611,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                     modifyRawReport(id: "EA3_06", newValue: timeComponent)
                 }
             } else {
-                modifyRawReport(id: error.id.mappedID, newValue: error.EVAStandardizedExpectedValue)
+                modifyRawReport(id: error.id.rawValue, newValue: error.EVAStandardizedExpectedValue)
             }
             error.toggleFixed()
             updateErrors(with: error)
@@ -632,7 +632,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 modifyRawReport(id: "EA3_06", newValue: timeComponent)
             }
         } else {
-            modifyRawReport(id: error.id.mappedID, newValue: newStandardizedValue)
+            modifyRawReport(id: error.id.rawValue, newValue: newStandardizedValue)
         }
         error.toggleFixed()
         updateErrors(with: error)
@@ -653,7 +653,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
                 modifyRawReport(id: "EA3_06", newValue: timeComponent)
             }
         } else {
-            modifyRawReport(id: error.id.mappedID, newValue: error.EVAStandardizedActualValue)
+            modifyRawReport(id: error.id.rawValue, newValue: error.EVAStandardizedActualValue)
         }
         
         error.toggleFixed()
