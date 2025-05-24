@@ -84,10 +84,16 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating private func validate_ldataLetturaPrecedente_EA3_05_06(old: ParsedAuditBeta) {
-        if detectedDeviceModel == .ELKEY_ATTO_COIN &&  missingValues.contains(.EA3_05_06) {
-            fixMissingPreviousDate(previousDate: old.dataLettura)
-        }
         let expected = old.dataLettura_EA3_02_03
+        
+        if detectedDeviceModel == .ELKEY_ATTO_COIN {
+            var error = ImportError(identifier: .EA3_05_06, currentValue: dataLetturaPrecedente_EA3_05_06, expectedValue: expected)
+            fixMissingPreviousDate(previousDate: old.dataLettura)
+            error.fixed = true
+            errors.append(error)
+            return
+        }
+        
         let calendar = Calendar(identifier: .gregorian)
         let comparison = calendar.compare(dataLetturaPrecedente_EA3_05_06, to: expected, toGranularity: .minute)
         if comparison != .orderedSame {
@@ -111,7 +117,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating private func validate_numeroVenditeCash_CA2_02(old: ParsedAuditBeta) {
-        guard old.numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_04.isValid else { return }
+        guard old.numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_02.isValid && numeroVenditeCash_CA2_04.isValid && detectedDeviceModel != .ELKEY_ATTO_COIN else { return }
         let numeroVenditeCash = numeroVenditeCash_CA2_02 - old.numeroVenditeCash_CA2_02
         if numeroVenditeCash != numeroVenditeCash_CA2_04 {
             let error = ImportError(identifier: .CA2_04, currentValue: numeroVenditeCash_CA2_04, expectedValue: numeroVenditeCash)
@@ -194,7 +200,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating private func validate_numeroVendite_LA1_04(old: ParsedAuditBeta) {
-        guard old.numeroVendite_LA1_05.isValid && numeroVendite_LA1_05.isValid && numeroVendite_LA1_04.isValid else { return }
+        guard old.numeroVendite_LA1_05.isValid && numeroVendite_LA1_05.isValid && numeroVendite_LA1_04.isValid && detectedDeviceModel != .ELKEY_ATTO_COIN else { return }
         let diff = numeroVendite_LA1_05 - old.numeroVendite_LA1_05
         if diff != numeroVendite_LA1_04 {
             let error = ImportError(identifier: .LA1_04, currentValue: numeroVendite_LA1_04, expectedValue: diff)
@@ -212,7 +218,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     }
     
     mutating private func validate_erogazioniCashless1_DA2_04(old: ParsedAuditBeta) {
-        guard old.erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_04.isValid else { return }
+        guard old.erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_02.isValid && erogazioniCashless1_DA2_04.isValid && detectedDeviceModel != .ELKEY_ATTO_COIN else { return }
         let diff = erogazioniCashless1_DA2_02 - old.erogazioniCashless1_DA2_02
         if diff != erogazioniCashless1_DA2_04 {
             let error = ImportError(identifier: .DA2_04, currentValue: erogazioniCashless1_DA2_04, expectedValue: diff)

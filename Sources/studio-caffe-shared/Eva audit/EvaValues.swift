@@ -512,9 +512,9 @@ public enum EvaValueIdentifier: String, Identifiable, Equatable {
         case .LA1_05:  "LA1_05 numero totale vendite cumulato calcolato sulla somma dei b.locchi: A1"
         
         case .DA2_01:  "DA2_01 importo venduto cashless 1 cumulato"
-        case .DA2_02:  "DA2_02 numero venditye cashless 1 cumulato"
+        case .DA2_02:  "DA2_02 numero vendite cashless 1 cumulato"
         case .DA2_03:  "DA2_03 importo venduto cashless 1 resettato"
-        case .DA2_04:  "DA2_04 numero venditye cashless 1 resettato"
+        case .DA2_04:  "DA2_04 numero vendite cashless 1 resettato"
         
         case .DA3_01:  "DA3_01 importo prelevato da cashless 1 cumulato"
         case .DA3_02:  "DA3_02 importo prelevato da cashless 1 resettato"
@@ -531,9 +531,9 @@ public enum EvaValueIdentifier: String, Identifiable, Equatable {
         case .DA6_02:  "DA6_02 bonus accreditato su cashless 1 resettato"
         
         case .DB2_01:  "DB2_01 importo venduto cashless 2 cumulato"
-        case .DB2_02:  "DB2_02 numero venditye cashless 2 cumulato"
+        case .DB2_02:  "DB2_02 numero vendite cashless 2 cumulato"
         case .DB2_03:  "DB2_03 importo venduto cashless 2 resettato"
-        case .DB2_04:  "DB2_04 numero venditye cashless 2 resettato"
+        case .DB2_04:  "DB2_04 numero vendite cashless 2 resettato"
         
         case .DB3_01:  "DB3_01 importo prelevato da cashless 2 cumulato"
         case .DB3_02:  "DB3_02 importo prelevato da cashless 2 resettato"

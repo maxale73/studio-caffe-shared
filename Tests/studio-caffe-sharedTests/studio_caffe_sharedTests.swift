@@ -26,7 +26,6 @@ struct HelperTests {
         
         new.validateImport(old: old)
         let numberOfErrors = new.errors.count
-        let numberOfFixedErrors = new.errors.filter { $0.isFixed }.count
         
         new.fixAllErrors()
         
@@ -112,15 +111,47 @@ struct HelperTests {
         #expect(new.errors[0].isFixed == false)
     }
     
-    @Test func optionalParsing() async throws {
-        let optionalDate: Date? = .now
-        let date: Date = .now
+    @Test func autofixDataRilevazionePrecedenteELKATT() async throws {
+        let oldFileURL = Bundle.module.url(forResource: "ELKATT_old_sample", withExtension: "txt")!
+        let newFileURL = Bundle.module.url(forResource: "ELKATT_sample", withExtension: "txt")!
+        let oldFile = try String(contentsOf: oldFileURL, encoding: .utf8)
+        let newFile = try String(contentsOf: newFileURL, encoding: .utf8)
         
-        print(optionalDate?.EVAStandardized)
-        print(date.EVAStandardized)
+        var new = ParsedAuditBeta(rawReport: newFile)!
+        var old = ParsedAuditBeta(rawReport: oldFile)!
         
-        print(optionalDate?.textDescription)
-        print(date.textDescription)
+        new.parseReport()
+        old.parseReport()
+        
+        new.validateImport(old: old)
+        
+        #expect(new.errors.count == 1)
+        #expect(new.errors[0].isFixed == true)
+        #expect(new.dataLetturaPrecedente.EVAStandardized == old.dataLettura.EVAStandardized)
+        
     }
+    
+//    @Test func optionalParsing() async throws {
+//        let optionalDate: Date? = .now
+//        let date: Date = .now
+//        
+//        print(optionalDate?.EVAStandardized)
+//        print(date.EVAStandardized)
+//        
+//        print(optionalDate?.textDescription)
+//        print(date.textDescription)
+//        
+//        let optionalDouble: Double? = 123.45
+//        let double: Double = 123.45
+//        let nilDouble: Double? = nil
+//        
+//        print(optionalDouble?.EVAStandardized)
+//        print(double.EVAStandardized)
+//        print(nilDouble?.EVAStandardized)
+//        
+//        print(optionalDouble?.textDescription)
+//        print(double.textDescription)
+//        print(nilDouble?.textDescription)
+//    }
 }
     
