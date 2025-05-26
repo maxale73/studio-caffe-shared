@@ -32,6 +32,8 @@ let package = Package(
             resources: [.copy("ELKATT_sample.txt"),
                         .copy("ELKATT_old_sample.txt"),
                         .copy("missingReportOldFile.txt"),
-                        .copy("missingReportNewFile.txt")]),
+                        .copy("missingReportNewFile.txt"),
+                        .copy("controllo_cassa_new.txt"),
+                        .copy("controllo_cassa_old.txt")]),
     ]
 )

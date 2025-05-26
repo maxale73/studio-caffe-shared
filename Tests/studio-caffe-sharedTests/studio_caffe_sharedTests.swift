@@ -131,6 +131,23 @@ struct HelperTests {
         
     }
     
+    @Test func controlloCassaContanti() async throws {
+        let oldFileURL = Bundle.module.url(forResource: "controllo_cassa_old", withExtension: "txt")!
+        let newFileURL = Bundle.module.url(forResource: "controllo_cassa_new", withExtension: "txt")!
+        let oldFile = try String(contentsOf: oldFileURL, encoding: .utf8)
+        let newFile = try String(contentsOf: newFileURL, encoding: .utf8)
+        
+        var new = ParsedAuditBeta(rawReport: newFile)!
+        var old = ParsedAuditBeta(rawReport: oldFile)!
+        
+        new.parseReport()
+        old.parseReport()
+        
+        new.validateImport(old: old)
+        
+        print(new.errors)
+    }
+    
 //    @Test func optionalParsing() async throws {
 //        let optionalDate: Date? = .now
 //        let date: Date = .now

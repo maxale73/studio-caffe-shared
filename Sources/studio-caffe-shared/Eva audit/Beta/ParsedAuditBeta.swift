@@ -352,6 +352,18 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         }
     }
     
+    mutating private func validate_cassa_contanti() {
+        
+        let banconote9 = banconoteInCassetta_CA3_09.fbValue!
+        let banconote4 = banconoteInCassetta_CA3_04.fbValue!
+        let banconote: Double = (banconote9 > 0 ? banconote9 : banconote4).round(to: 2)
+        
+        if (totaleCashInserito_CA3_01.fbValue! - (moneteInCassetta_CA3_02.fbValue + moneteVersoTubi_CA3_03.fbValue + banconote)).round(to: 2) != 0 {
+            let error = ImportError(identifier: .CA3_01, currentValue: totaleCashInserito_CA3_01.fbValue!, expectedValue: totaleCashInserito_CA3_01.fbValue! + banconote)
+            errors.append(error)
+        }
+    }
+    
     mutating private func fixMissingPreviousDate(previousDate: Date) {
         let rawBlocks = rawReport.components(separatedBy: "\n")
         guard let oldEA3 = rawBlocks.first(where: { $0.hasPrefix("EA3") }) else { return }
@@ -410,6 +422,8 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         
         validate_valoreErogazioniGratuite_VA3_03(old: old)
         validate_erogazioniGratuite_VA3_04(old: old)
+        
+        validate_cassa_contanti()
         
         validated = true
     }
