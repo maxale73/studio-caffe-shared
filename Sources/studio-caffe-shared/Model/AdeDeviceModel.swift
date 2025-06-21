@@ -4,6 +4,7 @@ public enum AdeDeviceModel: String, Codable, CaseIterable, Identifiable, Equatab
     public var id: String {
         rawValue
     }
+    case TELEVEND = "Televend"
     case NEWIS_ZIP = "Newis Zip"
     case NEWIS_HI = "Newis Hi"
     case ELKEY_BUBBLE = "ElKey Bubble"
