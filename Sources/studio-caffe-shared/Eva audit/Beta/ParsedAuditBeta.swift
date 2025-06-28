@@ -257,7 +257,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.erogazioniCashless2_DB2_02.isValid && erogazioniCashless2_DB2_02.isValid && erogazioniCashless2_DB2_04.isValid else { return }
         let diff = erogazioniCashless2_DB2_02 - old.erogazioniCashless2_DB2_02
         if diff != erogazioniCashless2_DB2_04 {
-            let error = ImportError(identifier: .DA2_04, currentValue: erogazioniCashless2_DB2_04, expectedValue: diff)
+            let error = ImportError(identifier: .DB2_04, currentValue: erogazioniCashless2_DB2_04, expectedValue: diff)
             errors.append(error)
         }
     }
@@ -266,7 +266,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoPrelevatoDaCashless2_DB3_01.isValid && importoPrelevatoDaCashless2_DB3_01.isValid && importoPrelevatoDaCashless2_DB3_02.isValid else { return }
         let diff = (importoPrelevatoDaCashless2_DB3_01 - old.importoPrelevatoDaCashless2_DB3_01).round(to: 2)
         if diff != importoPrelevatoDaCashless2_DB3_02.fbValue.round(to: 2) {
-            let error = ImportError(identifier: .DA3_02, currentValue: importoPrelevatoDaCashless2_DB3_02, expectedValue: diff)
+            let error = ImportError(identifier: .DB3_02, currentValue: importoPrelevatoDaCashless2_DB3_02, expectedValue: diff)
             errors.append(error)
         }
     }
