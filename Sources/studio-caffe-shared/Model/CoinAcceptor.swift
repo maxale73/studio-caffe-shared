@@ -16,6 +16,7 @@ public enum CoinAcceptor: String, Codable, CaseIterable, Identifiable, Sendable 
     case COINCO_GUARDIAN = "Coinco Guardian"
     case ICT_CC6100 = "ICT CC6100"
     case COMESTERO_RM5 = "Comestero RM5"
+    case CPI_EAGLE = "CPI Eagle"
     case none = "nessuno"
     
     public var coinAcceptorDescription: String {
@@ -32,6 +33,7 @@ public enum CoinAcceptor: String, Codable, CaseIterable, Identifiable, Sendable 
             case .COINCO_GUARDIAN: return "rendiresto(\(rawValue))"
             case .ICT_CC6100: return "rendiresto(\(rawValue))"
             case .COMESTERO_RM5: return "moneta(\(rawValue))"
+            case .CPI_EAGLE: return "moneta(\(rawValue))"
             case .none: return ""
         }
     }
