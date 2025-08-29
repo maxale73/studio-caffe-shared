@@ -248,7 +248,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         guard old.importoVendutoCashless2_DB2_01.isValid && importoVendutoCashless2_DB2_01.isValid && importoVendutoCashless2_DB2_03.isValid else { return }
         let diff = (importoVendutoCashless2_DB2_01 - old.importoVendutoCashless2_DB2_01).round(to: 2)
         if diff != importoVendutoCashless2_DB2_03.fbValue.round(to: 2) {
-            let error = ImportError(identifier: .DB2_01, currentValue: importoVendutoCashless2_DB2_03, expectedValue: diff)
+            let error = ImportError(identifier: .DB2_03, currentValue: importoVendutoCashless2_DB2_03, expectedValue: diff)
             errors.append(error)
         }
     }
