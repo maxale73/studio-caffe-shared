@@ -1,19 +1,19 @@
 import Foundation
 
-struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
-    var id: UUID
-    var customers: [CustomerName]
-    var machines: [MachineDTO]
-    var devices: [AdeDeviceDTO]
-    var products: [ProductDTO]
+public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
+    public var id: UUID
+    public var customers: [CustomerName]
+    public var machines: [MachineDTO]
+    public var devices: [AdeDeviceDTO]
+    public var products: [ProductDTO]
 }
 
-struct BarcodeSearchResult: Codable, Hashable, Identifiable, Sendable {
-    var id: UUID
-    var customers: [CustomerName]
-    var machines: [MachineDTO]
-    var devices: [AdeDeviceDTO]
-    var products: [ProductDTO]
+public struct BarcodeSearchResult: Codable, Hashable, Identifiable, Sendable {
+    public var id: UUID
+    public var customers: [CustomerName]
+    public var machines: [MachineDTO]
+    public var devices: [AdeDeviceDTO]
+    public var products: [ProductDTO]
 }
 
 public struct SearchEndpointsGroup: EndpointGroupType {
