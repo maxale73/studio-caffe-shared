@@ -8,6 +8,14 @@ struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
     var products: [ProductDTO]
 }
 
+struct BarcodeSearchResult: Codable, Hashable, Identifiable, Sendable {
+    var id: UUID
+    var customers: [CustomerName]
+    var machines: [MachineDTO]
+    var devices: [AdeDeviceDTO]
+    var products: [ProductDTO]
+}
+
 public struct SearchEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "search" }
