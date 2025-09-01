@@ -21,7 +21,7 @@ public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
 
 public struct BarcodeSearchResult: Codable, Hashable, Identifiable, Sendable {
     
-    internal init(customers: [CustomerName], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
+    public init(customers: [CustomerName], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
         
         self.id = .init()
         self.customers = customers
