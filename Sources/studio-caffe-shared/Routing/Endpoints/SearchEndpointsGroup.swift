@@ -1,6 +1,17 @@
 import Foundation
 
 public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
+    
+    public init(customers: [CustomerName], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
+        
+        self.id = .init()
+        self.customers = customers
+        self.machines = machines
+        self.devices = devices
+        self.products = products
+    }
+    
+    
     public var id: UUID
     public var customers: [CustomerName]
     public var machines: [MachineDTO]
@@ -9,6 +20,16 @@ public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
 }
 
 public struct BarcodeSearchResult: Codable, Hashable, Identifiable, Sendable {
+    
+    internal init(customers: [CustomerName], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
+        
+        self.id = .init()
+        self.customers = customers
+        self.machines = machines
+        self.devices = devices
+        self.products = products
+    }
+    
     public var id: UUID
     public var customers: [CustomerName]
     public var machines: [MachineDTO]
