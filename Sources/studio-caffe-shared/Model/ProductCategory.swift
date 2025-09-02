@@ -29,6 +29,7 @@ public enum ProductCategory: String, CaseIterable, RawRepresentable, Codable, Id
     case C_73_09_501
     case C_73_09_502
     case C_73_09_503
+    case C_73_09_069
     
     case C_73_01_017
     case C_73_09_006
@@ -65,6 +66,7 @@ extension ProductCategory: CustomStringConvertible {
         case .C_73_09_501: return "materiale manutenzione distributori (73.09.501)"
         case .C_73_09_502: return "ricambi freddo (73.09.502)"
         case .C_73_09_503: return "ricambi caldo (73.09.503)"
+        case .C_73_09_069: return "abbigliamento del personale (73.09.069)"
             
         case .C_73_01_017: return "materiale di consumo (73.01.017)"
         case .C_73_09_006: return "carburanti (73.09.006)"
@@ -100,6 +102,7 @@ extension ProductCategory: CustomStringConvertible {
         case .C_73_09_501: return "73.09.501"
         case .C_73_09_502: return "73.09.502"
         case .C_73_09_503: return "73.09.503"
+        case .C_73_09_069: return "73.09.069"
             
         case .C_73_01_017: return "73.01.017"
         case .C_73_09_006: return "73.09.006"
