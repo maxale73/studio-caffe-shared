@@ -2,7 +2,7 @@ import Foundation
 
 public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
     
-    public init(customers: [CustomerName], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
+    public init(customers: [CustomerCompleteDTO], machines: [MachineDTO], devices: [AdeDeviceDTO], products: [ProductDTO]) {
         
         self.id = .init()
         self.customers = customers
@@ -13,7 +13,7 @@ public struct GlobalSearchResult: Codable, Hashable, Identifiable, Sendable {
     
     
     public var id: UUID
-    public var customers: [CustomerName]
+    public var customers: [CustomerCompleteDTO]
     public var machines: [MachineDTO]
     public var devices: [AdeDeviceDTO]
     public var products: [ProductDTO]
