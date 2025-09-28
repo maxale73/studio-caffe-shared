@@ -254,6 +254,12 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func fetchAuditsID(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "fetchAuditsID", value: nil) ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
     public static func checkBeforeImport(auditsToCheck: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "check_before_import", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
