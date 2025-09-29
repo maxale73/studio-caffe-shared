@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AuditReadableValues: Identifiable {
+public struct AuditReadableValues: Codable, Identifiable, Equatable, Hashable, Sendable {
     public init(id: UUID = UUID(), valueDescription: String, readableValue: String) {
         self.id = id
         self.valueDescription = valueDescription
@@ -57,4 +57,22 @@ extension EvaAdeValues {
             AuditReadableValues(valueDescription: "cash overpay", readableValue: cashOverpay.currencyFormatted())
         ]
     }
+}
+
+public struct CollectedAuditData: Codable, Identifiable, Equatable, Hashable, Sendable {
+    internal init(id: UUID = .init(), adeValues: [AuditReadableValues] = [], infoValues: [AuditReadableValues] = [], otherValues: [AuditReadableValues] = [], checkAdeValues: [AuditReadableValues] = []) {
+        self.id = id
+        self.adeValues = adeValues
+        self.infoValues = infoValues
+        self.otherValues = otherValues
+        self.checkAdeValues = checkAdeValues
+    }
+    
+    
+    public var id: UUID
+    
+    public var adeValues: [AuditReadableValues] = []
+    public var infoValues:  [AuditReadableValues] = []
+    public var otherValues:  [AuditReadableValues] = []
+    public var checkAdeValues: [AuditReadableValues] = []
 }
