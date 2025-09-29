@@ -260,9 +260,9 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
-    public static func singleAuditByID(id: UUID? = nil) -> EndpointConfiguration {
+    public static func singleAuditByID(auditID: UUID? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "sinle_audit_by_id", value: nil),
-                           PathParameter(name: "id", value: .uuid(id)) ]
+                           PathParameter(name: "audit_id", value: .uuid(auditID)) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
