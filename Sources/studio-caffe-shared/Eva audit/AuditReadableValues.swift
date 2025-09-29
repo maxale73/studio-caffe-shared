@@ -8,7 +8,13 @@
 import Foundation
 
 public struct AuditReadableValues: Identifiable {
-    public var id: UUID = UUID()
+    public init(id: UUID = UUID(), valueDescription: String, readableValue: String) {
+        self.id = id
+        self.valueDescription = valueDescription
+        self.readableValue = readableValue
+    }
+    
+    public var id: UUID
     public var valueDescription: String
     public var readableValue: String
 }
