@@ -60,7 +60,7 @@ extension EvaAdeValues {
 }
 
 public struct CollectedAuditData: Codable, Identifiable, Equatable, Hashable, Sendable {
-    internal init(id: UUID = .init(), adeValues: [AuditReadableValues] = [], infoValues: [AuditReadableValues] = [], otherValues: [AuditReadableValues] = [], checkAdeValues: [AuditReadableValues] = []) {
+    public init(id: UUID = .init(), adeValues: [AuditReadableValues] = [], infoValues: [AuditReadableValues] = [], otherValues: [AuditReadableValues] = [], checkAdeValues: [AuditReadableValues] = []) {
         self.id = id
         self.adeValues = adeValues
         self.infoValues = infoValues
