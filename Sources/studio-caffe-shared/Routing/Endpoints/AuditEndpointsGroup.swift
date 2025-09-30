@@ -260,6 +260,12 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
     }
     
+    public static func _reportsCollectedData(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "_reports_collected_data", value: nil) ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
     public static func fetchAuditsID(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "fetch_audits_id", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
