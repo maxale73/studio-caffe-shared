@@ -8,6 +8,7 @@
 import Foundation
 
 public let IVA: Double = 22.0
+public let numberFormatter: NumberFormatter = .init()
 
 public extension Double {
     func round(to places: Int) -> Double {
@@ -52,19 +53,19 @@ public extension Double {
 public extension NumberFormatter {
     
     static func decimalFormatter() -> NumberFormatter {
-        let formatter = NumberFormatter()
+        let formatter = numberFormatter
         formatter.numberStyle = .decimal
         return formatter
     }
     
     static func integerFormatter() -> NumberFormatter {
-        let formatter = NumberFormatter()
+        let formatter = numberFormatter
         formatter.numberStyle = .none
         return formatter
     }
     
     static func fourDigitsCurrencyFormatter() -> NumberFormatter {
-        let formatter = NumberFormatter()
+        let formatter = numberFormatter
         formatter.numberStyle = .currencyAccounting
         formatter.minimumFractionDigits = 4
         return formatter

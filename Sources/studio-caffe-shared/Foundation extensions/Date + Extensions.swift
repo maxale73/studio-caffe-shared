@@ -7,6 +7,8 @@
 
 import Foundation
 
+public let calendar: Calendar = .init(identifier: .gregorian)
+
 public extension Date {
     
     static func nowComponents(calendar: Calendar) -> DateComponents {
@@ -116,38 +118,38 @@ public extension Date {
 
 public extension Date {
     static var defaultStartDate: Date {
-        var calendar = Calendar(identifier: .gregorian)
+        var calendar = calendar
         calendar.timeZone = .autoupdatingCurrent
         let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
         return calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: nowComponents.month, day: 1)) ?? .distantPast
     }
     
     static var beginOfYear: Date {
-        var calendar = Calendar(identifier: .gregorian)
+        var calendar = calendar
         calendar.timeZone = .autoupdatingCurrent
         let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
         return calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: 1, day: 1)) ?? Date.defaultStartDate
     }
     
     static var beginOfMonth: Date {
-        var calendar = Calendar(identifier: .gregorian)
+        var calendar = calendar
         calendar.timeZone = .autoupdatingCurrent
         let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
         return Date.beginOfDay(from: calendar.date(from: DateComponents(calendar: calendar, year: nowComponents.year, month: nowComponents.month, day: 1))!)
     }
     
     static func endOfDay(from _date: Date) -> Date {
-        var calendar = Calendar(identifier: .gregorian)
+        var calendar = calendar
         calendar.timeZone = .autoupdatingCurrent
         return calendar.date(bySettingHour: 23, minute: 59, second: 59, of: _date)!
     }
     
     static func beginOfDay(from _date: Date) -> Date {
-        Calendar(identifier: .gregorian).date(bySettingHour: 0, minute: 0, second: 1, of: _date)!
+        calendar.date(bySettingHour: 0, minute: 0, second: 1, of: _date)!
     }
     
     static func beginOfNextDay(from _date: Date) -> Date {
-        var calendar = Calendar(identifier: .gregorian)
+        var calendar = calendar
         calendar.timeZone = .autoupdatingCurrent
         let next = calendar.date(byAdding: .day, value: 1, to: _date)!
         return beginOfDay(from: next)
@@ -180,8 +182,8 @@ public extension Date {
     static func dateFromDashSplitted(_ dashSplitted: String) -> Date? {
         let stringComponents = dashSplitted.split(separator: "-")
         guard stringComponents.count == 3 else { return nil }
-        let comp = DateComponents(calendar: Calendar(identifier: .gregorian), timeZone: .autoupdatingCurrent, year: Int(stringComponents[0]), month: Int(stringComponents[1]), day: Int(stringComponents[2]), hour: 12, minute: 0)
+        let comp = DateComponents(calendar: calendar, timeZone: .autoupdatingCurrent, year: Int(stringComponents[0]), month: Int(stringComponents[1]), day: Int(stringComponents[2]), hour: 12, minute: 0)
 
-        return Calendar(identifier: .gregorian).date(from: comp)
+        return calendar.date(from: comp)
     }
 }
