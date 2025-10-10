@@ -8,13 +8,30 @@
 import Foundation
 
 public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
-    public init(id: UUID = UUID(), customerID: UUID? = nil, sellingPointID: UUID? = nil, deviceID: String? = nil, machineID: Int? = nil, deviceModel: AdeDeviceModel, fromDate: Date, toDate: Date) {
+    
+    public enum ResultType: String, Sendable, RawRepresentable, Codable {
+        
+        case all
+        case scaricoRendiresto
+        
+        public var textDescription: String {
+            switch self {
+            case .all:
+                return "tutte"
+            case .scaricoRendiresto:
+                return "scarico rendimento"
+            }
+        }
+    }
+    
+    public init(id: UUID = UUID(), customerID: UUID? = nil, sellingPointID: UUID? = nil, deviceID: String? = nil, machineID: Int? = nil, deviceModel: AdeDeviceModel = .none, resultType: ResultType = .all, fromDate: Date, toDate: Date) {
         self.id = id
         self.customerID = customerID
         self.sellingPointID = sellingPointID
         self.deviceID = deviceID
         self.machineID = machineID
         self.deviceModel = deviceModel
+        self.resultType = resultType
         self.fromDate = fromDate
         self.toDate = toDate
     }
@@ -25,6 +42,7 @@ public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
     public var deviceID: String?
     public var machineID: Int?
     public var deviceModel: AdeDeviceModel
+    public var resultType: Self.ResultType
     public var fromDate: Date
     public var toDate: Date
     
