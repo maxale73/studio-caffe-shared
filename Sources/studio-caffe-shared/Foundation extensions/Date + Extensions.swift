@@ -29,6 +29,21 @@ public extension Date {
         return .init(from: beginOfYear!, to: endOfYear!, intervalDescription: year.textDescription)
     }
     
+    static func pastMonths(calendar: Calendar, offset: Int) -> CustomTimeInterval {
+        let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
+        let month = nowComponents.month! - offset
+        let year = nowComponents.year
+        let beginOfMonth = calendar.date(from: DateComponents(calendar: calendar, year: year, month: month, day: 1, hour: 0, minute: 1))
+        let beginOfNextMonth = calendar.date(from: DateComponents(calendar: calendar, year: year, month: month + 1, day: 1, hour: 0, minute: 1))
+        let _endOfMonth = calendar.date(byAdding: .day, value: -1, to: beginOfNextMonth!)
+        let endOfMonth = endOfDay(from: _endOfMonth!)
+        
+        let _month = calendar.dateComponents([.month], from: endOfMonth)
+        let sym = calendar.monthSymbols[_month.month! - 1]
+        
+        return .init(from: beginOfMonth!, to: endOfMonth, intervalDescription: "\(sym) \(calendar.component(.year, from: endOfMonth))")
+    }
+    
     static func ultimoAnno(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .year, value: -1, to: to) ?? Date.defaultStartDate
