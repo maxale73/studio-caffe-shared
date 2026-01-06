@@ -24,7 +24,7 @@ public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
         }
     }
     
-    public init(id: UUID = UUID(), customerID: UUID? = nil, sellingPointID: UUID? = nil, deviceID: String? = nil, machineID: Int? = nil, deviceModel: AdeDeviceModel = .none, resultType: ResultType = .all, fromDate: Date, toDate: Date) {
+    public init(id: UUID = UUID(), customerID: UUID? = nil, sellingPointID: UUID? = nil, deviceID: String? = nil, machineID: Int? = nil, deviceModel: AdeDeviceModel = .none, resultType: ResultType = .all, interval: CustomTimeInterval) {
         self.id = id
         self.customerID = customerID
         self.sellingPointID = sellingPointID
@@ -32,8 +32,7 @@ public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
         self.machineID = machineID
         self.deviceModel = deviceModel
         self.resultType = resultType
-        self.fromDate = fromDate
-        self.toDate = toDate
+        self.interval = interval
     }
     
     public var id: UUID
@@ -43,15 +42,14 @@ public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
     public var machineID: Int?
     public var deviceModel: AdeDeviceModel
     public var resultType: Self.ResultType
-    public var fromDate: Date
-    public var toDate: Date
+    public var interval: CustomTimeInterval
     
     public static var defaultFilter: EvaAuditFilter {
-        EvaAuditFilter(id: defaultFilterID, deviceModel: .none, fromDate: Date.defaultStartDate, toDate: .init())
+        EvaAuditFilter(id: defaultFilterID, deviceModel: .none, interval: .defaultInterval())
     }
     
     public static var nullFilter: EvaAuditFilter {
-        EvaAuditFilter(id: defaultFilterID, deviceModel: .none, fromDate: .legalDistantPast, toDate: .distantFuture)
+        EvaAuditFilter(id: defaultFilterID, deviceModel: .none, interval: .nullInterval())
     }
     
     public static func == (lhs: EvaAuditFilter, rhs: EvaAuditFilter) -> Bool {
@@ -61,7 +59,6 @@ public struct EvaAuditFilter: Codable, RequestBody, Equatable, Sendable {
             lhs.deviceID == rhs.deviceID &&
             lhs.machineID == rhs.machineID &&
             lhs.deviceModel == rhs.deviceModel &&
-            lhs.fromDate == rhs.fromDate &&
-            lhs.toDate == rhs.toDate
+        lhs.interval == rhs.interval
     }
 }
