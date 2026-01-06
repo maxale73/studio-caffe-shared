@@ -245,7 +245,7 @@ public struct LastReportByMachine: Identifiable, Codable, Equatable, Sendable {
 }
 
 public struct FilterAndDataResult: Codable, Identifiable, Equatable, RequestBody, Sendable {
-    internal init(filter: EvaAuditFilter, data: CollectedAuditData) {
+    public init(filter: EvaAuditFilter, data: CollectedAuditData) {
         self.id = filter.id
         self.filter = filter
         self.data = data
