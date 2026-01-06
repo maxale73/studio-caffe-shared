@@ -244,6 +244,18 @@ public struct LastReportByMachine: Identifiable, Codable, Equatable, Sendable {
     public var date: Date
 }
 
+public struct FilterAndDataResult: Codable, Identifiable, Equatable, RequestBody, Sendable {
+    internal init(filter: EvaAuditFilter, data: CollectedAuditData) {
+        self.id = filter.id
+        self.filter = filter
+        self.data = data
+    }
+    
+    public let id: UUID
+    public let filter: EvaAuditFilter
+    public let data: CollectedAuditData
+}
+
 public struct AuditEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "evaReport" }
