@@ -245,13 +245,15 @@ public struct LastReportByMachine: Identifiable, Codable, Equatable, Sendable {
 }
 
 public struct FilterAndDataResult: Codable, Identifiable, Equatable, RequestBody, Sendable {
-    public init(filter: EvaAuditFilter, data: CollectedAuditData) {
+    public init(interval: CustomTimeInterval, filter: EvaAuditFilter, data: CollectedAuditData) {
         self.id = filter.id
+        self.interval = interval
         self.filter = filter
         self.data = data
     }
     
     public let id: UUID
+    public let interval: CustomTimeInterval
     public let filter: EvaAuditFilter
     public let data: CollectedAuditData
 }

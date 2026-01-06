@@ -175,18 +175,11 @@ struct HelperTests {
 @Suite("Date Tests")
 struct DateTests {
     
-    @Test func testPastMonths() {
+    @Test func testPastMonthsIntervals() {
         let numberOfMonths = 15
         
-        var intervals: [CustomTimeInterval] = []
-        let sym = calendar.monthSymbols
-        print(sym)
-        for i in 0..<numberOfMonths {
-            let interval = Date.pastMonths(calendar: .autoupdatingCurrent, offset: i)
-            let _month = calendar.dateComponents([.month], from: interval.to)
-            let sym = calendar.monthSymbols[_month.month! - 1]
-            print(interval)
-            intervals.append(interval)
-        }
+        let intervals = Date.pastMonthsIntervals(_calendar: calendar, count: numberOfMonths)
+        print(intervals)
+        print(intervals.count)
     }
 }

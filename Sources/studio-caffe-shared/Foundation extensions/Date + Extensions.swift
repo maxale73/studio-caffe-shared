@@ -29,19 +29,30 @@ public extension Date {
         return .init(from: beginOfYear!, to: endOfYear!, intervalDescription: year.textDescription)
     }
     
-    static func pastMonths(calendar: Calendar, offset: Int) -> CustomTimeInterval {
-        let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
+    static func pastMonth(_calendar: Calendar, offset: Int) -> CustomTimeInterval {
+        let nowComponents = _calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
         let month = nowComponents.month! - offset
         let year = nowComponents.year
-        let beginOfMonth = calendar.date(from: DateComponents(calendar: calendar, year: year, month: month, day: 1, hour: 0, minute: 1))
-        let beginOfNextMonth = calendar.date(from: DateComponents(calendar: calendar, year: year, month: month + 1, day: 1, hour: 0, minute: 1))
-        let _endOfMonth = calendar.date(byAdding: .day, value: -1, to: beginOfNextMonth!)
+        let beginOfMonth = _calendar.date(from: DateComponents(calendar: _calendar, year: year, month: month, day: 1, hour: 0, minute: 1))
+        let beginOfNextMonth = _calendar.date(from: DateComponents(calendar: _calendar, year: year, month: month + 1, day: 1, hour: 0, minute: 1))
+        let _endOfMonth = _calendar.date(byAdding: .day, value: -1, to: beginOfNextMonth!)
         let endOfMonth = endOfDay(from: _endOfMonth!)
         
-        let _month = calendar.dateComponents([.month], from: endOfMonth)
-        let sym = calendar.monthSymbols[_month.month! - 1]
+        let _month = _calendar.dateComponents([.month], from: endOfMonth)
+        let sym = _calendar.monthSymbols[_month.month! - 1]
         
-        return .init(from: beginOfMonth!, to: endOfMonth, intervalDescription: "\(sym) \(calendar.component(.year, from: endOfMonth))")
+        return .init(from: beginOfMonth!, to: endOfMonth, intervalDescription: "\(sym) \(_calendar.component(.year, from: endOfMonth))")
+    }
+    
+    static func pastMonthsIntervals(_calendar: Calendar, count: Int) -> [CustomTimeInterval] {
+        
+        var intervals: [CustomTimeInterval] = []
+        
+        for i in 1...count {
+            let interval = Date.pastMonth(_calendar: calendar, offset: i)
+            intervals.append(interval)
+        }
+        return intervals
     }
     
     static func ultimoAnno(calendar: Calendar) -> (from: Date, to: Date) {

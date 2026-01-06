@@ -13,4 +13,8 @@ public struct CustomTimeInterval: Equatable, Codable, Sendable {
     public var to: Date
     public var intervalDescription: String
     
+    public static func ever() -> CustomTimeInterval {
+        CustomTimeInterval(from: .distantPast, to: .distantFuture, intervalDescription: "Ever")
+    }
+    
 }
