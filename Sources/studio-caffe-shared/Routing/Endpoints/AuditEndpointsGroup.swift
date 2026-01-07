@@ -256,6 +256,20 @@ public struct FilterAndDataResult: Codable, Identifiable, Equatable, RequestBody
     public let data: CollectedAuditData
 }
 
+public struct SellsReport: Codable, Identifiable, Equatable, RequestBody, Sendable {
+    public init(filter: EvaAuditFilter, venduto: Double, erogazioni: Int) {
+        self.id = filter.id
+        self.filter = filter
+        self.venduto = venduto
+        self.erogazioni = erogazioni
+    }
+    
+    public var id: UUID
+    public var filter: EvaAuditFilter
+    public var venduto: Double
+    public var erogazioni: Int
+}
+
 public struct AuditEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "evaReport" }
@@ -264,6 +278,12 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         let parameters = [ PathParameter(name: "index", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+    
+    public static func sellsReport(filters: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [ PathParameter(name: "sells_report", value: nil) ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filters)
     }
     
     public static func reportsCollectedData(filter: RequestBody? = nil) -> EndpointConfiguration {
