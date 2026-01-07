@@ -21,12 +21,24 @@ public extension Date {
         return (beginOfLastYear!, .endOfDay(from: endOfLastYearDay!))
     }
     
-    static func pastYears(calendar: Calendar, offset: Int) -> CustomTimeInterval {
-        let nowComponents = calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
+    static func pastYears(_calendar: Calendar, offset: Int) -> CustomTimeInterval {
+        let nowComponents = _calendar.dateComponents([.year, .month, .day, .minute, .second], from: Date())
         let year = nowComponents.year! - offset
-        let beginOfYear = calendar.date(from: DateComponents(calendar: calendar, year: year, month: 1, day: 1, hour: 0, minute: 1))
-        let endOfYear = calendar.date(from: DateComponents(calendar: calendar, year: year, month: 12, day: 31, hour: 11, minute: 59))
+        let beginOfYear = _calendar.date(from: DateComponents(calendar: _calendar, year: year, month: 1, day: 1, hour: 0, minute: 1))
+        let endOfYear = _calendar.date(from: DateComponents(calendar: _calendar, year: year, month: 12, day: 31, hour: 11, minute: 59))
         return .init(from: beginOfYear!, to: endOfYear!, intervalDescription: year.textDescription)
+    }
+    
+    static func pastYearsIntervals(_calendar: Calendar, count: Int, includeCurrent: Bool = false) -> [CustomTimeInterval] {
+        
+        var intervals: [CustomTimeInterval] = []
+        let range: CountableClosedRange<Int> = includeCurrent ? 0...count - 1 : 1...count
+        
+        for i in range {
+            let interval = Date.pastYears(_calendar: _calendar, offset: i)
+            intervals.append(interval)
+        }
+        return intervals
     }
     
     static func pastMonth(_calendar: Calendar, offset: Int) -> CustomTimeInterval {
@@ -49,7 +61,7 @@ public extension Date {
         var intervals: [CustomTimeInterval] = []
         
         for i in 1...count {
-            let interval = Date.pastMonth(_calendar: calendar, offset: i)
+            let interval = Date.pastMonth(_calendar: _calendar, offset: i)
             intervals.append(interval)
         }
         return intervals

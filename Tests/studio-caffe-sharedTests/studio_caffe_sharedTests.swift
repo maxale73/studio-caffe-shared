@@ -180,6 +180,25 @@ struct DateTests {
         
         let intervals = Date.pastMonthsIntervals(_calendar: calendar, count: numberOfMonths)
         print(intervals)
-        print(intervals.count)
+        
+        #expect(intervals.count == numberOfMonths)
+    }
+    
+    @Test func testPastYearsIntervals() {
+        let numberOfYears = 15
+        
+        let intervals = Date.pastYearsIntervals(_calendar: calendar, count: numberOfYears)
+        print(intervals)
+        
+        #expect(intervals.count == numberOfYears)
+    }
+    
+    @Test func testPastYearsIntervalsIncludedCurrent() {
+        let numberOfYears = 15
+        
+        let intervals = Date.pastYearsIntervals(_calendar: calendar, count: numberOfYears, includeCurrent: true)
+        print(intervals)
+        
+        #expect(intervals.count == numberOfYears)
     }
 }
