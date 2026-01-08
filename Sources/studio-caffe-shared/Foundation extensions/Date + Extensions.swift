@@ -67,6 +67,22 @@ public extension Date {
         return intervals
     }
     
+    static func nestedYearsPastMonthsIntervals(_calendar: Calendar, yearsCount: Int, monthOffset: Int = 0) -> [[CustomTimeInterval]] {
+        var months: [CustomTimeInterval] = []
+        for i in 1 + monthOffset...(yearsCount * 12 + monthOffset) {
+            let interval = Date.pastMonth(_calendar: _calendar, offset: i)
+            months.append(interval)
+        }
+        
+        months.reverse()
+        
+        let dict = Dictionary(grouping: months, by: { month in
+            let id = month.intervalDescription.split(separator: " ")[0]
+            return id
+        })
+        return Array(dict.values).sorted(by:    { $0.first!.from < $1.first!.to })
+    }
+    
     static func ultimoAnno(calendar: Calendar) -> (from: Date, to: Date) {
         let to = Date()
         let from = calendar.date(byAdding: .year, value: -1, to: to) ?? Date.defaultStartDate
@@ -225,3 +241,4 @@ public extension Date {
         return calendar.date(from: comp)
     }
 }
+
