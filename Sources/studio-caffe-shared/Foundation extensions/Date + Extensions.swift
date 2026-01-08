@@ -67,7 +67,13 @@ public extension Date {
         return intervals
     }
     
-    static func nestedYearsPastMonthsIntervals(_calendar: Calendar, yearsCount: Int, monthOffset: Int = 0) -> [[CustomTimeInterval]] {
+    struct YearIntervals: Identifiable, Sendable {
+        public let id: UUID = .init()
+        public let months: [CustomTimeInterval]
+        public let desc: String
+    }
+    
+    static func nestedYearsPastMonthsIntervals(_calendar: Calendar, yearsCount: Int, monthOffset: Int = 0) -> [YearIntervals] {
         var months: [CustomTimeInterval] = []
         for i in 1 + monthOffset...(yearsCount * 12 + monthOffset) {
             let interval = Date.pastMonth(_calendar: _calendar, offset: i)
@@ -76,11 +82,34 @@ public extension Date {
         
         months.reverse()
         
-        let dict = Dictionary(grouping: months, by: { month in
-            let id = month.intervalDescription.split(separator: " ")[0]
-            return id
-        })
-        return Array(dict.values).sorted(by:    { $0.first!.from < $1.first!.to })
+        var years: [YearIntervals] = []
+        var currentYearDesc = String(months.first?.intervalDescription.split(separator: " ")[1] ?? "")
+        var currentMonths: [CustomTimeInterval] = []
+        
+        for var month in months {
+            let yearDesc = month.intervalDescription.split(separator: " ")[1]
+            let monthDesc = month.intervalDescription.split(separator: " ")[0]
+            month.intervalDescription = String(monthDesc)
+            
+            if yearDesc != currentYearDesc {
+                years.append(.init(months: currentMonths, desc: String(currentYearDesc)))
+                currentYearDesc = String(yearDesc)
+                currentMonths = [month]
+            } else {
+                currentMonths.append(month)
+            }
+            if month.from == months.last!.from {
+                years.append(.init(months: currentMonths, desc: String(currentYearDesc)))
+            }
+        }
+        
+        return years
+        
+//        let dict = Dictionary(grouping: months, by: { month in
+//            let id = month.intervalDescription.split(separator: " ")[0]
+//            return id
+//        })
+//        return Array(dict.values).sorted(by:    { $0.first!.from < $1.first!.to })
     }
     
     static func ultimoAnno(calendar: Calendar) -> (from: Date, to: Date) {

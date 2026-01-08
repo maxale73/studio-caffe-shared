@@ -206,14 +206,13 @@ struct DateTests {
         let numberOfYears = 3
         
         let intervals = Date.nestedYearsPastMonthsIntervals(_calendar: calendar, yearsCount: numberOfYears)
-        for month in intervals {
-            let _int = month.first!.intervalDescription.split(separator: " ").first!
-            print(_int)
-            for interval in month {
-                print(interval.intervalDescription)
+        for year in intervals {
+            print(year.desc)
+            for month in year.months {
+                print(month.intervalDescription)
             }
         }
         
-        #expect(intervals.count == 12)
+        #expect(intervals.count == 3)
     }
 }
