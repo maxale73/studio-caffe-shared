@@ -7,6 +7,12 @@
 
 import Foundation
 
+public struct YearIntervals: Identifiable, Sendable {
+    public let id: UUID = .init()
+    public let months: [CustomTimeInterval]
+    public let desc: String
+}
+
 public let calendar: Calendar = .init(identifier: .gregorian)
 
 public extension Date {
@@ -65,12 +71,6 @@ public extension Date {
             intervals.append(interval)
         }
         return intervals
-    }
-    
-    struct YearIntervals: Identifiable, Sendable {
-        public let id: UUID = .init()
-        public let months: [CustomTimeInterval]
-        public let desc: String
     }
     
     static func nestedYearsPastMonthsIntervals(_calendar: Calendar, yearsCount: Int, monthOffset: Int = 0) -> [YearIntervals] {
