@@ -270,6 +270,35 @@ public struct SellsReport: Codable, Identifiable, Equatable, RequestBody, Sendab
     public var erogazioni: Int
 }
 
+public struct YearSellsReport: Codable, Identifiable, Equatable, RequestBody, Sendable {
+    public init(id: UUID, desc: String, months: [YearSellsReport.MonthSellsReport]) {
+        self.id = id
+        self.desc = desc
+        self.months = months
+    }
+    
+    
+    public struct MonthSellsReport: Codable, Identifiable, Equatable, Sendable, RequestBody {
+        public init(id: UUID = .init(), interval: CustomTimeInterval, desc: String, venduto: Double, erogazioni: Int) {
+            self.id = id
+            self.interval = interval
+            self.desc = desc
+            self.venduto = venduto
+            self.erogazioni = erogazioni
+        }
+        
+        public var id: UUID
+        public var interval: CustomTimeInterval
+        public var desc: String
+        public var venduto: Double
+        public var erogazioni: Int
+    }
+    
+    public var id: UUID
+    public var desc: String
+    public var months: [MonthSellsReport]
+}
+
 public struct AuditEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "evaReport" }
