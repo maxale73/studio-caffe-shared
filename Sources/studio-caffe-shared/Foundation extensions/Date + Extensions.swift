@@ -7,8 +7,14 @@
 
 import Foundation
 
-public struct YearIntervals: Identifiable, Sendable {
-    public let id: UUID = .init()
+public struct YearIntervals: Identifiable, Sendable, Codable {
+    public init(months: [CustomTimeInterval], desc: String) {
+        self.months = months
+        self.desc = desc
+        self.id = UUID()
+    }
+    
+    public let id: UUID
     public let months: [CustomTimeInterval]
     public let desc: String
 }
