@@ -244,32 +244,6 @@ public struct LastReportByMachine: Identifiable, Codable, Equatable, Sendable {
     public var date: Date
 }
 
-public struct FilterAndDataResult: Codable, Identifiable, Equatable, RequestBody, Sendable {
-    public init(filter: EvaAuditFilter, data: CollectedAuditData) {
-        self.id = filter.id
-        self.filter = filter
-        self.data = data
-    }
-    
-    public let id: UUID
-    public let filter: EvaAuditFilter
-    public let data: CollectedAuditData
-}
-
-public struct SellsReport: Codable, Identifiable, Equatable, RequestBody, Sendable {
-    public init(filter: EvaAuditFilter, venduto: Double, erogazioni: Int) {
-        self.id = filter.id
-        self.filter = filter
-        self.venduto = venduto
-        self.erogazioni = erogazioni
-    }
-    
-    public var id: UUID
-    public var filter: EvaAuditFilter
-    public var venduto: Double
-    public var erogazioni: Int
-}
-
 public struct YearSellsReport: Codable, Identifiable, Equatable, RequestBody, Sendable {
     public init(id: UUID, desc: String, months: [YearSellsReport.MonthSellsReport]) {
         self.id = id
@@ -319,18 +293,6 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         let parameters = [ PathParameter(name: "reports_collected_data", value: nil) ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
-    }
-    
-    public static func _reportsCollectedData(filter: RequestBody? = nil) -> EndpointConfiguration {
-        let parameters = [ PathParameter(name: "_reports_collected_data", value: nil) ]
-        let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
-    }
-    
-    public static func multipleFiltersCollectedData(filters: RequestBody? = nil) -> EndpointConfiguration {
-        let parameters = [ PathParameter(name: "multiple_filters_collected_data", value: nil) ]
-        let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filters)
     }
     
     public static func fetchAuditsID(filter: RequestBody? = nil) -> EndpointConfiguration {
