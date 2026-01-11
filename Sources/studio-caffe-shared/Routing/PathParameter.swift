@@ -29,6 +29,11 @@ public enum PathParameterValue {
 }
 
 public struct PathParameter {
+    public init(name: String, value: PathParameterValue? = nil) {
+        self.name = name
+        self.value = value
+    }
+    
     public var name: String
     public var value: PathParameterValue?
 }
