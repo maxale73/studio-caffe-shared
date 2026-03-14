@@ -62,6 +62,39 @@ public struct HistoryDTO: Identifiable, Equatable, Codable, Hashable, Sendable {
     public var city: String
 }
 
+public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Sendable {
+    public init(
+        id: UUID,
+        date: Date,
+        sellingPoint: Int,
+        machineInternalID: Int,
+        machineFactoryID: String,
+        event: InstallationType
+    ) {
+        self.id = id
+        self.date = date
+        self.sellingPoint = sellingPoint
+        self.machineInternalID = machineInternalID
+        self.machineFactoryID = machineFactoryID
+        self.event = event
+    }
+
+    public var id: UUID
+    public var date: Date
+    public var sellingPoint: Int
+    public var machineInternalID: Int
+    public var machineFactoryID: String
+    public var event: InstallationType
+
+    public var eventDescription: String {
+        switch event {
+        case .associato: return "installato"
+        case .deposito: return "ritirato"
+        default: return "indefinito"
+        }
+    }
+}
+
 public struct MachineHistoryEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "machine_history" }
