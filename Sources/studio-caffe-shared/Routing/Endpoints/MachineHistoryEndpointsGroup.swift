@@ -82,4 +82,13 @@ public struct MachineHistoryEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+    
+    public static func fetchMachineHistory(customerID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "fetch_machine_history", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
 }
