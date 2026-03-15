@@ -122,6 +122,21 @@ public struct ReportByDevice: Identifiable, Equatable, Codable, Sendable {
     public var date: Date
 }
 
+public struct CustomerAdeDeviceHistoryEntry: Identifiable, Equatable, Codable, Sendable {
+    public init(deviceID: String, firstOccurrenceDate: Date, machineID: Int, machineMakerPlusModel: String) {
+        self.deviceID = deviceID
+        self.firstOccurrenceDate = firstOccurrenceDate
+        self.machineID = machineID
+        self.machineMakerPlusModel = machineMakerPlusModel
+    }
+
+    public var id: String { deviceID }
+    public var deviceID: String
+    public var firstOccurrenceDate: Date
+    public var machineID: Int
+    public var machineMakerPlusModel: String
+}
+
 public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody, Sendable {
     public init(id: UUID, deviceId: String, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date) {
         self.id = id
@@ -384,6 +399,15 @@ public struct AuditEndpointsGroup: EndpointGroupType {
     
     public static func lastReportByMachine() -> EndpointConfiguration {
         let parameters = [ PathParameter(name: "last_report_by_machine", value: nil)]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+
+    public static func adeDeviceHistoryForCustomer(customerID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "ade_device_history_for_customer", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
+        ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
