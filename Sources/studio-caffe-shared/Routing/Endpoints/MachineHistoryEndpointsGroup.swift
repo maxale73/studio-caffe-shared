@@ -68,6 +68,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
         date: Date,
         sellingPoint: Int,
         machineInternalID: Int,
+        model: String,
         machineFactoryID: String,
         event: InstallationType
     ) {
@@ -75,6 +76,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
         self.date = date
         self.sellingPoint = sellingPoint
         self.machineInternalID = machineInternalID
+        self.model = model
         self.machineFactoryID = machineFactoryID
         self.event = event
     }
@@ -83,6 +85,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
     public var date: Date
     public var sellingPoint: Int
     public var machineInternalID: Int
+    public var model: String
     public var machineFactoryID: String
     public var event: InstallationType
 
