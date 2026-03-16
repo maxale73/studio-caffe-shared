@@ -67,6 +67,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
         id: UUID,
         date: Date,
         sellingPoint: Int,
+        site: String,
         machineInternalID: Int,
         model: String,
         machineFactoryID: String,
@@ -75,6 +76,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
         self.id = id
         self.date = date
         self.sellingPoint = sellingPoint
+        self.site = site
         self.machineInternalID = machineInternalID
         self.model = model
         self.machineFactoryID = machineFactoryID
@@ -84,6 +86,7 @@ public struct CustomerMachineHistoryDTO: Identifiable, Codable, Equatable, Senda
     public var id: UUID
     public var date: Date
     public var sellingPoint: Int
+    public var site: String
     public var machineInternalID: Int
     public var model: String
     public var machineFactoryID: String

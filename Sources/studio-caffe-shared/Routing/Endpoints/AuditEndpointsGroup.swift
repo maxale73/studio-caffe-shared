@@ -123,9 +123,10 @@ public struct ReportByDevice: Identifiable, Equatable, Codable, Sendable {
 }
 
 public struct CustomerAdeDeviceHistoryEntry: Identifiable, Equatable, Codable, Sendable {
-    public init(deviceID: String, firstOccurrenceDate: Date, machineID: Int, machineMakerPlusModel: String) {
+    public init(deviceID: String, firstOccurrenceDate: Date, site: String, machineID: Int, machineMakerPlusModel: String) {
         self.deviceID = deviceID
         self.firstOccurrenceDate = firstOccurrenceDate
+        self.site = site
         self.machineID = machineID
         self.machineMakerPlusModel = machineMakerPlusModel
     }
@@ -133,6 +134,7 @@ public struct CustomerAdeDeviceHistoryEntry: Identifiable, Equatable, Codable, S
     public var id: String { deviceID }
     public var deviceID: String
     public var firstOccurrenceDate: Date
+    public var site: String
     public var machineID: Int
     public var machineMakerPlusModel: String
 }
