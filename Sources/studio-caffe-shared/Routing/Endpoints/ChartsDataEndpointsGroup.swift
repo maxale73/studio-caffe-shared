@@ -39,6 +39,69 @@ public struct ChartCategoryIncomeCorrelationRequest: Identifiable, Codable, Equa
     public var intervals: [CustomTimeInterval]
 }
 
+public struct ChartYearlyTallyCashboxRequest: Identifiable, Codable, Equatable, Sendable, RequestBody {
+    public init(
+        id: UUID = .init(),
+        requestDescription: String = "",
+        startYear: Int = 2020,
+        endYear: Int? = nil
+    ) {
+        self.id = id
+        self.requestDescription = requestDescription
+        self.startYear = startYear
+        self.endYear = endYear
+    }
+
+    public var id: UUID
+    public var requestDescription: String
+    public var startYear: Int
+    public var endYear: Int?
+}
+
+public struct ChartYearlyTallyCashboxPoint: Identifiable, Codable, Equatable, Sendable {
+    public init(
+        id: UUID = .init(),
+        year: Int,
+        tallySum: Double,
+        cashboxSum: Double,
+        difference: Double,
+        auditsCount: Int,
+        talliesCount: Int
+    ) {
+        self.id = id
+        self.year = year
+        self.tallySum = tallySum
+        self.cashboxSum = cashboxSum
+        self.difference = difference
+        self.auditsCount = auditsCount
+        self.talliesCount = talliesCount
+    }
+
+    public var id: UUID
+    public var year: Int
+    public var tallySum: Double
+    public var cashboxSum: Double
+    public var difference: Double
+    public var auditsCount: Int
+    public var talliesCount: Int
+}
+
+public struct ChartYearlyTallyCashboxResponse: Identifiable, Codable, Equatable, Sendable {
+    public init(
+        id: UUID = .init(),
+        responseDescription: String,
+        points: [ChartYearlyTallyCashboxPoint]
+    ) {
+        self.id = id
+        self.responseDescription = responseDescription
+        self.points = points
+    }
+
+    public var id: UUID
+    public var responseDescription: String
+    public var points: [ChartYearlyTallyCashboxPoint]
+}
+
 public struct ChartPurchasePeriod: Identifiable, Codable, Equatable, Sendable {
     public init(id: UUID = .init(), interval: CustomTimeInterval, periodDescription: String, purchaseValue: Double, purchaseAmount: Double, sellValue: Double = 0.0, sellAmount: Int = 0) {
         self.id = id
@@ -89,6 +152,12 @@ public struct ChartDataEndpointsGroup: EndpointGroupType {
 
     public static func fetchChartCategoryIncomeCorrelationData(dataRequest: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [PathParameter(name: "fetch_chart_category_income_correlation_data", value: nil)]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: dataRequest)
+    }
+
+    public static func fetchChartYearlyTallyCashboxData(dataRequest: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "fetch_chart_yearly_tally_cashbox_data", value: nil)]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: dataRequest)
     }
