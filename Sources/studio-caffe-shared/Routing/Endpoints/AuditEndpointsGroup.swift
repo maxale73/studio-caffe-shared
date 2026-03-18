@@ -139,7 +139,7 @@ public struct CustomerAdeDeviceHistoryEntry: Identifiable, Equatable, Codable, S
     public var machineMakerPlusModel: String
 }
 
-public struct CustomerAdeDeviceContributionRequest: Identifiable, Equatable, Codable, Sendable, RequestBody {
+public struct CustomerSellingPointStatisticsRequest: Identifiable, Equatable, Codable, Sendable, RequestBody {
     public init(
         id: UUID = .init(),
         requestDescription: String = "",
@@ -155,7 +155,7 @@ public struct CustomerAdeDeviceContributionRequest: Identifiable, Equatable, Cod
     public var interval: CustomTimeInterval
 }
 
-public struct CustomerAdeDeviceContributionEntry: Identifiable, Equatable, Codable, Sendable {
+public struct CustomerSellingPointStatisticsEntry: Identifiable, Equatable, Codable, Sendable {
     public init(
         deviceID: String,
         sellingPointID: Int,
@@ -184,7 +184,7 @@ public struct CustomerAdeDeviceContributionEntry: Identifiable, Equatable, Codab
     public var erogazioniContribution: Double
 }
 
-public struct CustomerAdeDeviceContributionsResponse: Identifiable, Equatable, Codable, Sendable {
+public struct CustomerSellingPointStatisticsResponse: Identifiable, Equatable, Codable, Sendable {
     public init(
         id: UUID = .init(),
         customerID: UUID,
@@ -192,7 +192,7 @@ public struct CustomerAdeDeviceContributionsResponse: Identifiable, Equatable, C
         interval: CustomTimeInterval,
         totalVenduto: Double,
         totalErogazioni: Int,
-        entries: [CustomerAdeDeviceContributionEntry]
+        entries: [CustomerSellingPointStatisticsEntry]
     ) {
         self.id = id
         self.customerID = customerID
@@ -209,8 +209,12 @@ public struct CustomerAdeDeviceContributionsResponse: Identifiable, Equatable, C
     public var interval: CustomTimeInterval
     public var totalVenduto: Double
     public var totalErogazioni: Int
-    public var entries: [CustomerAdeDeviceContributionEntry]
+    public var entries: [CustomerSellingPointStatisticsEntry]
 }
+
+public typealias CustomerAdeDeviceContributionRequest = CustomerSellingPointStatisticsRequest
+public typealias CustomerAdeDeviceContributionEntry = CustomerSellingPointStatisticsEntry
+public typealias CustomerAdeDeviceContributionsResponse = CustomerSellingPointStatisticsResponse
 
 public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody, Sendable {
     public init(id: UUID, deviceId: String, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date) {
@@ -487,7 +491,7 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
 
-    public static func adeDeviceContributionsForCustomer(
+    public static func sellingPointStatisticsForCustomer(
         customerID: UUID? = nil,
         request: RequestBody? = nil
     ) -> EndpointConfiguration {
@@ -497,5 +501,12 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: request)
+    }
+
+    public static func adeDeviceContributionsForCustomer(
+        customerID: UUID? = nil,
+        request: RequestBody? = nil
+    ) -> EndpointConfiguration {
+        sellingPointStatisticsForCustomer(customerID: customerID, request: request)
     }
 }
