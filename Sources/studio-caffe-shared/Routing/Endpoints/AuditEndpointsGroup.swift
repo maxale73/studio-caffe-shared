@@ -139,6 +139,79 @@ public struct CustomerAdeDeviceHistoryEntry: Identifiable, Equatable, Codable, S
     public var machineMakerPlusModel: String
 }
 
+public struct CustomerAdeDeviceContributionRequest: Identifiable, Equatable, Codable, Sendable, RequestBody {
+    public init(
+        id: UUID = .init(),
+        requestDescription: String = "",
+        interval: CustomTimeInterval
+    ) {
+        self.id = id
+        self.requestDescription = requestDescription
+        self.interval = interval
+    }
+
+    public var id: UUID
+    public var requestDescription: String
+    public var interval: CustomTimeInterval
+}
+
+public struct CustomerAdeDeviceContributionEntry: Identifiable, Equatable, Codable, Sendable {
+    public init(
+        deviceID: String,
+        sellingPointID: Int,
+        site: String,
+        venduto: Double,
+        erogazioni: Int,
+        vendutoContribution: Double,
+        erogazioniContribution: Double
+    ) {
+        self.deviceID = deviceID
+        self.sellingPointID = sellingPointID
+        self.site = site
+        self.venduto = venduto
+        self.erogazioni = erogazioni
+        self.vendutoContribution = vendutoContribution
+        self.erogazioniContribution = erogazioniContribution
+    }
+
+    public var id: String { "\(deviceID)-\(sellingPointID)" }
+    public var deviceID: String
+    public var sellingPointID: Int
+    public var site: String
+    public var venduto: Double
+    public var erogazioni: Int
+    public var vendutoContribution: Double
+    public var erogazioniContribution: Double
+}
+
+public struct CustomerAdeDeviceContributionsResponse: Identifiable, Equatable, Codable, Sendable {
+    public init(
+        id: UUID = .init(),
+        customerID: UUID,
+        responseDescription: String,
+        interval: CustomTimeInterval,
+        totalVenduto: Double,
+        totalErogazioni: Int,
+        entries: [CustomerAdeDeviceContributionEntry]
+    ) {
+        self.id = id
+        self.customerID = customerID
+        self.responseDescription = responseDescription
+        self.interval = interval
+        self.totalVenduto = totalVenduto
+        self.totalErogazioni = totalErogazioni
+        self.entries = entries
+    }
+
+    public var id: UUID
+    public var customerID: UUID
+    public var responseDescription: String
+    public var interval: CustomTimeInterval
+    public var totalVenduto: Double
+    public var totalErogazioni: Int
+    public var entries: [CustomerAdeDeviceContributionEntry]
+}
+
 public struct ToCheckAuditDTO: Codable, Identifiable, RequestBody, Sendable {
     public init(id: UUID, deviceId: String, progressivoLettura: Int, dataLettura: Date, dataLetturaPrecedente: Date) {
         self.id = id
@@ -412,5 +485,17 @@ public struct AuditEndpointsGroup: EndpointGroupType {
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+
+    public static func adeDeviceContributionsForCustomer(
+        customerID: UUID? = nil,
+        request: RequestBody? = nil
+    ) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "ade_device_contributions_for_customer", value: nil),
+            PathParameter(name: "customer_id", value: .uuid(customerID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: request)
     }
 }
