@@ -66,6 +66,31 @@ public struct AuditsRistorno: Codable, Identifiable, Equatable, Sendable {
     public var evaReports: [AuditConsumption]
 }
 
+/// A reading used for a rebate calculation, including its original selling point.
+public struct RistornoReportReading: Codable, Identifiable, Equatable, Sendable {
+    public init(id: UUID, erogazioni: Int, machineID: Int, machineModel: String, site: String, readingDate: Date, sellingPointID: UUID, sellingPointCode: Int, sellingPointAddress: String) {
+        self.id = id
+        self.erogazioni = erogazioni
+        self.machineID = machineID
+        self.machineModel = machineModel
+        self.site = site
+        self.readingDate = readingDate
+        self.sellingPointID = sellingPointID
+        self.sellingPointCode = sellingPointCode
+        self.sellingPointAddress = sellingPointAddress
+    }
+
+    public var id: UUID
+    public var erogazioni: Int
+    public var machineID: Int
+    public var machineModel: String
+    public var site: String
+    public var readingDate: Date
+    public var sellingPointID: UUID
+    public var sellingPointCode: Int
+    public var sellingPointAddress: String
+}
+
 public struct RistornoEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "ristorno" }
