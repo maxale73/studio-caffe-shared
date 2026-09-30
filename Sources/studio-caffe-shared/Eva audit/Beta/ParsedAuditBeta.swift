@@ -551,7 +551,11 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
     public init?(rawReport: String) {
         guard !rawReport.isEmpty else { return nil }
         self.id = UUID().uuidString
+        // Canonical line endings keep block parsing identical on macOS and Linux,
+        // and prevent trailing carriage returns from invalidating numeric values.
         self.rawReport = rawReport
+            .replacingOccurrences(of: "\r\n", with: "\n")
+            .replacingOccurrences(of: "\r", with: "\n")
     }
     
     private init() {
