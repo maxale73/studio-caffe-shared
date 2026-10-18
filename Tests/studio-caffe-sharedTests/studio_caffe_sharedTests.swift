@@ -213,6 +213,19 @@ struct DateTests {
             }
         }
         
-        #expect(intervals.count == 3)
+        let months = intervals.flatMap(\.months)
+        #expect(months.count == numberOfYears * 12)
+
+        let expectedYears = Set(months.map { calendar.component(.year, from: $0.from) })
+            .sorted()
+            .map { String($0) }
+        #expect(intervals.map(\.desc) == expectedYears)
+
+        for year in intervals {
+            #expect(!year.months.isEmpty)
+            #expect(year.months.allSatisfy {
+                String(calendar.component(.year, from: $0.from)) == year.desc
+            })
+        }
     }
 }
