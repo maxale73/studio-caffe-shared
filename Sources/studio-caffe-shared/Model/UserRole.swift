@@ -11,4 +11,5 @@ extension UserRole: CustomStringConvertible {
     public var description: String {
         rawValue
     }
+    
 }
