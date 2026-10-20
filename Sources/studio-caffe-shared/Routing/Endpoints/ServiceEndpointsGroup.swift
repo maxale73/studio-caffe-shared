@@ -51,7 +51,8 @@ public struct ServicePartToSave: Codable, Equatable, Hashable, Sendable {
 
 public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
     public init(id: UUID, machineID: UUID, catalogID: UUID, operationType: ServiceOperationType,
-                serviceDate: Date, counter: Int?, note: String? = nil, parts: [ServicePartToSave] = []) {
+                serviceDate: Date, counter: Int?, note: String? = nil, parts: [ServicePartToSave] = [],
+                allowInconsistentCounter: Bool? = nil) {
         self.id = id
         self.machineID = machineID
         self.catalogID = catalogID
@@ -60,6 +61,7 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
         self.counter = counter
         self.note = note
         self.parts = parts
+        self.allowInconsistentCounter = allowInconsistentCounter
     }
 
     public var id: UUID
@@ -70,6 +72,8 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
     public var counter: Int?
     public var note: String?
     public var parts: [ServicePartToSave]
+    // Missing/false requires validation; true records an explicit user confirmation.
+    public var allowInconsistentCounter: Bool?
 }
 
 public struct ServicePageDTO: Codable, Equatable, Sendable {
