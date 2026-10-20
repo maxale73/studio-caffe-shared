@@ -6,6 +6,7 @@ public enum ServiceOperationType: String, Codable, Identifiable, CaseIterable, R
     case lavaggio
     case sostituzione
     case riparazione
+    case approntamento
     case altro
 }
 

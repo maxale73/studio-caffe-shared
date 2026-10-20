@@ -50,5 +50,23 @@ struct ServiceTests {
         #expect(try decoder.decode(ServiceHistoryFilter.self, from: body) == filter)
         #expect(ServiceCatalogEndpointsGroup.index().serverRoute == ["index"])
         #expect(ServiceCatalogEndpointsGroup.save().group == "service_catalog")
+        let catalogID = UUID()
+        let deletion = ServiceCatalogEndpointsGroup.delete(catalogID: catalogID)
+        #expect(deletion.clientRoute == "service_catalog/delete/\(catalogID.uuidString)/")
+        #expect(deletion.serverRoute == ["delete", ":catalog_id"])
+        #expect(deletion.httpMethod == .post)
+        #expect(deletion.requiresToken)
+        #expect(!deletion.allowsCaching)
+    }
+
+    @Test func catalogUsageRoundTripsAndOlderResponsesRemainReadable() throws {
+        let catalog = ServiceCatalogDTO(id: UUID(), serviceDescription: "Gruppo espresso", hasBeenUsed: true)
+        let data = try JSONEncoder.scEncoder.encode(catalog)
+        #expect(try decoder.decode(ServiceCatalogDTO.self, from: data) == catalog)
+        var legacy = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        legacy.removeValue(forKey: "hasBeenUsed")
+        let decoded = try decoder.decode(ServiceCatalogDTO.self, from: JSONSerialization.data(withJSONObject: legacy))
+        #expect(decoded.id == catalog.id)
+        #expect(!decoded.hasBeenUsed)
     }
 }
