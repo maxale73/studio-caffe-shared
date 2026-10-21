@@ -88,7 +88,12 @@ public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable, Se
     public var internalID: Int
     public var factoryID: String
     public var notes: [String]?
-    public var installation: InstallationType
+    public var state: MachineState
+    public var installationRole: InstallationRole?
+    public var installation: InstallationType {
+        get { InstallationType(state: state, installationRole: installationRole) }
+        set { state = newValue.machineState; installationRole = newValue.installationRole }
+    }
     
     public var model: MachineModelDTO
     public var sellingPoint: SellingPointBM?
@@ -109,7 +114,8 @@ public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable, Se
         self.internalID = internalID
         self.factoryID = factoryID
         self.notes = notes
-        self.installation = installation
+        self.state = installation.machineState
+        self.installationRole = installation.installationRole
         
         self.sellingPoint = sellingPoint
         self.model = model
@@ -120,7 +126,7 @@ public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable, Se
         return
             lhs.id == rhs.id
             && lhs.internalID == rhs.internalID
-            && lhs.installation == rhs.installation
+            && lhs.state == rhs.state && lhs.installationRole == rhs.installationRole
             && lhs.sellingPoint == rhs.sellingPoint
         && lhs.factoryID == rhs.factoryID
         && lhs.model == rhs.model
@@ -129,6 +135,112 @@ public struct MachineCompleteDTO: Codable, Hashable, Identifiable, Equatable, Se
     
     public static var empty: MachineCompleteDTO {
         MachineCompleteDTO(id: UUID(), internalID: 0, factoryID: "", notes: nil, installation: .deposito, sellingPoint: nil, model: .emptyModel, adeDevice: nil)
+    }
+
+    public init(id: UUID, internalID: Int, factoryID: String, notes: [String]?, state: MachineState, installationRole: InstallationRole? = nil, model: MachineModelDTO, sellingPoint: SellingPointBM?, adeDevice: AdeDeviceDTO?) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.notes = notes
+        self.state = state
+        self.installationRole = installationRole
+        self.model = model
+        self.sellingPoint = sellingPoint
+        self.adeDevice = adeDevice
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, internalID, factoryID, notes, state, installationRole, model, sellingPoint, adeDevice, installation
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        (state, installationRole) = try container.machineState(stateKey: .state, roleKey: .installationRole, legacyKey: .installation)
+        id = try container.decode(UUID.self, forKey: .id)
+        internalID = try container.decode(Int.self, forKey: .internalID)
+        factoryID = try container.decode(String.self, forKey: .factoryID)
+        notes = try container.decodeIfPresent([String].self, forKey: .notes)
+        model = try container.decode(MachineModelDTO.self, forKey: .model)
+        sellingPoint = try container.decodeIfPresent(SellingPointBM.self, forKey: .sellingPoint)
+        adeDevice = try container.decodeIfPresent(AdeDeviceDTO.self, forKey: .adeDevice)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(internalID, forKey: .internalID)
+        try container.encode(factoryID, forKey: .factoryID)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encode(state, forKey: .state)
+        try container.encodeIfPresent(installationRole, forKey: .installationRole)
+        try container.encode(model, forKey: .model)
+        try container.encodeIfPresent(sellingPoint, forKey: .sellingPoint)
+        try container.encodeIfPresent(adeDevice, forKey: .adeDevice)
+        try container.encode(InstallationType(state: state, installationRole: installationRole), forKey: .installation)
+    }
+}
+
+
+public struct MachineByDeviceDTO: Codable, Hashable, Identifiable, Equatable, Sendable {
+
+    public var id: UUID
+    public var internalID: Int
+    public var factoryID: String
+    public var notes: [String]?
+    public var state: MachineState
+    public var installationRole: InstallationRole?
+    public var installation: InstallationType {
+        get { InstallationType(state: state, installationRole: installationRole) }
+        set { state = newValue.machineState; installationRole = newValue.installationRole }
+    }
+
+    public var model: MachineModelDTO
+    public var sellingPoint: SellingPointBM?
+
+    public init(id: UUID, internalID: Int, factoryID: String, notes: [String]?, installation: InstallationType,
+                model: MachineModelDTO, sellingPoint: SellingPointBM?) {
+        self.init(id: id, internalID: internalID, factoryID: factoryID, notes: notes,
+                  state: installation.machineState, installationRole: installation.installationRole,
+                  model: model, sellingPoint: sellingPoint)
+    }
+
+    public init(id: UUID, internalID: Int, factoryID: String, notes: [String]?, state: MachineState, installationRole: InstallationRole? = nil, model: MachineModelDTO, sellingPoint: SellingPointBM?) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.notes = notes
+        self.state = state
+        self.installationRole = installationRole
+        self.model = model
+        self.sellingPoint = sellingPoint
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, internalID, factoryID, notes, state, installationRole, model, sellingPoint, installation
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        (state, installationRole) = try container.machineState(stateKey: .state, roleKey: .installationRole, legacyKey: .installation)
+        id = try container.decode(UUID.self, forKey: .id)
+        internalID = try container.decode(Int.self, forKey: .internalID)
+        factoryID = try container.decode(String.self, forKey: .factoryID)
+        notes = try container.decodeIfPresent([String].self, forKey: .notes)
+        model = try container.decode(MachineModelDTO.self, forKey: .model)
+        sellingPoint = try container.decodeIfPresent(SellingPointBM.self, forKey: .sellingPoint)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(internalID, forKey: .internalID)
+        try container.encode(factoryID, forKey: .factoryID)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encode(state, forKey: .state)
+        try container.encodeIfPresent(installationRole, forKey: .installationRole)
+        try container.encode(model, forKey: .model)
+        try container.encodeIfPresent(sellingPoint, forKey: .sellingPoint)
+        try container.encode(InstallationType(state: state, installationRole: installationRole), forKey: .installation)
     }
 }
 
@@ -140,7 +252,12 @@ public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBod
     public var factoryID: String
     public var model: MachineModelDTO
     public var notes: [String]?
-    public var installation: InstallationType
+    public var state: MachineState
+    public var installationRole: InstallationRole?
+    public var installation: InstallationType {
+        get { InstallationType(state: state, installationRole: installationRole) }
+        set { state = newValue.machineState; installationRole = newValue.installationRole }
+    }
     public var sellingPoint: UUID?
     public var adeDevice: UUID?
     
@@ -157,8 +274,10 @@ public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBod
         self.id = id
         self.internalID = internalID
         self.factoryID = factoryID
+        self.notes = notes
         self.model = model
-        self.installation = installation
+        self.state = installation.machineState
+        self.installationRole = installation.installationRole
         self.sellingPoint = sellingPoint
         self.adeDevice = adeDevice
     }
@@ -171,11 +290,53 @@ public struct MachineDTO: Identifiable, Equatable, Hashable, Codable, RequestBod
         return
             lhs.id == rhs.id
             && lhs.internalID == rhs.internalID
-            && lhs.installation == rhs.installation
+            && lhs.state == rhs.state && lhs.installationRole == rhs.installationRole
             && lhs.sellingPoint == rhs.sellingPoint
         && lhs.factoryID == rhs.factoryID
         && lhs.model == rhs.model
         && lhs.adeDevice == rhs.adeDevice
+    }
+
+    public init(id: UUID, internalID: Int, factoryID: String, model: MachineModelDTO, notes: [String]?, state: MachineState, installationRole: InstallationRole? = nil, sellingPoint: UUID?, adeDevice: UUID?) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.model = model
+        self.notes = notes
+        self.state = state
+        self.installationRole = installationRole
+        self.sellingPoint = sellingPoint
+        self.adeDevice = adeDevice
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, internalID, factoryID, model, notes, state, installationRole, sellingPoint, adeDevice, installation
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        (state, installationRole) = try container.machineState(stateKey: .state, roleKey: .installationRole, legacyKey: .installation)
+        id = try container.decode(UUID.self, forKey: .id)
+        internalID = try container.decode(Int.self, forKey: .internalID)
+        factoryID = try container.decode(String.self, forKey: .factoryID)
+        model = try container.decode(MachineModelDTO.self, forKey: .model)
+        notes = try container.decodeIfPresent([String].self, forKey: .notes)
+        sellingPoint = try container.decodeIfPresent(UUID.self, forKey: .sellingPoint)
+        adeDevice = try container.decodeIfPresent(UUID.self, forKey: .adeDevice)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(internalID, forKey: .internalID)
+        try container.encode(factoryID, forKey: .factoryID)
+        try container.encode(model, forKey: .model)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encode(state, forKey: .state)
+        try container.encodeIfPresent(installationRole, forKey: .installationRole)
+        try container.encodeIfPresent(sellingPoint, forKey: .sellingPoint)
+        try container.encodeIfPresent(adeDevice, forKey: .adeDevice)
+        try container.encode(InstallationType(state: state, installationRole: installationRole), forKey: .installation)
     }
 }
 
@@ -207,7 +368,8 @@ public struct MachineBySP: Codable, Hashable, Identifiable, Sendable {
         self.internalID = internalID
         self.factoryID = factoryID
         self.notes = notes
-        self.installation = installation
+        self.state = installation.machineState
+        self.installationRole = installation.installationRole
         self.model = model
         self.adeDevice = adeDevice
     }
@@ -217,7 +379,12 @@ public struct MachineBySP: Codable, Hashable, Identifiable, Sendable {
     public var internalID: Int
     public var factoryID: String
     public var notes: [String]?
-    public var installation: InstallationType
+    public var state: MachineState
+    public var installationRole: InstallationRole?
+    public var installation: InstallationType {
+        get { InstallationType(state: state, installationRole: installationRole) }
+        set { state = newValue.machineState; installationRole = newValue.installationRole }
+    }
     
     public var model: MachineModelDTO
     public var adeDevice: AdeDeviceDTO?
@@ -227,9 +394,48 @@ public struct MachineBySP: Codable, Hashable, Identifiable, Sendable {
             && lhs.internalID == rhs.internalID
             && lhs.factoryID == rhs.factoryID
             && lhs.notes == rhs.notes
-            && lhs.installation == rhs.installation
+            && lhs.state == rhs.state && lhs.installationRole == rhs.installationRole
             && lhs.model == rhs.model
             && lhs.adeDevice == rhs.adeDevice
+    }
+
+    public init(id: UUID, internalID: Int, factoryID: String, notes: [String]?, state: MachineState, installationRole: InstallationRole? = nil, model: MachineModelDTO, adeDevice: AdeDeviceDTO?) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.notes = notes
+        self.state = state
+        self.installationRole = installationRole
+        self.model = model
+        self.adeDevice = adeDevice
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, internalID, factoryID, notes, state, installationRole, model, adeDevice, installation
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        (state, installationRole) = try container.machineState(stateKey: .state, roleKey: .installationRole, legacyKey: .installation)
+        id = try container.decode(UUID.self, forKey: .id)
+        internalID = try container.decode(Int.self, forKey: .internalID)
+        factoryID = try container.decode(String.self, forKey: .factoryID)
+        notes = try container.decodeIfPresent([String].self, forKey: .notes)
+        model = try container.decode(MachineModelDTO.self, forKey: .model)
+        adeDevice = try container.decodeIfPresent(AdeDeviceDTO.self, forKey: .adeDevice)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(internalID, forKey: .internalID)
+        try container.encode(factoryID, forKey: .factoryID)
+        try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encode(state, forKey: .state)
+        try container.encodeIfPresent(installationRole, forKey: .installationRole)
+        try container.encode(model, forKey: .model)
+        try container.encodeIfPresent(adeDevice, forKey: .adeDevice)
+        try container.encode(InstallationType(state: state, installationRole: installationRole), forKey: .installation)
     }
 }
 

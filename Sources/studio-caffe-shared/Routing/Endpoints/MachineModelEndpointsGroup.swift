@@ -45,13 +45,49 @@ public struct MachineByModel: Codable, Hashable, Identifiable, Equatable, Sendab
         self.id = id
         self.internalID = internalID
         self.factoryID = factoryID
-        self.installation = installation
+        self.state = installation.machineState
+        self.installationRole = installation.installationRole
     }
     
     public var id: UUID
     public var internalID: Int
     public var factoryID: String
-    public var installation: InstallationType
+    public var state: MachineState
+    public var installationRole: InstallationRole?
+    public var installation: InstallationType {
+        get { InstallationType(state: state, installationRole: installationRole) }
+        set { state = newValue.machineState; installationRole = newValue.installationRole }
+    }
+
+    public init(id: UUID, internalID: Int, factoryID: String, state: MachineState, installationRole: InstallationRole? = nil) {
+        self.id = id
+        self.internalID = internalID
+        self.factoryID = factoryID
+        self.state = state
+        self.installationRole = installationRole
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, internalID, factoryID, state, installationRole, installation
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        (state, installationRole) = try container.machineState(stateKey: .state, roleKey: .installationRole, legacyKey: .installation)
+        id = try container.decode(UUID.self, forKey: .id)
+        internalID = try container.decode(Int.self, forKey: .internalID)
+        factoryID = try container.decode(String.self, forKey: .factoryID)
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(internalID, forKey: .internalID)
+        try container.encode(factoryID, forKey: .factoryID)
+        try container.encode(state, forKey: .state)
+        try container.encodeIfPresent(installationRole, forKey: .installationRole)
+        try container.encode(InstallationType(state: state, installationRole: installationRole), forKey: .installation)
+    }
 }
 
 public struct ModelWithStocks: Codable, Hashable, Identifiable, Equatable, Sendable {
