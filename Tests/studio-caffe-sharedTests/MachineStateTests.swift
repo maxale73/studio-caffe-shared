@@ -3,6 +3,28 @@ import Testing
 import studio_caffe_shared
 
 struct MachineStateTests {
+    @Test(arguments: MachineState.allCases)
+    func manualTransitionsNeverInstallOrSellAMachine(_ state: MachineState) {
+        #expect(!state.manualTransitions.contains(.installato))
+        #expect(!state.manualTransitions.contains(.venduto))
+        #expect(!state.manualTransitions.contains(state))
+        if state == .installato || state == .venduto {
+            #expect(state.manualTransitions.isEmpty)
+        } else {
+            #expect(Set(state.manualTransitions) == Set([MachineState.deposito, .dismesso, .rottamato]).subtracting([state]))
+        }
+    }
+
+    @Test func stateUpdateCarriesExpectedStateAndUsesMachineRoute() throws {
+        let update = MachineStateUpdateDTO(state: .dismesso, expectedState: .deposito)
+        #expect(try JSONDecoder().decode(MachineStateUpdateDTO.self, from: JSONEncoder.scEncoder.encode(update)) == update)
+        let id = UUID()
+        let endpoint = MachineEndpointsGroup.updateState(machineID: id, update: update)
+        #expect(endpoint.clientRoute.contains("update_state/" + id.uuidString))
+        #expect(endpoint.httpMethod == .post)
+        #expect(endpoint.body?.toJSONData() == update.toJSONData())
+    }
+
     @Test(arguments: InstallationType.allCases)
     func legacyMachineStatesHaveALosslessConversion(_ legacy: InstallationType) throws {
         #expect(InstallationType(state: legacy.machineState, installationRole: legacy.installationRole) == legacy)

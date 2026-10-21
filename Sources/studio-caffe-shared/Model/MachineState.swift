@@ -9,4 +9,11 @@ public enum MachineState: String, Codable, Identifiable, CaseIterable, Sendable,
 
     public var id: String { rawValue }
     public var description: String { rawValue }
+
+    public var manualTransitions: [MachineState] {
+        switch self {
+        case .installato, .venduto: []
+        case .deposito, .dismesso, .rottamato: [.deposito, .dismesso, .rottamato].filter { $0 != self }
+        }
+    }
 }

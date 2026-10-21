@@ -479,6 +479,15 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: machine)
     }
+
+    public static func updateState(machineID: UUID? = nil, update: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [
+            PathParameter(name: "update_state", value: nil),
+            PathParameter(name: "machine_id", value: .uuid(machineID))
+        ]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: update)
+    }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
