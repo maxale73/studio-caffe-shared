@@ -9,6 +9,7 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
     public var catalog: ServiceCatalogDTO?
     public var operationType: ServiceOperationType?
     public var note: String?
+    public var counter: Int?
     public var userID: UUID
     public var recordedAt: Date?
     public var serviceIDs: [UUID]
@@ -16,7 +17,7 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
     public init(id: UUID, machineID: UUID, requestDate: Date, source: ServiceRequestSource,
                 status: ServiceRequestStatus = .aperta, catalog: ServiceCatalogDTO? = nil,
                 operationType: ServiceOperationType? = nil, note: String? = nil,
-                userID: UUID, recordedAt: Date? = nil, serviceIDs: [UUID] = []) {
+                userID: UUID, recordedAt: Date? = nil, serviceIDs: [UUID] = [], counter: Int? = nil) {
         self.id = id
         self.machineID = machineID
         self.requestDate = requestDate
@@ -25,13 +26,14 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
         self.catalog = catalog
         self.operationType = operationType
         self.note = note
+        self.counter = counter
         self.userID = userID
         self.recordedAt = recordedAt
         self.serviceIDs = serviceIDs
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, machineID, requestDate, source, status, catalog, operationType, note, userID, recordedAt, serviceIDs
+        case id, machineID, requestDate, source, status, catalog, operationType, note, userID, recordedAt, serviceIDs, counter
     }
 
     public init(from decoder: any Decoder) throws {
@@ -46,7 +48,8 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
                   note: try container.decodeIfPresent(String.self, forKey: .note),
                   userID: try container.decode(UUID.self, forKey: .userID),
                   recordedAt: try container.decodeIfPresent(Date.self, forKey: .recordedAt),
-                  serviceIDs: try container.decodeIfPresent([UUID].self, forKey: .serviceIDs) ?? [])
+                  serviceIDs: try container.decodeIfPresent([UUID].self, forKey: .serviceIDs) ?? [],
+                  counter: try container.decodeIfPresent(Int.self, forKey: .counter))
     }
 }
 
@@ -59,10 +62,11 @@ public struct ServiceRequestToSave: Identifiable, Codable, Equatable, RequestBod
     public var catalogID: UUID?
     public var operationType: ServiceOperationType?
     public var note: String?
+    public var counter: Int?
 
     public init(id: UUID, machineID: UUID, requestDate: Date, source: ServiceRequestSource,
                 status: ServiceRequestStatus = .aperta, catalogID: UUID? = nil,
-                operationType: ServiceOperationType? = nil, note: String? = nil) {
+                operationType: ServiceOperationType? = nil, note: String? = nil, counter: Int? = nil) {
         self.id = id
         self.machineID = machineID
         self.requestDate = requestDate
@@ -71,10 +75,11 @@ public struct ServiceRequestToSave: Identifiable, Codable, Equatable, RequestBod
         self.catalogID = catalogID
         self.operationType = operationType
         self.note = note
+        self.counter = counter
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, machineID, requestDate, source, status, catalogID, operationType, note
+        case id, machineID, requestDate, source, status, catalogID, operationType, note, counter
     }
 
     public init(from decoder: any Decoder) throws {
@@ -86,7 +91,22 @@ public struct ServiceRequestToSave: Identifiable, Codable, Equatable, RequestBod
                   status: try container.decodeIfPresent(ServiceRequestStatus.self, forKey: .status) ?? .aperta,
                   catalogID: try container.decodeIfPresent(UUID.self, forKey: .catalogID),
                   operationType: try container.decodeIfPresent(ServiceOperationType.self, forKey: .operationType),
-                  note: try container.decodeIfPresent(String.self, forKey: .note))
+                  note: try container.decodeIfPresent(String.self, forKey: .note),
+                  counter: try container.decodeIfPresent(Int.self, forKey: .counter))
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(machineID, forKey: .machineID)
+        try container.encode(requestDate, forKey: .requestDate)
+        try container.encode(source, forKey: .source)
+        try container.encode(status, forKey: .status)
+        try container.encodeIfPresent(catalogID, forKey: .catalogID)
+        try container.encodeIfPresent(operationType, forKey: .operationType)
+        try container.encodeIfPresent(note, forKey: .note)
+        // Explicit null clears the value; older clients omit this field entirely.
+        try container.encode(counter, forKey: .counter)
     }
 }
 

@@ -8,7 +8,7 @@ struct ServiceRequestTests {
         let catalogID = UUID()
         let request = ServiceRequestToSave(id: UUID(), machineID: UUID(), requestDate: Date(timeIntervalSince1970: 1000),
                                            source: source, status: status, catalogID: catalogID, operationType: .riparazione,
-                                           note: "Non eroga")
+                                           note: "Non eroga", counter: 5_000_000_000)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         #expect(try decoder.decode(ServiceRequestToSave.self, from: #require(request.toJSONData())) == request)
@@ -16,7 +16,7 @@ struct ServiceRequestTests {
                                          source: source, status: status,
                                          catalog: ServiceCatalogDTO(id: catalogID, serviceDescription: "Gruppo espresso"),
                                          operationType: request.operationType, note: request.note, userID: UUID(),
-                                         recordedAt: Date(timeIntervalSince1970: 2000), serviceIDs: [UUID(), UUID()])
+                                         recordedAt: Date(timeIntervalSince1970: 2000), serviceIDs: [UUID(), UUID()], counter: request.counter)
         #expect(try decoder.decode(ServiceRequestDTO.self, from: JSONEncoder.scEncoder.encode(response)) == response)
     }
 
@@ -29,7 +29,7 @@ struct ServiceRequestTests {
         decoder.dateDecodingStrategy = .iso8601
         let decoded = try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json))
         #expect(decoded.status == .aperta)
-        #expect(decoded.catalogID == nil && decoded.operationType == nil)
+        #expect(decoded.catalogID == nil && decoded.operationType == nil && decoded.counter == nil)
         json["status"] = "inesistente"
         #expect(throws: DecodingError.self) { try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json)) }
         json["status"] = "pendente"
@@ -76,7 +76,22 @@ struct ServiceRequestTests {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let decoded = try decoder.decode(ServiceRequestDTO.self, from: JSONSerialization.data(withJSONObject: json))
-        #expect(decoded.status == .aperta && decoded.serviceIDs.isEmpty)
+        #expect(decoded.status == .aperta && decoded.serviceIDs.isEmpty && decoded.counter == nil)
         #expect(ServiceRequestStatus.allCases.count == 3)
+    }
+
+    @Test func counterCanBeExplicitlyClearedAndIsOptionalForOlderPayloads() throws {
+        let request = ServiceRequestToSave(id: UUID(), machineID: UUID(), requestDate: .now, source: .cliente)
+        var json = try #require(JSONSerialization.jsonObject(with: JSONEncoder.scEncoder.encode(request)) as? [String: Any])
+        #expect(json["counter"] is NSNull)
+        json.removeValue(forKey: "counter")
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let old = try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(old.counter == nil)
+        json["counter"] = "123"
+        #expect(throws: DecodingError.self) {
+            try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json))
+        }
     }
 }
