@@ -47,7 +47,24 @@ struct ServiceRequestTests {
         #expect(ServiceRequestEndpointsGroup.find(id: id).clientRoute.contains(id.uuidString))
         #expect(ServiceRequestEndpointsGroup.fetchByMachine(machineID: id, filter: filter).clientRoute.contains(id.uuidString))
         #expect(ServiceRequestEndpointsGroup.fetchByMachine(machineID: id).httpMethod == .post)
+        #expect(ServiceRequestEndpointsGroup.index(filter: filter).clientRoute == "service_request/index/")
+        #expect(ServiceRequestEndpointsGroup.index().httpMethod == .post)
         #expect(ServiceRequestStatus.nonRisolta.description == "non risolta")
+    }
+
+    @Test func globalPagesCarryMachineIdentityAndInsertionDate() throws {
+        let machine = FilteredMachineDTO(id: UUID(), internalID: 100001, factoryID: "CALL123", model: .emptyModel)
+        let request = ServiceRequestDTO(id: UUID(), machineID: machine.id, requestDate: Date(timeIntervalSince1970: 1000),
+                                         source: .cliente, userID: UUID(), recordedAt: Date(timeIntervalSince1970: 2000))
+        let item = ServiceRequestListItemDTO(request: request, machine: machine)
+        let page = ServiceRequestListPageDTO(items: [item], page: 2, per: 10, total: 11)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(ServiceRequestListPageDTO.self, from: JSONEncoder.scEncoder.encode(page))
+        #expect(decoded == page)
+        #expect(decoded.items.first?.id == request.id)
+        #expect(decoded.items.first?.machine.id == decoded.items.first?.request.machineID)
+        #expect(decoded.items.first?.request.recordedAt != decoded.items.first?.request.requestDate)
     }
 
     @Test func olderRequestResponsesDefaultToOpenAndAnEmptyServiceList() throws {

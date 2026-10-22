@@ -107,6 +107,12 @@ public struct ServiceRequestPageDTO: Codable, Equatable, Sendable {
 public struct ServiceRequestEndpointsGroup: EndpointGroupType {
     public static var group: String { "service_request" }
 
+    public static func index(filter: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "index", value: nil)]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: filter)
+    }
+
     public static func save(request: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [PathParameter(name: "save", value: nil)]
         let constructor = PathConstructor(group: group, elements: parameters)

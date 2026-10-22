@@ -22,7 +22,8 @@ struct MachineStateTests {
         let endpoint = MachineEndpointsGroup.updateState(machineID: id, update: update)
         #expect(endpoint.clientRoute.contains("update_state/" + id.uuidString))
         #expect(endpoint.httpMethod == .post)
-        #expect(endpoint.body?.toJSONData() == update.toJSONData())
+        let body = try #require(endpoint.body?.toJSONData())
+        #expect(try JSONDecoder().decode(MachineStateUpdateDTO.self, from: body) == update)
     }
 
     @Test(arguments: InstallationType.allCases)
