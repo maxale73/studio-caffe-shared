@@ -15,7 +15,7 @@ struct ServiceTests {
         let part = ServicePartDTO(id: UUID(), product: ProductID(id: UUID(), productDescription: "Guarnizione"), quantity: 2)
         let service = ServiceDTO(id: UUID(), machineID: UUID(), catalog: catalog, operationType: operationType,
                                  serviceDate: Date(timeIntervalSince1970: 1_000), counter: 42_150, userID: UUID(),
-                                 recordedAt: Date(timeIntervalSince1970: 2_000), note: "Controllo tenuta", parts: [part])
+                                 recordedAt: Date(timeIntervalSince1970: 2_000), note: "Controllo tenuta", parts: [part], requestID: UUID())
         let page = ServicePageDTO(items: [service], page: 1, per: 50, total: 1)
         let data = try JSONEncoder.scEncoder.encode(page)
         let decoded = try decoder.decode(ServicePageDTO.self, from: data)
@@ -31,6 +31,7 @@ struct ServiceTests {
         #expect(decoded.counter == nil)
         #expect(decoded.note == nil)
         #expect(decoded.parts.isEmpty)
+        #expect(decoded.requestID == nil)
         #expect(throws: (any Error).self) {
             try JSONDecoder().decode(ServiceOperationType.self, from: Data("\"invalid\"".utf8))
         }
@@ -38,7 +39,7 @@ struct ServiceTests {
 
     @Test func endpointsShareRoutesAndRequestBodies() throws {
         let machineID = UUID()
-        let filter = ServiceHistoryFilter(page: 2, per: 10, catalogID: UUID(), operationType: .lavaggio)
+        let filter = ServiceHistoryFilter(page: 2, per: 10, catalogID: UUID(), operationType: .lavaggio, requestID: UUID())
         let endpoint = ServiceEndpointsGroup.fetchByMachine(machineID: machineID, filter: filter)
         #expect(endpoint.group == "service")
         #expect(endpoint.clientRoute == "service/fetch_by_machine/\(machineID.uuidString)/")
@@ -68,5 +69,23 @@ struct ServiceTests {
         let decoded = try decoder.decode(ServiceCatalogDTO.self, from: JSONSerialization.data(withJSONObject: legacy))
         #expect(decoded.id == catalog.id)
         #expect(!decoded.hasBeenUsed)
+    }
+
+    @Test func requestLinksRoundTripAndOlderServicesRemainReadable() throws {
+        let requestID = UUID()
+        let service = ServiceToSave(id: UUID(), machineID: UUID(), catalogID: UUID(), operationType: .lavaggio,
+                                    serviceDate: Date(timeIntervalSince1970: 0), counter: nil, requestID: requestID)
+        let data = try #require(service.toJSONData())
+        #expect(try decoder.decode(ServiceToSave.self, from: data).requestID == requestID)
+        var older = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        older.removeValue(forKey: "requestID")
+        #expect(try decoder.decode(ServiceToSave.self, from: JSONSerialization.data(withJSONObject: older)).requestID == nil)
+        let response = ServiceDTO(id: service.id, machineID: service.machineID,
+                                  catalog: ServiceCatalogDTO(id: service.catalogID, serviceDescription: "gruppo espresso"),
+                                  operationType: service.operationType, serviceDate: service.serviceDate, counter: nil,
+                                  userID: UUID(), recordedAt: nil, note: nil, parts: [], requestID: requestID)
+        older = try #require(JSONSerialization.jsonObject(with: JSONEncoder.scEncoder.encode(response)) as? [String: Any])
+        older.removeValue(forKey: "requestID")
+        #expect(try decoder.decode(ServiceDTO.self, from: JSONSerialization.data(withJSONObject: older)).requestID == nil)
     }
 }

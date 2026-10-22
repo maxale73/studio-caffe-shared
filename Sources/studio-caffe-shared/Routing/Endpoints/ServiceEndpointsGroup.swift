@@ -14,7 +14,8 @@ public struct ServicePartDTO: Identifiable, Codable, Equatable, Hashable, Sendab
 
 public struct ServiceDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     public init(id: UUID, machineID: UUID, catalog: ServiceCatalogDTO, operationType: ServiceOperationType,
-                serviceDate: Date, counter: Int?, userID: UUID, recordedAt: Date?, note: String?, parts: [ServicePartDTO]) {
+                serviceDate: Date, counter: Int?, userID: UUID, recordedAt: Date?, note: String?, parts: [ServicePartDTO],
+                requestID: UUID? = nil) {
         self.id = id
         self.machineID = machineID
         self.catalog = catalog
@@ -25,6 +26,7 @@ public struct ServiceDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
         self.recordedAt = recordedAt
         self.note = note
         self.parts = parts
+        self.requestID = requestID
     }
 
     public var id: UUID
@@ -37,6 +39,7 @@ public struct ServiceDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     public var recordedAt: Date?
     public var note: String?
     public var parts: [ServicePartDTO]
+    public var requestID: UUID?
 }
 
 public struct ServicePartToSave: Codable, Equatable, Hashable, Sendable {
@@ -52,7 +55,7 @@ public struct ServicePartToSave: Codable, Equatable, Hashable, Sendable {
 public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
     public init(id: UUID, machineID: UUID, catalogID: UUID, operationType: ServiceOperationType,
                 serviceDate: Date, counter: Int?, note: String? = nil, parts: [ServicePartToSave] = [],
-                allowInconsistentCounter: Bool? = nil) {
+                allowInconsistentCounter: Bool? = nil, requestID: UUID? = nil) {
         self.id = id
         self.machineID = machineID
         self.catalogID = catalogID
@@ -62,6 +65,7 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
         self.note = note
         self.parts = parts
         self.allowInconsistentCounter = allowInconsistentCounter
+        self.requestID = requestID
     }
 
     public var id: UUID
@@ -74,6 +78,7 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
     public var parts: [ServicePartToSave]
     // Missing/false requires validation; true records an explicit user confirmation.
     public var allowInconsistentCounter: Bool?
+    public var requestID: UUID?
 }
 
 public struct ServicePageDTO: Codable, Equatable, Sendable {

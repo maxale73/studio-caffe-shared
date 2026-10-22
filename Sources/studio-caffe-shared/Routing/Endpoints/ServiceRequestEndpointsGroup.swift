@@ -11,11 +11,12 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
     public var note: String?
     public var userID: UUID
     public var recordedAt: Date?
+    public var serviceIDs: [UUID]
 
     public init(id: UUID, machineID: UUID, requestDate: Date, source: ServiceRequestSource,
-                status: ServiceRequestStatus = .pendente, catalog: ServiceCatalogDTO? = nil,
+                status: ServiceRequestStatus = .aperta, catalog: ServiceCatalogDTO? = nil,
                 operationType: ServiceOperationType? = nil, note: String? = nil,
-                userID: UUID, recordedAt: Date? = nil) {
+                userID: UUID, recordedAt: Date? = nil, serviceIDs: [UUID] = []) {
         self.id = id
         self.machineID = machineID
         self.requestDate = requestDate
@@ -26,6 +27,26 @@ public struct ServiceRequestDTO: Identifiable, Codable, Equatable, Sendable {
         self.note = note
         self.userID = userID
         self.recordedAt = recordedAt
+        self.serviceIDs = serviceIDs
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, machineID, requestDate, source, status, catalog, operationType, note, userID, recordedAt, serviceIDs
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(id: try container.decode(UUID.self, forKey: .id),
+                  machineID: try container.decode(UUID.self, forKey: .machineID),
+                  requestDate: try container.decode(Date.self, forKey: .requestDate),
+                  source: try container.decode(ServiceRequestSource.self, forKey: .source),
+                  status: try container.decodeIfPresent(ServiceRequestStatus.self, forKey: .status) ?? .aperta,
+                  catalog: try container.decodeIfPresent(ServiceCatalogDTO.self, forKey: .catalog),
+                  operationType: try container.decodeIfPresent(ServiceOperationType.self, forKey: .operationType),
+                  note: try container.decodeIfPresent(String.self, forKey: .note),
+                  userID: try container.decode(UUID.self, forKey: .userID),
+                  recordedAt: try container.decodeIfPresent(Date.self, forKey: .recordedAt),
+                  serviceIDs: try container.decodeIfPresent([UUID].self, forKey: .serviceIDs) ?? [])
     }
 }
 
@@ -40,7 +61,7 @@ public struct ServiceRequestToSave: Identifiable, Codable, Equatable, RequestBod
     public var note: String?
 
     public init(id: UUID, machineID: UUID, requestDate: Date, source: ServiceRequestSource,
-                status: ServiceRequestStatus = .pendente, catalogID: UUID? = nil,
+                status: ServiceRequestStatus = .aperta, catalogID: UUID? = nil,
                 operationType: ServiceOperationType? = nil, note: String? = nil) {
         self.id = id
         self.machineID = machineID
@@ -62,7 +83,7 @@ public struct ServiceRequestToSave: Identifiable, Codable, Equatable, RequestBod
                   machineID: try container.decode(UUID.self, forKey: .machineID),
                   requestDate: try container.decode(Date.self, forKey: .requestDate),
                   source: try container.decode(ServiceRequestSource.self, forKey: .source),
-                  status: try container.decodeIfPresent(ServiceRequestStatus.self, forKey: .status) ?? .pendente,
+                  status: try container.decodeIfPresent(ServiceRequestStatus.self, forKey: .status) ?? .aperta,
                   catalogID: try container.decodeIfPresent(UUID.self, forKey: .catalogID),
                   operationType: try container.decodeIfPresent(ServiceOperationType.self, forKey: .operationType),
                   note: try container.decodeIfPresent(String.self, forKey: .note))

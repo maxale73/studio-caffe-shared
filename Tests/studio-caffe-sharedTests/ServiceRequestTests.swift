@@ -16,35 +16,50 @@ struct ServiceRequestTests {
                                          source: source, status: status,
                                          catalog: ServiceCatalogDTO(id: catalogID, serviceDescription: "Gruppo espresso"),
                                          operationType: request.operationType, note: request.note, userID: UUID(),
-                                         recordedAt: Date(timeIntervalSince1970: 2000))
+                                         recordedAt: Date(timeIntervalSince1970: 2000), serviceIDs: [UUID(), UUID()])
         #expect(try decoder.decode(ServiceRequestDTO.self, from: JSONEncoder.scEncoder.encode(response)) == response)
     }
 
-    @Test func aRequestWithoutAStatusOrDiagnosisDefaultsToPending() throws {
+    @Test func aRequestWithoutAStatusOrDiagnosisDefaultsToOpen() throws {
         let request = ServiceRequestToSave(id: UUID(), machineID: UUID(), requestDate: Date(timeIntervalSince1970: 1000), source: .cliente)
-        #expect(request.status == .pendente)
+        #expect(request.status == .aperta)
         var json = try #require(JSONSerialization.jsonObject(with: JSONEncoder.scEncoder.encode(request)) as? [String: Any])
         json.removeValue(forKey: "status")
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let decoded = try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json))
-        #expect(decoded.status == .pendente)
+        #expect(decoded.status == .aperta)
         #expect(decoded.catalogID == nil && decoded.operationType == nil)
         json["status"] = "inesistente"
         #expect(throws: DecodingError.self) { try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json)) }
         json["status"] = "pendente"
+        #expect(throws: DecodingError.self) { try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json)) }
+        json["status"] = "aperta"
         json["source"] = "inesistente"
         #expect(throws: DecodingError.self) { try decoder.decode(ServiceRequestToSave.self, from: JSONSerialization.data(withJSONObject: json)) }
     }
 
     @Test func filtersAndRoutesUseSharedRequestContracts() throws {
         #expect(try JSONDecoder().decode(ServiceRequestFilter.self, from: Data("{}".utf8)) == ServiceRequestFilter())
-        let filter = ServiceRequestFilter(statuses: [.pendente, .aperta], source: .operatore, catalogID: UUID(), page: 2, per: 10)
+        let filter = ServiceRequestFilter(statuses: [.aperta], source: .operatore, catalogID: UUID(), page: 2, per: 10)
         #expect(try JSONDecoder().decode(ServiceRequestFilter.self, from: JSONEncoder.scEncoder.encode(filter)) == filter)
         let id = UUID()
         #expect(ServiceRequestEndpointsGroup.find(id: id).clientRoute.contains(id.uuidString))
         #expect(ServiceRequestEndpointsGroup.fetchByMachine(machineID: id, filter: filter).clientRoute.contains(id.uuidString))
         #expect(ServiceRequestEndpointsGroup.fetchByMachine(machineID: id).httpMethod == .post)
         #expect(ServiceRequestStatus.nonRisolta.description == "non risolta")
+    }
+
+    @Test func olderRequestResponsesDefaultToOpenAndAnEmptyServiceList() throws {
+        let response = ServiceRequestDTO(id: UUID(), machineID: UUID(), requestDate: Date(timeIntervalSince1970: 1000),
+                                         source: .cliente, userID: UUID())
+        var json = try #require(JSONSerialization.jsonObject(with: JSONEncoder.scEncoder.encode(response)) as? [String: Any])
+        json.removeValue(forKey: "serviceIDs")
+        json.removeValue(forKey: "status")
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decoded = try decoder.decode(ServiceRequestDTO.self, from: JSONSerialization.data(withJSONObject: json))
+        #expect(decoded.status == .aperta && decoded.serviceIDs.isEmpty)
+        #expect(ServiceRequestStatus.allCases.count == 3)
     }
 }
