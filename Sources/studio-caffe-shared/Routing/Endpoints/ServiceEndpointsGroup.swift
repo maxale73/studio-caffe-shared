@@ -13,13 +13,12 @@ public struct ServicePartDTO: Identifiable, Codable, Equatable, Hashable, Sendab
 }
 
 public struct ServiceDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
-    public init(id: UUID, machineID: UUID, catalog: ServiceCatalogDTO, operationType: ServiceOperationType,
+    public init(id: UUID, machineID: UUID, items: [ServiceItemDTO],
                 serviceDate: Date, counter: Int?, userID: UUID, recordedAt: Date?, note: String?, parts: [ServicePartDTO],
                 requestID: UUID? = nil) {
         self.id = id
         self.machineID = machineID
-        self.catalog = catalog
-        self.operationType = operationType
+        self.items = items
         self.serviceDate = serviceDate
         self.counter = counter
         self.userID = userID
@@ -31,8 +30,7 @@ public struct ServiceDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
 
     public var id: UUID
     public var machineID: UUID
-    public var catalog: ServiceCatalogDTO
-    public var operationType: ServiceOperationType
+    public var items: [ServiceItemDTO]
     public var serviceDate: Date
     public var counter: Int?
     public var userID: UUID
@@ -53,13 +51,12 @@ public struct ServicePartToSave: Codable, Equatable, Hashable, Sendable {
 }
 
 public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
-    public init(id: UUID, machineID: UUID, catalogID: UUID, operationType: ServiceOperationType,
+    public init(id: UUID, machineID: UUID, items: [ServiceItemToSave],
                 serviceDate: Date, counter: Int?, note: String? = nil, parts: [ServicePartToSave] = [],
                 allowInconsistentCounter: Bool? = nil, requestID: UUID? = nil) {
         self.id = id
         self.machineID = machineID
-        self.catalogID = catalogID
-        self.operationType = operationType
+        self.items = items
         self.serviceDate = serviceDate
         self.counter = counter
         self.note = note
@@ -70,8 +67,7 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
 
     public var id: UUID
     public var machineID: UUID
-    public var catalogID: UUID
-    public var operationType: ServiceOperationType
+    public var items: [ServiceItemToSave]
     public var serviceDate: Date
     public var counter: Int?
     public var note: String?

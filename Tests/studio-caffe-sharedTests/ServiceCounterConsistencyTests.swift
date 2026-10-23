@@ -26,8 +26,7 @@ struct ServiceCounterConsistencyTests {
     }
 
     @Test func confirmationFlagIsOptionalForExistingClients() throws {
-        let original = ServiceToSave(id: UUID(), machineID: UUID(), catalogID: UUID(), operationType: .lavaggio,
-                                     serviceDate: Date(timeIntervalSince1970: 0), counter: 100)
+        let original = ServiceToSave(id: UUID(), machineID: UUID(), items: [ServiceItemToSave(catalogID: UUID(), operationType: .lavaggio)], serviceDate: Date(timeIntervalSince1970: 0), counter: 100)
         let data = try JSONEncoder.scEncoder.encode(original)
         let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
         #expect(json["allowInconsistentCounter"] == nil)
