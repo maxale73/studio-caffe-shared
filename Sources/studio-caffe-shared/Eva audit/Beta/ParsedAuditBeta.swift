@@ -711,6 +711,8 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         parseReport()
     }
     
+    /// Raggruppa prezzi e vendite per pista, includendo sulla pista originaria
+    /// i contatori fedeltà HI della lista 5 (codici 101...200).
     public func priceList() -> [AuditProduct] {
         var blocks: [EvaBlock] = []
         
@@ -727,7 +729,7 @@ public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
         let LA1Blocks = blocks.filter({ $0.name == "LA1" })
         return LA1Blocks.reduce([AuditProduct]()) { (_products, block) -> [AuditProduct] in
             guard let vends = block.intValue(for: 4), let price = block.doubleValue(for: 3) else { return _products }
-            let code = block.values[1]
+            let code = priceListProductCode(listNumber: block.intValue(for: 1), productCode: block.values[1])
             if var prod = _products.first(where: { $0.code == code }) {
                 prod.increaseVends(v: vends, for: price)
                 var newProducts = _products
