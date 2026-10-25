@@ -86,6 +86,22 @@ public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
 public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "adeDevice" }
+
+    /// Legge il layout corrente, oppure una risposta con layout assente.
+    public static func findPriceLayout(deviceID: UUID? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "find_price_layout", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
+
+    /// Crea o aggiorna una singola pista e restituisce il layout corrente completo.
+    public static func savePriceChannel(deviceID: UUID? = nil, channel: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "save_price_channel", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: channel)
+    }
     
     public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
