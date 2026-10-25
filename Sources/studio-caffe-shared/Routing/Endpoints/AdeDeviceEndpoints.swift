@@ -7,18 +7,28 @@ public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Request
     public var qrCode: String
     public var model: AdeDeviceModel
     public var configuration: AdeDeviceConfigurationDTO
+    /// Dati fiscali locali facoltativi; i payload precedenti restano decodificabili.
+    public var fiscalStatus: AdeDeviceFiscalStatus?
+    public var fiscalStatusReason: AdeDeviceFiscalStatusReason?
+    public var fiscalStatusReasonDescription: String?
 
     public init(id: UUID,
          adeID: String,
          qrCode: String,
          model: AdeDeviceModel,
-         configuration: AdeDeviceConfigurationDTO) {
+         configuration: AdeDeviceConfigurationDTO,
+         fiscalStatus: AdeDeviceFiscalStatus? = nil,
+         fiscalStatusReason: AdeDeviceFiscalStatusReason? = nil,
+         fiscalStatusReasonDescription: String? = nil) {
 
         self.id = id
         self.adeID = adeID
         self.qrCode = qrCode
         self.model = model
         self.configuration = configuration
+        self.fiscalStatus = fiscalStatus
+        self.fiscalStatusReason = fiscalStatusReason
+        self.fiscalStatusReasonDescription = fiscalStatusReasonDescription
     }
 
     public static func == (lhs: AdeDeviceDTO, rhs: AdeDeviceDTO) -> Bool {
@@ -27,7 +37,10 @@ public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Request
             lhs.adeID == rhs.adeID &&
             lhs.qrCode == rhs.qrCode &&
             lhs.model == rhs.model &&
-            lhs.configuration == rhs.configuration
+            lhs.configuration == rhs.configuration &&
+            lhs.fiscalStatus == rhs.fiscalStatus &&
+            lhs.fiscalStatusReason == rhs.fiscalStatusReason &&
+            lhs.fiscalStatusReasonDescription == rhs.fiscalStatusReasonDescription
     }
 
     public static func newDevice(adeID: String, model: AdeDeviceModel ) -> AdeDeviceDTO {
@@ -56,7 +69,9 @@ public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable, Sen
 
 public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
     
-    public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfigurationDTO, machineModel: MachineModelDTO? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil) {
+    public init(id: UUID, adeID: String, qrCode: String, model: AdeDeviceModel, configuration: AdeDeviceConfigurationDTO, machineModel: MachineModelDTO? = nil, machineID: Int? = nil, customer: String? = nil, site: String? = nil,
+                fiscalStatus: AdeDeviceFiscalStatus? = nil, fiscalStatusReason: AdeDeviceFiscalStatusReason? = nil,
+                fiscalStatusReasonDescription: String? = nil) {
         self.id = id
         self.adeID = adeID
         self.qrCode = qrCode
@@ -66,6 +81,9 @@ public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
         self.machineID = machineID
         self.customer = customer
         self.site = site
+        self.fiscalStatus = fiscalStatus
+        self.fiscalStatusReason = fiscalStatusReason
+        self.fiscalStatusReasonDescription = fiscalStatusReasonDescription
     }
     
     public var id: UUID
@@ -77,6 +95,9 @@ public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
     public var machineID: Int?
     public var customer: String?
     public var site: String?
+    public var fiscalStatus: AdeDeviceFiscalStatus?
+    public var fiscalStatusReason: AdeDeviceFiscalStatusReason?
+    public var fiscalStatusReasonDescription: String?
     
     public static func == (lhs: FetchedDevice, rhs: FetchedDevice) -> Bool {
         return lhs.id == rhs.id
@@ -86,6 +107,14 @@ public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {
 public struct AdeDeviceEndpointsGroup: EndpointGroupType {
     
     public static var group: String { "adeDevice" }
+
+    /// Aggiorna solo i dati fiscali locali del sistema master; non comunica il cambio ad AdE.
+    public static func saveFiscalStatus(deviceID: UUID? = nil, update: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "save_fiscal_status", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: update)
+    }
 
     /// Legge il layout corrente, oppure una risposta con layout assente.
     public static func findPriceLayout(deviceID: UUID? = nil) -> EndpointConfiguration {
