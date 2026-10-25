@@ -64,11 +64,12 @@ struct ServiceRequestTests {
         #expect(ServiceRequestStatus.nonRisolta.description == "non risolta")
     }
 
-    @Test func globalPagesCarryMachineIdentityAndInsertionDate() throws {
+    @Test func globalPagesCarryMachineIdentityCustomerAndInsertionDate() throws {
         let machine = FilteredMachineDTO(id: UUID(), internalID: 100001, factoryID: "CALL123", model: .emptyModel)
         let request = ServiceRequestDTO(id: UUID(), machineID: machine.id, requestDate: Date(timeIntervalSince1970: 1000),
                                          source: .cliente, userID: UUID(), recordedAt: Date(timeIntervalSince1970: 2000))
-        let item = ServiceRequestListItemDTO(request: request, machine: machine)
+        let customer = CustomerName(id: UUID(), businessName: "Cliente chiamate", alias: "Sede centrale")
+        let item = ServiceRequestListItemDTO(request: request, machine: machine, customer: customer)
         let page = ServiceRequestListPageDTO(items: [item], page: 2, per: 10, total: 11)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -77,6 +78,12 @@ struct ServiceRequestTests {
         #expect(decoded.items.first?.id == request.id)
         #expect(decoded.items.first?.machine.id == decoded.items.first?.request.machineID)
         #expect(decoded.items.first?.request.recordedAt != decoded.items.first?.request.requestDate)
+        #expect(decoded.items.first?.customer == customer)
+        var older = try #require(JSONSerialization.jsonObject(with: JSONEncoder.scEncoder.encode(item)) as? [String: Any])
+        older.removeValue(forKey: "customer")
+        let legacy = try decoder.decode(ServiceRequestListItemDTO.self, from: JSONSerialization.data(withJSONObject: older))
+        #expect(legacy.customer == nil)
+        #expect(legacy.machine == machine && legacy.request == request)
     }
 
     @Test func olderRequestResponsesDefaultToOpenAndAnEmptyServiceList() throws {
