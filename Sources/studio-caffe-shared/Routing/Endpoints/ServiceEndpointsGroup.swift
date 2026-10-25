@@ -53,7 +53,7 @@ public struct ServicePartToSave: Codable, Equatable, Hashable, Sendable {
 public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, RequestBody, Sendable {
     public init(id: UUID, machineID: UUID, items: [ServiceItemToSave],
                 serviceDate: Date, counter: Int?, note: String? = nil, parts: [ServicePartToSave] = [],
-                allowInconsistentCounter: Bool? = nil, requestID: UUID? = nil) {
+                allowInconsistentCounter: Bool? = nil, requestID: UUID? = nil, resolveRequest: Bool? = nil) {
         self.id = id
         self.machineID = machineID
         self.items = items
@@ -63,6 +63,7 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
         self.parts = parts
         self.allowInconsistentCounter = allowInconsistentCounter
         self.requestID = requestID
+        self.resolveRequest = resolveRequest
     }
 
     public var id: UUID
@@ -75,6 +76,8 @@ public struct ServiceToSave: Identifiable, Codable, Equatable, Hashable, Request
     // Missing/false requires validation; true records an explicit user confirmation.
     public var allowInconsistentCounter: Bool?
     public var requestID: UUID?
+    // Only an explicit confirmation resolves the linked request in the service transaction.
+    public var resolveRequest: Bool?
 }
 
 public struct ServicePageDTO: Codable, Equatable, Sendable {

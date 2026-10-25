@@ -99,4 +99,19 @@ struct ServiceTests {
         older.removeValue(forKey: "requestID")
         #expect(try decoder.decode(ServiceDTO.self, from: JSONSerialization.data(withJSONObject: older)).requestID == nil)
     }
+
+    @Test func resolvingALinkedRequestRequiresAnExplicitChoiceAndKeepsOlderPayloadsReadable() throws {
+        var service = ServiceToSave(id: UUID(), machineID: UUID(),
+            items: [.init(catalogID: UUID(), operationType: .riparazione)],
+            serviceDate: Date(timeIntervalSince1970: 0), counter: nil, requestID: UUID())
+        let legacy = try #require(service.toJSONData())
+        #expect(try decoder.decode(ServiceToSave.self, from: legacy).resolveRequest == nil)
+        for choice in [false, true] {
+            service.resolveRequest = choice
+            service.allowInconsistentCounter = true
+            let decoded = try decoder.decode(ServiceToSave.self, from: #require(service.toJSONData()))
+            #expect(decoded == service)
+            #expect(decoded.resolveRequest == choice)
+        }
+    }
 }
