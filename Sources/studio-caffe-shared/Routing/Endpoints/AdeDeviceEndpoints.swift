@@ -102,6 +102,14 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: channel)
     }
+
+    /// Aggiorna soltanto il tipo delle piste selezionate, in un'unica transazione.
+    public static func savePriceChannelTypes(deviceID: UUID? = nil, update: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "save_price_channel_types", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: update)
+    }
     
     public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
