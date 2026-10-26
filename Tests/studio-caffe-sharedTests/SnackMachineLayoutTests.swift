@@ -39,16 +39,36 @@ struct SnackMachineLayoutTests {
         }
     }
 
-    @Test func preservesUnmappedAndConflictingChannelsWithoutUsingTheirPriceIndexAsASector() {
+    @Test func strictModePreservesUnmappedAndConflictingChannels() {
         let values = [channel(1, sector: nil), channel(2, sector: ""), channel(3, sector: "001A"),
                       channel(4, sector: "11"), channel(5, sector: "011"), channel(6, sector: "-20"),
                       channel(7, sector: "29"), channel(8, sector: "999999999999999999999999999"),
                       channel(9, sector: "21.5"), channel(10, sector: "5")]
-        let layout = SnackMachineLayout(channels: values + [channel(100, sector: "20", type: .hot)])
+        let layout = SnackMachineLayout(channels: values + [channel(100, sector: "20", type: .hot)], useChannelIndexForMissingSector: false)
         #expect(layout.drawers.isEmpty && layout.columnCount == 0)
         #expect(layout.unplacedChannels.map(\.channel) == values)
         #expect(layout.unplacedChannels.map(\.reason) == [.missingSector, .missingSector, .invalidSector,
             .duplicateSector, .duplicateSector, .invalidSector, .incompatibleNumbering, .invalidSector, .invalidSector, .invalidSector])
+    }
+
+    @Test func usesThePriceChannelIndexWhenTheSectorIsMissingOrBlank() {
+        let values = [channel(11, sector: nil), channel(13, sector: ""), channel(15, sector: " \n")]
+            + (20...25).map { channel($0, sector: nil) }
+        let layout = SnackMachineLayout(channels: values)
+        #expect(layout.columnCount == 6 && layout.unplacedChannels.isEmpty)
+        #expect(layout.drawers[0].selections.map(\.columns) == [0..<2, 2..<4, 4..<6])
+        #expect(layout.drawers.flatMap(\.selections).allSatisfy { $0.sector == $0.channel.index })
+        #expect(layout.drawers.flatMap(\.selections).map(\.channel) == values)
+    }
+
+    @Test func explicitSectorsWinAndFallbackCodesStillParticipateInConflictValidation() {
+        let values = [channel(1, sector: "21"), channel(2, sector: nil),
+                      channel(20, sector: nil), channel(99, sector: "020")]
+        let layout = SnackMachineLayout(channels: values)
+        #expect(layout.drawers[0].selections.map(\.sector) == [21])
+        #expect(layout.drawers[0].selections.first?.channel.index == 1)
+        #expect(layout.unplacedChannels.map(\.channel.index) == [2, 20, 99])
+        #expect(layout.unplacedChannels.map(\.reason) == [.invalidSector, .duplicateSector, .duplicateSector])
     }
 
     @Test func gapsLargerThanAPairRemainUnresolvedInsteadOfStretchingASelection() {

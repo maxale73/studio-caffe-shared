@@ -8,7 +8,8 @@ import Foundation
 /// selezioni doppie nel primo cassetto e sei singole nel secondo.
 ///
 /// È una rappresentazione derivata: non modifica listini o settori e non inventa
-/// associazioni per piste senza un settore numerico univoco.
+/// associazioni per piste senza un settore numerico univoco. Se il settore è
+/// vuoto, usa per impostazione predefinita l'indice pista come codice settore.
 public struct SnackMachineLayout: Equatable, Sendable {
     /// Selezione reale, con fotografia della pista e intervallo di colonne occupate.
     public struct Selection: Identifiable, Equatable, Sendable {
@@ -87,15 +88,18 @@ public struct SnackMachineLayout: Equatable, Sendable {
 
     /// Esclude i tipi diversi da snack; conserva tutte le piste snack, anche se non collocabili.
     ///
+    /// - Parameter useChannelIndexForMissingSector: Se `true`, un settore assente
+    ///   o composto soltanto da spazi è sostituito dall'indice della pista.
     /// La numerazione contigua da uno è riconosciuta se manca qualsiasi posizione zero.
     /// Negli altri casi si assume l'origine zero, anche per soli cassetti `11,13,15`.
     /// I salti di due identificano selezioni doppie quando l'intero cassetto è
     /// ricostruibile. Salti più grandi rimangono spazi irrisolti, non selezioni triple.
-    public init(channels: [PriceChannelDTO]) {
+    public init(channels: [PriceChannelDTO], useChannelIndexForMissingSector: Bool = true) {
         var entries: [Entry] = []
         var unplaced: [UnplacedChannel] = []
         for channel in channels.filter({ $0.type == .snack }).sorted(by: Self.channelOrder) {
-            let text = channel.machineSectorCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let explicitSector = channel.machineSectorCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let text = explicitSector.isEmpty && useChannelIndexForMissingSector ? String(channel.index) : explicitSector
             guard !text.isEmpty else {
                 unplaced.append(.init(channel: channel, reason: .missingSector))
                 continue

@@ -2,7 +2,9 @@
 
 `SnackMachineLayout` è una fotografia derivata delle piste `type == .snack`.
 Usa `machineSectorCode` per la posizione fisica e conserva `PriceChannelDTO.index`
-come numero della pista prezzo. Non modifica il listino e non confonde i due codici.
+come numero della pista prezzo. Se il campo settore è vuoto o assente, usa il
+numero pista anche come codice settore. Il settore esplicito è sempre prioritario.
+Non modifica il listino né salva il settore ricavato dall'indice.
 
 ## Settori e griglia
 
@@ -37,10 +39,14 @@ esplicita delle larghezze, che il listino attuale non contiene.
 
 ## Piste non posizionate
 
-Le piste snack senza settore, con codici non numerici, duplicati dopo la
+Le piste snack con codici non numerici, duplicati dopo la
 normalizzazione (`11` e `011`) o incompatibili con la griglia sono conservate in
-`unplacedChannels`, con la relativa causale. Nessuna è scartata e l'indice prezzo
-non viene usato implicitamente come settore. I tipi caldo e non definito sono esclusi.
+`unplacedChannels`, con la relativa causale. Nessuna è scartata. Anche i settori
+ricavati dal numero pista devono avere una decina di cassetto e non duplicare
+settori espliciti o ricavati da altre piste. Un settore non vuoto ma non valido
+non viene sostituito dall'indice. I tipi caldo e non definito sono esclusi.
+L'opzione `useChannelIndexForMissingSector: false` disabilita il ripiego sull'indice
+e conserva anche i settori mancanti tra le piste non collocate.
 
 Le celle reali conservano settore, pista completa e intervallo di colonne. La UI
 può quindi mostrare l'intestazione `settore (pista)`, il prezzo 1 esatto in `Decimal`
