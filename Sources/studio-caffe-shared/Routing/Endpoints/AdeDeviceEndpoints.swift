@@ -139,6 +139,14 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: update)
     }
+
+    /// Elimina le piste selezionate in transazione e restituisce il layout completo rimasto.
+    public static func deletePriceChannels(deviceID: UUID? = nil, deletion: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "delete_price_channels", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: deletion)
+    }
     
     public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [
