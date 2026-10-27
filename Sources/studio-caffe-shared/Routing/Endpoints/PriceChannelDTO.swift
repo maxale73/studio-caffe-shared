@@ -11,6 +11,7 @@ public struct PriceChannelDTO: Identifiable, Codable, Equatable, Sendable, Reque
     public var price1: Decimal
     public var price2: Decimal?
     public var description: String?
+    /// Due cifre per il settore, con un prefisso opzionale di una lettera o cifra per il distributore.
     public var machineSectorCode: String?
 
     public init(id: UUID = UUID(), index: Int, type: PriceChannelType = .undefined,
@@ -38,6 +39,10 @@ public struct PriceChannelDTO: Identifiable, Codable, Equatable, Sendable, Reque
             var rounded = Decimal()
             NSDecimalRound(&rounded, &value, 2, .plain)
             guard rounded == price else { return "I prezzi possono avere al massimo due decimali." }
+        }
+        let sector = machineSectorCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !sector.isEmpty && PriceChannelSector(rawValue: sector) == nil {
+            return "Il settore deve contenere due cifre, con un prefisso facoltativo di una lettera o cifra per il distributore (es. 11, 011, x11)."
         }
         return nil
     }

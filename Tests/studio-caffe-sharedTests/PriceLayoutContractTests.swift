@@ -6,7 +6,7 @@ struct PriceLayoutContractTests {
     @Test func roundTripsExactAmountsAndOptionalLayouts() throws {
         let deviceID = UUID()
         let channel = PriceChannelDTO(index: 7, type: .hot, price1: Decimal(string: "1.20")!,
-                                      price2: Decimal(string: "0.35"), description: "Caffè", machineSectorCode: "001A")
+                                      price2: Decimal(string: "0.35"), description: "Caffè", machineSectorCode: "x11")
         let response = PriceLayoutResponse(adeDeviceID: deviceID,
             layout: .init(id: UUID(), adeDeviceID: deviceID, channels: [channel], createdAt: Date(timeIntervalSince1970: 1000)))
         let decoder = JSONDecoder()
