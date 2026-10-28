@@ -3,6 +3,20 @@ import Testing
 @testable import studio_caffe_shared
 
 struct AdeDeviceLifecycleTests {
+    @Test func warehouseReturnAndNextAuditStartANewServicePeriod() {
+        let withdrawal = AdeDeviceLifecycleDecision(event: .warehouseReturn, currentStatus: .inService,
+                                                    hasBeenMaster: true, hasImportedAudit: true)
+        #expect(withdrawal.updatesFiscalStatus && !withdrawal.isInconsistent)
+        #expect(withdrawal.resultingStatus == .outOfService && withdrawal.resultingReason == .warehouse)
+        let reinstallation = AdeDeviceLifecycleDecision(event: .masterAssociation, currentStatus: .outOfService,
+                                                        hasBeenMaster: true, hasImportedAudit: true, currentReason: .warehouse)
+        #expect(!reinstallation.updatesFiscalStatus && !reinstallation.isInconsistent)
+        let audit = AdeDeviceLifecycleDecision(event: .auditImport, currentStatus: .outOfService,
+                                               hasBeenMaster: true, hasImportedAudit: true, currentReason: .warehouse)
+        #expect(audit.updatesFiscalStatus && !audit.isInconsistent)
+        #expect(audit.resultingStatus == .inService && audit.resultingReason == nil)
+    }
+
     @Test(arguments: [nil] + AdeDeviceFiscalStatus.allCases.map(Optional.some))
     func firstEventsOverrideEveryStatusAndReportInconsistencies(_ status: AdeDeviceFiscalStatus?) {
         let association = AdeDeviceLifecycleDecision(event: .masterAssociation, currentStatus: status,

@@ -164,6 +164,12 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .get)
     }
+
+    /// Sistemi già collegati a un master in deposito, per configurare uno slave in magazzino.
+    public static func mastersInWarehouse() -> EndpointConfiguration {
+        let constructor = PathConstructor(group: group, elements: [PathParameter(name: "masters_in_warehouse", value: nil)])
+        return EndpointConfiguration(pathConstructor: constructor, method: .get)
+    }
     
     public static func save(adeDevice: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

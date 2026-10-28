@@ -3,6 +3,17 @@ import Testing
 import studio_caffe_shared
 
 struct MachineStateTests {
+    @Test(arguments: MachineState.allCases, InstallationRole.allCases)
+    func paymentRolesAreAllowedOnlyWhileInstalledOrInWarehouse(_ state: MachineState, _ role: InstallationRole) throws {
+        let message = state.associationValidationMessage(hasSellingPoint: state == .installato,
+                                                         hasAdeDevice: true, installationRole: role)
+        #expect((message == nil) == (state == .installato || state == .deposito))
+        let machine = MachineDTO(id: UUID(), internalID: 100001, factoryID: "WAREHOUSE", model: .emptyModel,
+                                 notes: nil, state: .deposito, installationRole: role, sellingPoint: nil, adeDevice: UUID())
+        let decoded = try JSONDecoder().decode(MachineDTO.self, from: JSONEncoder.scEncoder.encode(machine))
+        #expect(decoded.state == .deposito && decoded.installationRole == role)
+        #expect(decoded.adeDevice == machine.adeDevice)
+    }
     @Test(arguments: MachineState.allCases)
     func manualTransitionsNeverInstallOrSellAMachine(_ state: MachineState) {
         #expect(!state.manualTransitions.contains(.installato))

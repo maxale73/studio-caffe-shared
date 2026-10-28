@@ -10,6 +10,15 @@ eventi (`hasBeenMaster`, `hasImportedAudit`), mantenuta dal server. Gli eventi
 successivi conservano lo stato corrente, anche se corretto o cancellato manualmente.
 Le associazioni slave non sono eventi di attivazione.
 
+Il ritiro mantiene collegamento e ruolo, mentre la macchina passa a `deposito`.
+Gli slave ancora installati vanno ritirati o dissociati prima del master. Finché
+il master resta installato, il ritiro di uno slave non cambia lo stato fiscale
+del sistema condiviso. Dopo il ritiro dell'ultima macchina, `warehouseReturn`
+imposta `FUORI_SERVIZIO` e causale `Magazzino` (00608). La successiva installazione
+mantiene questo stato fino alla prima audit riuscita, che riporta `IN_SERVIZIO`
+anche se esistevano audit precedenti. Le altre causali manuali restano conservate
+nelle importazioni successive alla prima.
+
 Quando lo stato precedente è diverso da quello atteso, `alertMessage(adeID:)`
 descrive l'incoerenza e l'eventuale correzione. Il server invia gli avvisi dopo
 il commit nell'header `X-Ade-Device-Lifecycle-Alerts`: JSON di
