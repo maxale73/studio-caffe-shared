@@ -532,13 +532,13 @@ public struct MachineEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: ids)
     }
     
-    public static func uninstall(sellingPointID: UUID? = nil) -> EndpointConfiguration {
+    public static func uninstall(sellingPointID: UUID? = nil, withdrawal: AdeDeviceWithdrawal? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "uninstall", value: nil),
             PathParameter(name: "selling_point_id", value: .uuid(sellingPointID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: withdrawal)
     }
     
     public static func fetchAsset(machineID: UUID? = nil) -> EndpointConfiguration {

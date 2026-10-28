@@ -29,3 +29,18 @@ avvisi nell'header e indica il numero degli ulteriori dispositivi da verificare.
 L'app decodifica l'header soltanto dopo il successo della richiesta e presenta
 l'alert nella vista che ha eseguito l'associazione o l'importazione. Lo stato
 resta un'annotazione locale: non vengono effettuate comunicazioni all'AdE.
+
+## Causale obbligatoria del ritiro
+
+`AdeDeviceWithdrawal` richiede `reason`, limitato a `00608` (Magazzino) e `00607`
+(Malfunzionamento). Entrambi gli endpoint di ritiro accettano il payload;
+il ritiro del solo sistema lascia invariato lo stato fisico del distributore.
+L'evento `withdrawal(reason)` imposta `FUORI_SERVIZIO` con la causale scelta.
+Il server conserva il motivo anche quando ritira un solo slave e il sistema
+rimane operativo sul master.
+
+`awaitingServiceAfterWithdrawal` distingue il ritiro per malfunzionamento da
+una semplice annotazione manuale: nel primo caso un'audit riuscita ripristina
+`IN_SERVIZIO`, nel secondo conserva lo stato manuale. L'aggiornamento manuale
+dello stato fiscale annulla questa attesa. `warehouseReturn` resta disponibile
+per la preparazione automatica di un nuovo sistema su una macchina in deposito.

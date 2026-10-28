@@ -179,14 +179,14 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: adeDevice)
     }
     
-    public static func uninstall(deviceID: UUID? = nil, machineID: UUID? = nil) -> EndpointConfiguration {
+    public static func uninstall(deviceID: UUID? = nil, machineID: UUID? = nil, withdrawal: AdeDeviceWithdrawal? = nil) -> EndpointConfiguration {
         let parameters = [
             PathParameter(name: "uninstall", value: nil),
             PathParameter(name: "device_id", value: .uuid(deviceID)),
             PathParameter(name: "machine_id", value: .uuid(machineID))
         ]
         let constructor = PathConstructor(group: group, elements: parameters)
-        return EndpointConfiguration(pathConstructor: constructor, method: .post)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: withdrawal)
     }
     
     public static func indexWithFilter(filter: RequestBody? = nil) -> EndpointConfiguration {

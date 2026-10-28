@@ -4,6 +4,7 @@ public enum AdeDeviceLifecycleEvent: Sendable {
     case masterAssociation
     case auditImport
     case warehouseReturn
+    case withdrawal(AdeDeviceWithdrawalReason)
 }
 
 /// Regole locali del ciclo fiscale. I primi eventi prevalgono anche sulle annotazioni manuali.
@@ -18,27 +19,31 @@ public struct AdeDeviceLifecycleDecision: Equatable, Sendable {
 
     public init(event: AdeDeviceLifecycleEvent, currentStatus: AdeDeviceFiscalStatus?,
                 hasBeenMaster: Bool, hasImportedAudit: Bool,
-                currentReason: AdeDeviceFiscalStatusReason? = nil) {
+                currentReason: AdeDeviceFiscalStatusReason? = nil,
+                awaitingServiceAfterWithdrawal: Bool = false) {
         previousStatus = currentStatus
         let isInWarehouse = currentStatus == .outOfService && currentReason == .warehouse
+        let isAwaitingService = isInWarehouse || (awaitingServiceAfterWithdrawal && currentStatus == .outOfService && currentReason == .malfunction)
         switch event {
         case .masterAssociation:
             isFirstEvent = !hasBeenMaster
-            expectedStatus = hasBeenMaster ? (isInWarehouse ? .outOfService : (hasImportedAudit ? .inService : .activated)) : nil
+            expectedStatus = hasBeenMaster ? (isAwaitingService ? .outOfService : (hasImportedAudit ? .inService : .activated)) : nil
             resultingStatus = hasBeenMaster ? currentStatus : .activated
             updatesFiscalStatus = !hasBeenMaster
             resultingReason = hasBeenMaster ? currentReason : nil
         case .auditImport:
             isFirstEvent = !hasImportedAudit
-            expectedStatus = isInWarehouse ? .outOfService : (hasImportedAudit ? .inService : .activated)
-            updatesFiscalStatus = !hasImportedAudit || isInWarehouse
+            expectedStatus = isAwaitingService ? .outOfService : (hasImportedAudit ? .inService : .activated)
+            updatesFiscalStatus = !hasImportedAudit || isAwaitingService
             resultingStatus = updatesFiscalStatus ? .inService : currentStatus
             resultingReason = updatesFiscalStatus ? nil : currentReason
-        case .warehouseReturn:
+        case .warehouseReturn, .withdrawal:
+            let reason: AdeDeviceWithdrawalReason
+            if case .withdrawal(let value) = event { reason = value } else { reason = .warehouse }
             isFirstEvent = false
-            expectedStatus = isInWarehouse ? .outOfService : (hasImportedAudit ? .inService : (hasBeenMaster ? .activated : nil))
+            expectedStatus = isAwaitingService ? .outOfService : (hasImportedAudit ? .inService : (hasBeenMaster ? .activated : nil))
             resultingStatus = .outOfService
-            resultingReason = .warehouse
+            resultingReason = reason.fiscalReason
             updatesFiscalStatus = true
         }
         isInconsistent = currentStatus != expectedStatus
