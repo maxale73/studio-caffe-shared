@@ -11,6 +11,10 @@ struct AdeDeviceLifecycleTests {
         let reinstallation = AdeDeviceLifecycleDecision(event: .masterAssociation, currentStatus: .outOfService,
                                                         hasBeenMaster: true, hasImportedAudit: true, currentReason: .warehouse)
         #expect(!reinstallation.updatesFiscalStatus && !reinstallation.isInconsistent)
+        let returnedWithoutAudit = AdeDeviceLifecycleDecision(event: .warehouseReturn, currentStatus: .outOfService,
+                                                               hasBeenMaster: true, hasImportedAudit: true, currentReason: .warehouse)
+        #expect(!returnedWithoutAudit.isInconsistent)
+        #expect(returnedWithoutAudit.resultingStatus == .outOfService && returnedWithoutAudit.resultingReason == .warehouse)
         let audit = AdeDeviceLifecycleDecision(event: .auditImport, currentStatus: .outOfService,
                                                hasBeenMaster: true, hasImportedAudit: true, currentReason: .warehouse)
         #expect(audit.updatesFiscalStatus && !audit.isInconsistent)

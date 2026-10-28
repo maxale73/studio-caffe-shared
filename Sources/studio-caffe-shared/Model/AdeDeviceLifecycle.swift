@@ -36,7 +36,7 @@ public struct AdeDeviceLifecycleDecision: Equatable, Sendable {
             resultingReason = updatesFiscalStatus ? nil : currentReason
         case .warehouseReturn:
             isFirstEvent = false
-            expectedStatus = hasImportedAudit ? .inService : (hasBeenMaster ? .activated : nil)
+            expectedStatus = isInWarehouse ? .outOfService : (hasImportedAudit ? .inService : (hasBeenMaster ? .activated : nil))
             resultingStatus = .outOfService
             resultingReason = .warehouse
             updatesFiscalStatus = true
