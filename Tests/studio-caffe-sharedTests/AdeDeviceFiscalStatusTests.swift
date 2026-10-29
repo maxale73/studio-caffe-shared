@@ -3,6 +3,28 @@ import Testing
 import studio_caffe_shared
 
 struct AdeDeviceFiscalStatusTests {
+    @Test func manualTransitionsPreserveTheVendingLifecycleAndCannotBeBypassedWithNull() {
+        let cases: [(AdeDeviceFiscalStatus?, [AdeDeviceFiscalStatus?])] = [
+            (nil, [nil, .activated, .inService, .outOfService, .deactivated, .decommissioned]),
+            (.activated, [.activated, .inService, .outOfService, .deactivated, .decommissioned]),
+            (.inService, [.inService, .outOfService, .deactivated, .decommissioned]),
+            (.outOfService, [.inService, .outOfService, .deactivated, .decommissioned]),
+            (.deactivated, [.activated, .deactivated]),
+            (.decommissioned, [.decommissioned])
+        ]
+        let targets: [AdeDeviceFiscalStatus?] = [nil] + AdeDeviceFiscalStatus.allCases.map(Optional.some)
+        for (current, allowed) in cases {
+            #expect(AdeDeviceFiscalStatus.allowedManualStatuses(from: current) == allowed.compactMap { $0 })
+            for target in targets {
+                let update = AdeDeviceFiscalStatusUpdate(status: target)
+                #expect((update.transitionValidationMessage(from: current) == nil) == allowed.contains(target))
+            }
+        }
+        // Cambiare una causale sullo stesso stato resta consentito anche su un sistema dismesso.
+        let correction = AdeDeviceFiscalStatusUpdate(status: .decommissioned, reason: .other, reasonDescription: "Correzione causale")
+        #expect(correction.validationMessage == nil && correction.transitionValidationMessage(from: .decommissioned) == nil)
+    }
+
     @Test func usesOnlyTheFiveVendingStatesAndOfficialReasonCodes() throws {
         #expect(AdeDeviceFiscalStatus.allCases.map(\.rawValue) == ["ATTIVATO", "IN_SERVIZIO", "FUORI_SERVIZIO", "DISATTIVATO", "DISMESSO"])
         #expect(AdeDeviceFiscalStatus(rawValue: "CENSITO") == nil)

@@ -2,8 +2,8 @@ import Foundation
 
 /// Sostituisce soltanto lo stato fiscale locale e la sua eventuale causale.
 ///
-/// `status: null` rimuove un dato non noto o registrato per errore. La chiave
-/// `status` è obbligatoria nel JSON per distinguere la cancellazione da un body vuoto.
+/// `status: null` è ammesso soltanto se il dato corrente è già non noto. La chiave
+/// `status` è obbligatoria nel JSON per distinguere il dato assente da un body vuoto.
 /// L'operazione non invia richieste all'Agenzia delle Entrate.
 public struct AdeDeviceFiscalStatusUpdate: Codable, Equatable, RequestBody, Sendable {
     public var status: AdeDeviceFiscalStatus?
@@ -31,6 +31,20 @@ public struct AdeDeviceFiscalStatusUpdate: Codable, Equatable, RequestBody, Send
             if reason == .other && normalizedReasonDescription == nil { return "Descrivi la causale Altro." }
         } else if normalizedReasonDescription != nil {
             return "Seleziona una causale per inserire la descrizione."
+        }
+        return nil
+    }
+
+    /// Controllo sullo stato effettivamente letto dal server sotto lock.
+    /// La validazione dei campi rimane in `validationMessage`.
+    public func transitionValidationMessage(from currentStatus: AdeDeviceFiscalStatus?) -> String? {
+        guard status != currentStatus else { return nil }
+        guard let status else {
+            return "Uno stato fiscale già noto non può tornare a Non noto."
+        }
+        guard AdeDeviceFiscalStatus.allowedManualStatuses(from: currentStatus).contains(status) else {
+            let previous = currentStatus?.displayName ?? "Non noto"
+            return "Il passaggio da \(previous) a \(status.displayName) non è consentito. Aggiorna i dati del dispositivo prima di riprovare."
         }
         return nil
     }

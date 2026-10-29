@@ -15,6 +15,22 @@ public enum AdeDeviceFiscalStatus: String, Codable, CaseIterable, Identifiable, 
 
     public var id: String { rawValue }
 
+    /// Stati annotabili manualmente a partire dal dato corrente, incluso quello corrente
+    /// per correggerne la causale. `nil` consente l'inizializzazione di un dato sconosciuto.
+    /// Prima associazione e prima audit usano separatamente `AdeDeviceLifecycleDecision`.
+    public static func allowedManualStatuses(from currentStatus: Self?) -> [Self] {
+        switch currentStatus {
+        case nil, .activated:
+            allCases
+        case .inService, .outOfService:
+            [.inService, .outOfService, .deactivated, .decommissioned]
+        case .deactivated:
+            [.activated, .deactivated]
+        case .decommissioned:
+            [.decommissioned]
+        }
+    }
+
     /// Etichetta italiana, distinta dal valore stabile usato per JSON e database.
     public var displayName: String {
         switch self {
