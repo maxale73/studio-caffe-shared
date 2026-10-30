@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ImportError: Hashable, Identifiable {
+public struct ImportError: Hashable, Identifiable, Sendable {
     
     public var id: EvaValueIdentifier { identifier }
     public let identifier: EvaValueIdentifier
@@ -33,7 +33,7 @@ public struct ImportError: Hashable, Identifiable {
     }
 }
 
-public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType {
+public struct ParsedAuditBeta: Identifiable, Hashable, ResettedAuditValuesType, Sendable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)

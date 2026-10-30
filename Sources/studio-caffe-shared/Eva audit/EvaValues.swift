@@ -354,7 +354,7 @@ public enum EvaValues: Equatable {
     }
 }
 
-public enum EvaValueIdentifier: String, Identifiable, Equatable {
+public enum EvaValueIdentifier: String, Identifiable, Equatable, Sendable {
     
     public var id: String { rawValue }
     
