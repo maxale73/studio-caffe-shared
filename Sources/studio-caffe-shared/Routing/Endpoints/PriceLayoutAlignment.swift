@@ -8,14 +8,14 @@ public enum PriceLayoutAlignmentMode: String, Codable, CaseIterable, Sendable {
 public struct PriceLayoutAlignmentRequest: Codable, Equatable, Sendable, RequestBody {
     public var rawAudit: String
     public var expectedLayoutID: UUID?
-    public var expectedUpdatedAt: Date?
+    public var expectedChannels: [PriceChannelDTO]?
     public var mode: PriceLayoutAlignmentMode
 
-    public init(rawAudit: String, expectedLayoutID: UUID?, expectedUpdatedAt: Date?,
+    public init(rawAudit: String, expectedLayoutID: UUID?, expectedChannels: [PriceChannelDTO]?,
                 mode: PriceLayoutAlignmentMode) {
         self.rawAudit = rawAudit
         self.expectedLayoutID = expectedLayoutID
-        self.expectedUpdatedAt = expectedUpdatedAt
+        self.expectedChannels = expectedChannels
         self.mode = mode
     }
 }

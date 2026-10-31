@@ -8,15 +8,13 @@ struct PriceLayoutAlignmentTests {
         let request = PriceLayoutAlignmentRequest(
             rawAudit: "LA1*0*1*100*1",
             expectedLayoutID: UUID(),
-            expectedUpdatedAt: Date(timeIntervalSince1970: 1_800_000_000),
+            expectedChannels: [.init(index: 1, price1: 1)],
             mode: mode
         )
 
         let data = try JSONEncoder.scEncoder.encode(request)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
 
-        #expect(try decoder.decode(PriceLayoutAlignmentRequest.self, from: data) == request)
+        #expect(try JSONDecoder().decode(PriceLayoutAlignmentRequest.self, from: data) == request)
     }
 
     @Test func buildsAlignmentEndpoint() {
@@ -26,7 +24,7 @@ struct PriceLayoutAlignmentTests {
             alignment: PriceLayoutAlignmentRequest(
                 rawAudit: "LA1*0*1*100*1",
                 expectedLayoutID: nil,
-                expectedUpdatedAt: nil,
+                expectedChannels: nil,
                 mode: .updateAndAdd
             )
         )
