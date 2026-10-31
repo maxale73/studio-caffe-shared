@@ -252,14 +252,19 @@ public struct ServerCheckedAudit: Codable, Identifiable, Equatable, Hashable, Se
     public let customer: String
     public let success: Bool
     public let message: String
+    public let adeDeviceID: UUID?
+    public let priceLayout: PriceLayoutDTO?
     
-    public init(report: ToCheckAuditDTO, previuosRawReport: String, machineID: String, customer: String, success: Bool, message: ServerCheckedAuditResult) {
+    public init(report: ToCheckAuditDTO, previuosRawReport: String, machineID: String, customer: String, success: Bool,
+                message: ServerCheckedAuditResult, adeDeviceID: UUID? = nil, priceLayout: PriceLayoutDTO? = nil) {
         self.id = report.id
         self.previousRawReport = previuosRawReport
         self.machineID = machineID
         self.customer = customer
         self.success = success
         self.message = message.rawValue
+        self.adeDeviceID = adeDeviceID
+        self.priceLayout = priceLayout
     }
 }
 

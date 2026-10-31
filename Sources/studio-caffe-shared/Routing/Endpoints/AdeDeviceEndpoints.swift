@@ -147,6 +147,14 @@ public struct AdeDeviceEndpointsGroup: EndpointGroupType {
         let constructor = PathConstructor(group: group, elements: parameters)
         return EndpointConfiguration(pathConstructor: constructor, method: .post, body: deletion)
     }
+
+    /// Allinea in modo atomico il listino persistito ai prezzi rilevati in un audit EVA.
+    public static func alignPriceLayout(deviceID: UUID? = nil, alignment: RequestBody? = nil) -> EndpointConfiguration {
+        let parameters = [PathParameter(name: "align_price_layout", value: nil),
+                          PathParameter(name: "device_id", value: .uuid(deviceID))]
+        let constructor = PathConstructor(group: group, elements: parameters)
+        return EndpointConfiguration(pathConstructor: constructor, method: .post, body: alignment)
+    }
     
     public static func uninstalled(filter: RequestBody? = nil) -> EndpointConfiguration {
         let parameters = [

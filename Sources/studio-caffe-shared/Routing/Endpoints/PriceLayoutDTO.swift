@@ -1,7 +1,7 @@
 import Foundation
 
 /// Configurazione corrente delle piste di un dispositivo, ordinata per indice.
-public struct PriceLayoutDTO: Identifiable, Codable, Equatable, Sendable {
+public struct PriceLayoutDTO: Identifiable, Codable, Equatable, Hashable, Sendable {
     public var id: UUID
     public var adeDeviceID: UUID
     public var channels: [PriceChannelDTO]

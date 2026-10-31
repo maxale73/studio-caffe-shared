@@ -4,7 +4,7 @@ import Foundation
 ///
 /// L'identificativo rimane stabile anche quando cambia l'indice della pista.
 /// Il dispositivo proprietario è specificato nel percorso dell'endpoint.
-public struct PriceChannelDTO: Identifiable, Codable, Equatable, Sendable, RequestBody {
+public struct PriceChannelDTO: Identifiable, Codable, Equatable, Hashable, Sendable, RequestBody {
     public var id: UUID
     public var index: Int
     public var type: PriceChannelType
