@@ -56,15 +56,22 @@ public struct AdeDeviceDTO: Codable, Equatable, Hashable, AdeDeviceType, Request
 }
 
 public struct FilteredDeviceDTO: Codable, Equatable, Hashable, Identifiable, Sendable {
-    public init(id: UUID, adeID: String, model: AdeDeviceModel) {
+    public init(
+        id: UUID,
+        adeID: String,
+        model: AdeDeviceModel,
+        fiscalStatus: AdeDeviceFiscalStatus? = nil
+    ) {
         self.id = id
         self.adeID = adeID
         self.model = model
+        self.fiscalStatus = fiscalStatus
     }
     
     public let id: UUID
     public let adeID: String
     public let model: AdeDeviceModel
+    public let fiscalStatus: AdeDeviceFiscalStatus?
 }
 
 public struct FetchedDevice: Codable, Equatable, Identifiable, Sendable {

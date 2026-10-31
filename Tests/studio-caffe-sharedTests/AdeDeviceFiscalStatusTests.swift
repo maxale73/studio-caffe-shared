@@ -72,6 +72,19 @@ struct AdeDeviceFiscalStatusTests {
         let copy = try JSONDecoder().decode(FetchedDevice.self, from: JSONEncoder().encode(fetched))
         #expect(copy.fiscalStatus == .outOfService && copy.fiscalStatusReason == .warehouse && copy.fiscalStatusReasonDescription == "Deposito")
         #expect(try JSONDecoder().decode(FetchedDevice.self, from: old).fiscalStatus == nil)
+
+        let filtered = FilteredDeviceDTO(
+            id: device.id,
+            adeID: device.adeID,
+            model: device.model,
+            fiscalStatus: .decommissioned
+        )
+        let filteredData = try JSONEncoder().encode(filtered)
+        #expect(try JSONDecoder().decode(FilteredDeviceDTO.self, from: filteredData) == filtered)
+        var legacyObject = try #require(JSONSerialization.jsonObject(with: filteredData) as? [String: Any])
+        legacyObject.removeValue(forKey: "fiscalStatus")
+        let legacyFiltered = try JSONSerialization.data(withJSONObject: legacyObject)
+        #expect(try JSONDecoder().decode(FilteredDeviceDTO.self, from: legacyFiltered).fiscalStatus == nil)
     }
 
     @Test func followsTheExistingDeviceEndpointConventions() throws {
